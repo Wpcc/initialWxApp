@@ -67,6 +67,10 @@ Page({
 
 ### 简单案例（小程序）
 
+**文件名：**
+
+​	小程序基础案例
+
 **文档目录：**
 
 ```
@@ -172,9 +176,13 @@ App({
 })
 ```
 
-解惑：
+#### 用户权限（js）
 
- `wx.getSetting`:
+通过应用（APP）生命周期或者页面生命周期（page），可以通过js获取用户授权信息，在这之前一般需要检查用户的授权设置（即做了哪些授权），所以js授权设置一般会调用两个API。
+
+`wx.getSetting`、`wx.getUserInfo`
+
+ **wx.getSetting:**
 
 获取用户授权设置（同意授权、拒绝授权），返回值中只会出现小程序已经向用户请求过的权限。
 
@@ -199,9 +207,93 @@ wx.getSetting({
 })
 ```
 
-解惑：
+**wx.getUserInfo:**
 
-`this.userInfoReadyCallback`:
+**该接口为异步接口，在有些情况下需要做相应处理，以免在页面加载完毕后才返回对应数据。**
+
+对应参数：
+
+| 属性            | 类型     | 默认值 | 必填 | 说明                                                         |
+| --------------- | -------- | ------ | ---- | ------------------------------------------------------------ |
+| withCredentials | boolean  |        | 否   | 是否带上登录态信息。当withCredentials为true时，要求此前有调用过wx.login且登录态尚未过期，此时返回的数据会包含encryptedData,iv等敏感信息；当withCredentials为false时，不要求有登录态，返回的数据不包含encryptedData,iv等敏感信息 |
+| lang            | string   | en     | 否   | 显示用户信息的语言                                           |
+| success         | function |        | 否   | 接口调用成功的回调函数                                       |
+| fail            | function |        | 否   | 接口调用失败的回调函数                                       |
+| complete        | function |        | 否   | 接口调用结束的回调函数（调用成功、失败都会执行）             |
+
+object.lang的合法值：
+
+| 值    | 说明     |
+| ----- | -------- |
+| en    | 英文     |
+| zh_CN | 简体中文 |
+| zh_TW | 繁体中文 |
+
+示例代码：
+
+```java
+//必须是在用户已经授权的情况下调用
+wx.getUserInfo({
+    success(res) {
+        const userInfo = res.userInfo
+        const nickName = userInfo.nickName
+        const avatarUrl = userInfo.avatarUrl
+        const gender = userInfo.gender //性别 0：未知 1：男 2：女
+        const privince = userInfo.province
+        const city = userInfo.city
+        const country = userInfo.country
+    }
+})
+```
+
+
+
+#### 异步（getUserInfo）
+
+`getUserInfo`为异步API，之所以需要解决该API出现的异步问题。是因为`getUserInfo`是在APP.js的生命周期（onLaunch）当中调用，并且调用的结果需要在index.js生命周期（onLoad）进行赋值。
+
+通过回调函数可以解决以上问题：
+
+在index.js定义全局回调函数`app.userInfoReadyCallback`，然后在app.js进行判断，如果`this.userInfoReadyCallback`存在的话，也就证明index.js中的onLoad已经加载，这个时候就可以将获取的值传递到回调函数中。
+
+并在index.js进行数据的初始化。
+
+#### 版本兼容（canIUse）
+
+[具体说明](https://developers.weixin.qq.com/community/develop/doc/0000a26e1aca6012e896a517556c01)
+
+示例代码：
+
+```javascript
+//在没有 open-type=getUserInfo 版本的兼容处理
+wx.getUserInfo({
+    success: res => {
+        app.globalData.userInfo = res.userInfo
+        this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo:true
+        })
+    }
+})
+```
+
+示例代码说明：
+
+之所以用以上代码，这是由于在低版本中`wx.getUserInfo`会直接弹出授权框。
+
+#### 用户权限（wxml）
+
+**button.open-type：**定义button按钮的权限类别。
+
+[具体说明](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)
+
+**bindgetuserinfo：**当用户点击该按钮是，会返回获取到的用户信息，回调的detail数据与`wx.getUserInfo`返回的一致。
+
+
+
+
+
+
 
 
 
