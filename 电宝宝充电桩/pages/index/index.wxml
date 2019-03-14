@@ -1,8 +1,10 @@
 <!--index.wxml-->
 <view class="container">
-    <view class="page__bd"><!--hello-->
+    <!-- input页面 -->
+    <view class="page__bd">
         <view class="weui-search-bar">
             <view class="weui-search-bar__form">
+                <!-- 输入框获取焦点显示内容 -->
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
                     <input type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
@@ -10,6 +12,7 @@
                         <icon type="clear" size="14"></icon>
                     </view>
                 </view>
+                <!-- 输入框初始显示内容 -->
                 <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
                     <icon class="weui-icon-search" type="search" size="14"></icon>
                     <view class="weui-search-bar__text">搜索</view>

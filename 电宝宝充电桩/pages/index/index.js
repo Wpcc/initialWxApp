@@ -6,6 +6,9 @@ Page({
       inputVal: ""
   },
   showInput: function () {
+      wx.navigateTo({
+          url:'../list/index'
+      })
       this.setData({
           inputShowed: true
       });
