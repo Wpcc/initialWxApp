@@ -1,13 +1,37 @@
 <!--index.wxml-->
 <view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+    <view class="page__bd"><!--hello-->
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+                    <input type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text">搜索</view>
+                </label>
+            </view>
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+    </view>
+    <view class="page__iconbar">
+        <view class="iconbar_charge iconbar">
+            <image src="../../static/images/icon_charge.png" style="width:30px;height:30px;" />
+            <view >我要充电</view>  
+        </view>
+        <view class="iconbar_payment iconbar">
+            <image src="../../static/images/icon_payment.png" style="width:30px;height:30px;" />
+            <view >我要充值</view> 
+        </view>
+        <view class="iconbar_instructions iconbar">
+            <image src="../../static/images/icon_instructions.png" style="width:30px;height:30px;" />
+            <view >使用指南</view> 
+        </view> 
+        
+    </view>
+    <map style="width:100%;height:calc(100% - 116px)" />
 </view>
