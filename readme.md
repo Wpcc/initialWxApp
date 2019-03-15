@@ -65,6 +65,47 @@ Page({
 })
 ```
 
+### 权限
+
+当有些操作需要用户权限用户在最开始又拒绝的时候，通过`wx.openSetting`可以进行后续的权限引导。
+
+示例：
+
+比如，当用户打开小程序的时候，通过`wx.getLocation`获取用户地理位置，这个时候需要在app.json中定义位置权限弹窗`"permission":{"scope.userLocation":{"desc":"你的位置信息将用于小程序位置接口的效果展示"}}`，但是当用户拒绝APP获取权限的时候，小程序在后续操作就拿不到用户权限，这个时候通过`wx.openSetting`在后续点击过程中打开用户权限设置页面。
+
+```javascript
+Page({
+    data:{
+        getLocation: false //定义一个值，做判断
+    },
+    onShow: function() {
+        const that = this
+        wx.getLocation({
+            success (res) {
+                that.setData({
+                    getLocation: true
+                })
+            } 
+        })
+    },
+    openSetter: function () {
+        if(!this.data.getLocation){
+            wx.openSetting({
+                success (res) {
+                    console.log(res.authSetting)
+                }
+            })
+        }else{
+            console.log('你已经授权成功了')
+        }
+    }
+})
+```
+
+
+
+
+
 ### 简单案例（小程序）
 
 **文件名：**
@@ -288,6 +329,8 @@ wx.getUserInfo({
 [具体说明](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)
 
 **bindgetuserinfo：**当用户点击该按钮是，会返回获取到的用户信息，回调的detail数据与`wx.getUserInfo`返回的一致。
+
+
 
 
 

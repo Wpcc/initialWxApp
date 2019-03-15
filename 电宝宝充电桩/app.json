@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/list/index"
+    "pages/list/index",
+    "pages/map/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -22,7 +23,7 @@
         "selectedIconPath": "static/images/menu_home_clicked.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/map/index",
         "text": "地图",
         "iconPath": "static/images/menu_map_default.png",
         "selectedIconPath": "static/images/menu_map_clicked.png"

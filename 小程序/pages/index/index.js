@@ -15,6 +15,10 @@ Page({
       url: '../logs/logs'
     })
   },
+  console: function() {
+    console.log('clicked')
+  },
+
   onLoad: function () {
     if(!this.data.userInfo){
       this.setData({

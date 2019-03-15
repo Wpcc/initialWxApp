@@ -7,25 +7,22 @@
                 <!-- 输入框获取焦点显示内容 -->
                 <view class="weui-search-bar__box">
                     <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
-                    <input type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
-                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
-                        <icon type="clear" size="14"></icon>
-                    </view>
+                    <input type="text"  class="weui-search-bar__input"
+                     placeholder="{{inputVal || '搜索'}}" disabled="{{disabledTrue}}" bindtap="goList" />
                 </view>
                 <!-- 输入框初始显示内容 -->
-                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="goList">
                     <icon class="weui-icon-search" type="search" size="14"></icon>
-                    <view class="weui-search-bar__text">搜索</view>
+                    <view class="weui-search-bar__text">输入地址或充电桩号</view>
                 </label>
             </view>
-            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
         </view>
     </view>
     <view class="page__iconbar">
-        <view class="iconbar_charge iconbar">
+        <navigator class="iconbar_charge iconbar" url="../list/index" hover-class="none">
             <image src="../../static/images/icon_charge.png" style="width:30px;height:30px;" />
             <view >我要充电</view>  
-        </view>
+        </navigator>
         <view class="iconbar_payment iconbar">
             <image src="../../static/images/icon_payment.png" style="width:30px;height:30px;" />
             <view >我要充值</view> 

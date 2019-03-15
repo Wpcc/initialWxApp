@@ -1,0 +1,5 @@
+<!--index.wxml-->
+<view class="container">
+  <button bindtap="openSetter">设置</button>
+  <map longitude="{{longitude}}" latitude='{{latitude}}' markers="{{markers}}"></map>
+</view>

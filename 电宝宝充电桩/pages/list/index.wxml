@@ -1,2 +1,23 @@
 <!--pages/list/index.wxml-->
-<text>pages/list/index.wxml</text>
+<view class="container">
+    <!-- input页面 -->
+    <view class="page__bd">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <!-- 输入框获取焦点显示内容 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14" bindtap="goBack"></icon>
+                    <input
+                     type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" 
+                     value="{{inputVal}}" focus="{{FocusTrue}}" bindinput="inputTyping"
+                     bindconfirm="goBack" confirmType="done"
+                    />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-search-bar__cancel-btn" bindtap="goBack">取消</view>
+        </view>
+    </view>
+</view>
