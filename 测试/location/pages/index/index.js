@@ -7,27 +7,22 @@ Page({
     getLocation: false,
     latitude: 23.099994,
     longitude: 113.324520,
+    compassTrue: true,
     markers: [
       {
         id: 0,
         latitude: 23.099994,
-        longitude: 113.324520,
-        width: 50,
-        height: 50
+        longitude: 113.324520
       },
       {
-        id: 0,
+        id: 1,
         latitude: 56.099994,
-        longitude: 113.324520,
-        width: 50,
-        height: 50
+        longitude: 113.324520
       },
       {
-        id: 0,
+        id: 2,
         latitude: 23.099994,
-        longitude: 100.324520,
-        width: 50,
-        height: 50
+        longitude: 100.324520
       }
     ],
   },
@@ -38,10 +33,11 @@ Page({
       success(res) {
         that.setData({
           getLocation: true,
-          'markers[0].latitude':res.latitude,
-          'markets[0].longitude':res.longitude
+          'latitude':res.latitude,
+          'longitude':res.longitude
         })
-        console.log(that.data.getLocation)
+        console.log(res.latitude)
+        console.log(res.longitude)
       }
     })
     console.log(this.data.getLocation)
