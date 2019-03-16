@@ -1,5 +1,10 @@
 <!--index.wxml-->
 <view class="container">
   <button bindtap="openSetter">设置</button>
-  <map longitude="{{longitude}}" latitude='{{latitude}}' markers="{{markers}}" show-compass="{{compassTrue}}"></map>
+  <map longitude="{{longitude}}" latitude='{{latitude}}' markers="{{markers}}" show-location bindmarkertap="callout"></map>
+  <cover-view class="message-container" bindtap="tap1">
+    <cover-view class="message-view" bindtap="goMap">
+      hello world
+    </cover-view>
+  </cover-view>
 </view>

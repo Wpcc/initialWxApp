@@ -1,0 +1,7 @@
+<view class="page-body">
+    <cover-view>
+      <cover-view class="cover-view" bindtap="tap1">cover-view</cover-view>
+    </cover-view>
+    <cover-image class="cover-image" bindtap="tap1" src="/image/location.png" />
+  <map style="width:100%;height:100%;"></map>
+</view>
