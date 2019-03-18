@@ -1,4 +1,4 @@
-// pages/map/index.js
+// pages/mine/index.js
 Page({
 
   /**

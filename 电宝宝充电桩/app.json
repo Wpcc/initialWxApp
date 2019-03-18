@@ -4,14 +4,15 @@
     "pages/product/index",
     "pages/list/index",
     "pages/logs/logs",
-    "pages/map/index",
-    "pages/payment/index"
+    "pages/payment/index",
+    "pages/mine/index",
+    "pages/scan/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#23C675",
     "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "white"
   },
   "tabBar": {
     "color": "#333333",
@@ -25,13 +26,13 @@
         "selectedIconPath": "static/images/menu_home_clicked.png"
       },
       {
-        "pagePath": "pages/map/index",
+        "pagePath": "pages/scan/index",
         "text": "二维码",
         "iconPath": "static/images/menu_scan_default.png",
         "selectedIconPath": "static/images/menu_scan_clicked.png"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/mine/index",
         "text": "我的",
         "iconPath": "static/images/menu_mine_default.png",
         "selectedIconPath": "static/images/menu_mine_clicked.png"

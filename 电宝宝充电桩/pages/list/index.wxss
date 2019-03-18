@@ -11,7 +11,7 @@
     display: -webkit-flex;
     display: flex;
     box-sizing: border-box;
-    border-top: 1rpx solid #d7d6dc;
+    background: #23C675;
   }
   
   .weui-icon-search {
@@ -60,7 +60,7 @@
   .weui-search-bar__cancel-btn {
     margin-left: 10px;
     line-height: 34px;
-    color: #3385ff;
+    color: #fff;
     white-space: nowrap;
     font-size: 16px;
   }
@@ -126,11 +126,12 @@
   }
   .list-icon{
     display: block;
+    margin-bottom: 5px;
   }
  .list-distance{
    display: block;
    width: 30px;
    height: 20px;
-   font-size: 14px;
+   font-size: 12px;
  }
   

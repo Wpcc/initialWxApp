@@ -16,16 +16,11 @@ Page({
       content: '00000001',
       success(res) {
         if (res.confirm) {
-          console.log('click confirm')
-          wx.requestPayment({
-            timeStamp: '',
-            nonceStr: '',
-            package: '',
-            signType: 'MD5',
-            paySign: '',
-            success(res) { },
-            fail(res) { }
+          // 点击确认按钮 跳转到支付页面
+          wx.navigateTo({
+            url:'../payment/index'
           })
+          
         } else if (res.cancel) {
           console.log('用户点击取消')
         }

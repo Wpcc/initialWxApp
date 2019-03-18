@@ -18,20 +18,21 @@
             </view>
         </view>
     </view>
-    <view class="page__iconbar">
-        <navigator class="iconbar_charge iconbar" url="../list/index" hover-class="none">
-            <image src="../../static/images/icon_charge.png" style="width:30px;height:30px;" />
-            <view >我要充电</view>  
-        </navigator>
-        <view class="iconbar_payment iconbar">
-            <image src="../../static/images/icon_payment.png" style="width:30px;height:30px;" />
-            <view >我要充值</view> 
-        </view>
-        <view class="iconbar_instructions iconbar">
-            <image src="../../static/images/icon_instructions.png" style="width:30px;height:30px;" />
-            <view >使用指南</view> 
-        </view> 
-        
-    </view>
-    <map style="width:100%;height:calc(100% - 116px)" />
+    <map style="width:100%;height:calc(100% - 44px)" />
+    <cover-view class="page__box">
+        <cover-view class="page__iconbar">
+            <cover-view class="iconbar_charge iconbar" bindtap="goList">
+                <cover-image class="iconbar_image" src="../../static/images/icon_charge.png" style="width:40px;height:40px;" />
+                <cover-view >我要充电</cover-view>  
+            </cover-view>
+            <cover-view class="iconbar_payment iconbar">
+                <cover-image class="iconbar_image" src="../../static/images/icon_payment.png" style="width:40px;height:40px;" />
+                <cover-view >我要充值</cover-view> 
+            </cover-view>
+            <cover-view class="iconbar_instructions iconbar">
+                <cover-image class="iconbar_image" src="../../static/images/icon_instructions.png" style="width:40px;height:40px;" />
+                <cover-view >使用指南</cover-view> 
+            </cover-view> 
+        </cover-view>
+    </cover-view>
 </view>

@@ -33,7 +33,7 @@
       </view>
       <view class='list-right'>
         <view class="list-icon-container">
-          <image class='list-icon' src='../../static/images/location_yes.png' style='width:30px;height:30px;'></image>
+          <image class='list-icon' src='../../static/images/location_go.png' style='width:25px;height:25px;'></image>
           <text class='list-distance'>30m</text>
         </view>
       </view>
@@ -50,7 +50,7 @@
       </view>
       <view class='list-right'>
         <view class="list-icon-container">
-          <image class='list-icon' src='../../static/images/location_yes.png' style='width:30px;height:30px;'></image>
+          <image class='list-icon' src='../../static/images/location_go.png' style='width:25px;height:25px;'></image>
           <text class='list-distance'>30m</text>
         </view>
       </view>
