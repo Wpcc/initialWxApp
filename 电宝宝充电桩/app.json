@@ -1,7 +1,9 @@
 {
   "pages": [
-    "pages/list/index",
+    "pages/payment/index",
     "pages/index/index",
+    "pages/product/index",
+    "pages/list/index",
     "pages/logs/logs",
     "pages/map/index"
   ],

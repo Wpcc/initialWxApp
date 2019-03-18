@@ -1,0 +1,14 @@
+<!--pages/payment/index.wxml-->
+<view class="container">
+    <view class="form-title">
+        <text>请选择充电桩端口号</text>
+    </view>
+    <view class="form-container">
+        <view class="form-content">
+          <button class="form-btn" wx:for='{{pileNum}}' wx:key='{{item.id}}' bindtap="clickedPileNum">{{item.content}}</button>
+        </view>
+    </view>
+    <view class="btn-box">
+        <text>微信支付 ￥1.00</text>
+    </view>
+</view>

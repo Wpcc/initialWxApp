@@ -134,6 +134,28 @@ API:
 
 
 
+## 接口
+
+map接口，使用gcj02国测局坐标系：
+
+```javascript
+// response 返回值
+{
+    code:2000,
+    markers:[
+        {
+            latitude:30.593099, //number 维度
+            longitude:114.305393, //number 经度
+            name:"良品铺子店", //string 名字
+            address:"武汉市汉阳区汉阳大道知音西村2号1-2", //string 地点
+            pileNumber:00000001, //number 充电桩号
+            use:false, //boolean 充电桩能否使用
+            distance：200, //number 距离
+        }
+    ]
+}
+```
+
 
 
 

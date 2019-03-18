@@ -22,7 +22,13 @@ Page({
         wx.navigateBack({
             delta: 1
         })
-    },  
+    }, 
+    // 点击列表也，跳转到产品详情页
+    goProduct: function () {
+      wx.navigateTo({
+        url:'../product/index' //赋带详细充电桩坐标
+      })
+    }, 
     /**
      * 生命周期函数
      */

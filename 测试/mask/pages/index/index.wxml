@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<view class="container">
+  <cover-view class="mask" wx:if="{{maskIsShow}}">
+        <cover-view class="mask-box">
+            <cover-view class="mask-view">
+                <cover-view class="mask-view-title">请核对充电桩号是否一致</cover-view>
+                <cover-view class="mask-view-content">00000001</cover-view>
+            </cover-view>
+            <cover-view class="mask-btn">
+                <cover-view class="mask-btn-cancel">取消</cover-view>
+                <cover-view class="mask-btn-confirm">确定</cover-view>
+            </cover-view>
+        </cover-view>
+    </cover-view>
+</view>
