@@ -330,6 +330,67 @@ wx.getUserInfo({
 
 **bindgetuserinfo：**当用户点击该按钮是，会返回获取到的用户信息，回调的detail数据与`wx.getUserInfo`返回的一致。
 
+### 数据设置
+
+微信小程序中，将JS中的数据与页面中的数据分开，故通过`this.data`修改的数据只能在JS页面中有效，在wxml中并无效果。
+
+所以小程序需要通过`this.setData`API来进行数据修改：
+
+```javascript
+Page({
+    data:{
+        text:'init data',
+        num:0,
+        array:[{text:'init data'}],
+        object:{
+            text:'init data'
+        }
+    },
+    changeText() {
+        this.setData({
+            text:'change data'
+        })
+    },
+    changeNum() {
+        this.setData({
+            num:2
+        })
+    },
+    changeItemArray() {
+        this.setData({
+            'array[0].text':'changed data'
+        })
+    },
+    changeItemObject() {
+        this.setData({
+            'object.text':'changed data'
+        })
+    },
+    addNewField() {
+        this.setData({
+            'newField.text':'new data'
+        })
+    }
+})
+```
+
+**在小程序中并没有提供循环来对数据进行批量修改，故通过for循环可以达到以上效果：**
+
+```javascript
+clickedPileNum: function (e) {
+    // 通过数据模拟循环设置数据
+    for(let i=0; i<this.data.pileNum.length; i++){
+        var obj = {}
+        var background = 'pileNum[' + i + '].background'
+        var color = 'pileNum[' + i + '].color'
+        obj[background] = '#ffffff' 
+        obj[color] = '#23C675'
+        this.setData(obj)
+    }
+    console.log(e._relatedInfo.anchorRelatedText) //获取点击按钮的值
+}
+```
+
 
 
 

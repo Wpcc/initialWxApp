@@ -1,11 +1,11 @@
 {
   "pages": [
-    "pages/payment/index",
     "pages/index/index",
     "pages/product/index",
     "pages/list/index",
     "pages/logs/logs",
-    "pages/map/index"
+    "pages/map/index",
+    "pages/payment/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -15,7 +15,7 @@
   },
   "tabBar": {
     "color": "#333333",
-    "selectedColor": "#3385ff",
+    "selectedColor": "#23C675",
     "position": "bottom",
     "list": [
       {
@@ -26,9 +26,9 @@
       },
       {
         "pagePath": "pages/map/index",
-        "text": "地图",
-        "iconPath": "static/images/menu_map_default.png",
-        "selectedIconPath": "static/images/menu_map_clicked.png"
+        "text": "二维码",
+        "iconPath": "static/images/menu_scan_default.png",
+        "selectedIconPath": "static/images/menu_scan_clicked.png"
       },
       {
         "pagePath": "pages/index/index",

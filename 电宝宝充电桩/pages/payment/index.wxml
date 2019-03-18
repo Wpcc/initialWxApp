@@ -5,7 +5,7 @@
     </view>
     <view class="form-container">
         <view class="form-content">
-          <button class="form-btn" wx:for='{{pileNum}}' wx:key='{{item.id}}' bindtap="clickedPileNum">{{item.content}}</button>
+          <button class="form-btn" wx:for='{{pileNum}}' wx:key='{{item.id}}' bindtap="clickedPileNum" style="background:{{item.background}};color:{{item.color}}">{{item.content}}</button>
         </view>
     </view>
     <view class="btn-box">
