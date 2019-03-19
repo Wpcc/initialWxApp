@@ -5,8 +5,10 @@
     "pages/list/index",
     "pages/logs/logs",
     "pages/payment/index",
+    "pages/scan/index",
     "pages/mine/index",
-    "pages/scan/index"
+    "pages/instruction/index",
+    "pages/recharge/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,25 +19,24 @@
   "tabBar": {
     "color": "#333333",
     "selectedColor": "#23C675",
-    "position": "bottom",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "首页",
         "iconPath": "static/images/menu_home_default.png",
-        "selectedIconPath": "static/images/menu_home_clicked.png"
+        "selectedIconPath": "static/images/menu_home_clicked.png",
+        "text": "首页"
       },
       {
         "pagePath": "pages/scan/index",
-        "text": "二维码",
         "iconPath": "static/images/menu_scan_default.png",
-        "selectedIconPath": "static/images/menu_scan_clicked.png"
+        "selectedIconPath": "static/images/menu_scan_clicked.png",
+        "text": "扫一扫"
       },
       {
         "pagePath": "pages/mine/index",
-        "text": "我的",
         "iconPath": "static/images/menu_mine_default.png",
-        "selectedIconPath": "static/images/menu_mine_clicked.png"
+        "selectedIconPath": "static/images/menu_mine_clicked.png",
+        "text": "我的"
       }
     ]
   }

@@ -1,2 +1,44 @@
 <!--pages/mine/index.wxml-->
-<text>pages/mine/index.wxml</text>
+<view class="user-container">
+  <view class="info-container">
+    <view class="avatar-container">
+      <view class="avatar-icon">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class="avatar-text">
+        <view class="avatar-nickname">
+          <open-data type="userNickName" style="font-size:16px;"></open-data>
+          <text class="noAuthText">未授权</text>
+        </view>
+        <view class="setAuth">
+          <text class="auth-text">点击授权</text>
+          <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="account-container">
+    <view class="accountTitle">账户余额</view>
+    <view class="accountBalance">￥0.00</view>
+  </view>
+</view>
+<view class="list-container">
+  <view class="list-box">
+    <view class="list-left">
+      <image src="../../static/mine/icon_record.png" class="record"/>
+      <text class="record-text">充电记录</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+  <view class="list-box">
+    <view class="list-left">
+      <image src="../../static/mine/icon_recharge.png" class="record"/>
+      <text class="record-text">充电记录</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+</view>

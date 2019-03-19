@@ -8,7 +8,7 @@
                 <cover-view class="popup-title-text">武汉市汉阳区汉阳大道知音西村2号</cover-view>
             </cover-view>
             <cover-view class="popup-view">
-                <cover-view class="view-left">充电桩情况：剩余6充点口</cover-view>
+                <cover-view class="view-left">充电桩情况：剩余6充电口</cover-view>
                 <cover-view class="view-right">充电桩号：00000001</cover-view>
             </cover-view>
         </cover-view>

@@ -126,7 +126,6 @@
   }
   .list-icon{
     display: block;
-    margin-bottom: 5px;
   }
  .list-distance{
    display: block;

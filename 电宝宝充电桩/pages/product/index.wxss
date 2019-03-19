@@ -20,6 +20,9 @@ map{
   background: #23C675;
   color: #ffffff;
 }
+.payment-button::after{
+  border:none;
+}
 
 .popup-container{
   width: 100%;

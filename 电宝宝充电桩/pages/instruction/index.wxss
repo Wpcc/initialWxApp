@@ -1,0 +1,12 @@
+/* pages/instruction/index.wxss */
+.container{
+  width: 100%;
+  height: 100%;
+  background: #23C675;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+text{
+  color: #fff;
+}

@@ -14,6 +14,7 @@ Page({
     wx.showModal({
       title: '请核对充电桩号是否一致',
       content: '00000001',
+      confirmColor:'#23C675',
       success(res) {
         if (res.confirm) {
           // 点击确认按钮 跳转到支付页面

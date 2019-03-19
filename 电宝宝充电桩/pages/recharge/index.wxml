@@ -1,0 +1,4 @@
+<!--pages/recharge/index.wxml-->
+<view class='container'>
+  <text>开发中，请等待</text>
+</view>

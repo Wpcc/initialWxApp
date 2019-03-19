@@ -374,7 +374,9 @@ Page({
 })
 ```
 
-**在小程序中并没有提供循环来对数据进行批量修改，故通过for循环可以达到以上效果：**
+#### for
+
+在小程序中并没有提供循环来对数据进行批量修改，故通过for循环可以达到以上效果：
 
 ```javascript
 clickedPileNum: function (e) {
@@ -388,6 +390,16 @@ clickedPileNum: function (e) {
         this.setData(obj)
     }
     console.log(e._relatedInfo.anchorRelatedText) //获取点击按钮的值
+}
+```
+
+### 样式设置
+
+#### button边框
+
+```css
+button::after{
+    border:none;
 }
 ```
 

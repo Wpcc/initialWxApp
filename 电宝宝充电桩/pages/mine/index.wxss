@@ -1,1 +1,92 @@
 /* pages/mine/index.wxss */
+.user-container{
+  padding-top: 20px;
+  width: 100%;
+  height: 70px;
+  background: #23C675
+}
+.info-container{
+  position: absolute;
+  left: 20px;
+  top: 20px;
+}
+/* 用户信息设置 */
+.avatar-container{
+  display: flex;
+  justify-content: flex-start;
+}
+.avatar-text{
+  font-size: 14px;
+  margin-left: 7px;
+  color: #fff;
+}
+.avatar-icon{
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  border-radius: 25px;
+  overflow: hidden;
+}
+.avatar-nickname{
+  margin-bottom: 5px;
+}
+/* 未授权样式 */
+.noAuthText {
+  font-size: 12px;
+  margin-left: 10px;
+  border:1px solid #fff;
+  padding: 0 2px;
+  border-radius: 4px;
+}
+/* 右边账户设置 */
+.account-container{
+  height: 50px;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 14px;
+  color: #fff;
+  text-align: right;
+}
+.accountTitle{
+  font-size: 16px;
+}
+.accountTitle{
+  margin-bottom: 5px;
+}
+/* list样式 */
+.list-container{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 10px;
+}
+.list-box{
+  width: 100%;
+  height: 50px;
+  border-bottom: 1px solid #999;
+  font-size: 14px;
+}
+.list-left{
+  float: left;
+  margin-left: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.list-right{
+  float: right;
+  margin-right: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.record{
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.icon-next{
+  width: 13px;
+  height: 13px;
+}
