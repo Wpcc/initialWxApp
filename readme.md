@@ -324,11 +324,38 @@ wx.getUserInfo({
 
 #### 用户权限（wxml）
 
-**button.open-type：**定义button按钮的权限类别。
+**button.open-type：**定义button按钮的权限类别。兼容性1.3.0，以及很低了。
 
-[具体说明](https://developers.weixin.qq.com/miniprogram/dev/component/button.html)
+>  open-type和bindgetuserinfo是绑定出现，其中open-type打开用户授权弹窗
+>
+> 如果用户否决授权，在下次点击依旧会有该授权弹窗
+>
+> bindgetuserinfo获取用户授权后的信息。
 
-**bindgetuserinfo：**当用户点击该按钮是，会返回获取到的用户信息，回调的detail数据与`wx.getUserInfo`返回的一致。
+
+
+案例：
+
+```html
+<!-- html -->
+<button open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+```
+
+```javascript
+// open-type 绑定的设置函数 
+getUserInfo: function(e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+    })
+}
+```
+
+如果还要做兼容，通过小程序自动生成的代码可查看具体兼容细节。
+
+
 
 ### 数据设置
 

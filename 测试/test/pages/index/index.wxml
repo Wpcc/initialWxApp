@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+  <button open-type="getUserInfo">授权页面</button>
+</view>

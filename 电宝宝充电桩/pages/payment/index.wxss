@@ -45,4 +45,8 @@
     justify-content: center;
     align-items: center;
     color: #ffffff;
+    border-radius: 0;
+}
+.btn-box::after{
+  border:none
 }

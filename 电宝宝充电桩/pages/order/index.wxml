@@ -1,0 +1,118 @@
+<!--pages/order/index.wxml-->
+<view class="container">
+  <view class="tabbar-container">
+    <view id="tabbar-underway" class="tabbar-underway" style="{{leftSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="changeStyle">
+      <text class="underway-text">进行中</text>
+    </view>
+    <view id="tabbar-completed" class="tabbar-completed" style="{{rightSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="changeStyle">
+      <text class="completed-text">已完成</text>
+    </view>
+  </view>
+  <view class="list-container">
+    <!-- 进行中页面 -->
+    <view class="underway-ul" wx:if="{{leftSelected}}">
+      <view class="order-li">
+        <view class="title">
+          <view class="title-left">
+            <text class="order-number">2018040297569897</text>
+            <text class="order-timeLabel">订单时间：</text>
+            <text class="order-number">2018-04-02</text>
+          </view>
+          <view class="title-right">
+            <text class="order-status">已付款</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="location">
+            <image src="../../static/order/icon_location.png" style="width:12px;height:14px;"/>
+            <!-- 地址部分超出省略 -->
+            <text class="location-name">武汉市汉阳区汉阳大道知音西村2号</text>
+          </view>
+          <view class="pile">
+            充电桩号：
+            <text class="pile-number">00000001</text>
+          </view>
+          <view class="balance">
+            <view class="recharge-left">
+              充电剩余时间：
+              <text class="recharge-time">180分钟</text>
+            </view>
+            <view class="recharge-right">
+              充电金额：
+              <text class="recharge-money">￥1.00</text>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="order-li">
+        <view class="title">
+          <view class="title-left">
+            <text class="order-number">2018040297569897</text>
+            <text class="order-timeLabel">订单时间：</text>
+            <text class="order-number">2018-04-02</text>
+          </view>
+          <view class="title-right">
+            <text class="order-status">已付款</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="location">
+            <image src="../../static/order/icon_location.png" style="width:12px;height:14px;"/>
+            <!-- 地址部分超出省略 -->
+            <text class="location-name">武汉市汉阳区汉阳大道知音西村2号</text>
+          </view>
+          <view class="pile">
+            充电桩号：
+            <text class="pile-number">00000001</text>
+          </view>
+          <view class="balance">
+            <view class="recharge-left">
+              充电剩余时间：
+              <text class="recharge-time">180分钟</text>
+            </view>
+            <view class="recharge-right">
+              充电金额：
+              <text class="recharge-money">￥1.00</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- 已完成页面 -->
+    <view class="completed-ul" wx:if="{{rightSelected}}">
+      <view class="order-li">
+        <view class="title">
+          <view class="title-left">
+            <text class="order-number">2018040297569897</text>
+            <text class="order-timeLabel">订单时间：</text>
+            <text class="order-number">2018-04-02</text>
+          </view>
+          <view class="title-right">
+            <text class="order-status-right">已付款</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="location">
+            <image src="../../static/order/icon_location.png" style="width:12px;height:14px;"/>
+            <!-- 地址部分超出省略 -->
+            <text class="location-name">武汉市汉阳区汉阳大道知音西村2号</text>
+          </view>
+          <view class="pile">
+            充电桩号：
+            <text class="pile-number">00000001</text>
+          </view>
+          <view class="balance">
+            <view class="recharge-left">
+              充电剩余时间：
+              <text class="recharge-time">180分钟</text>
+            </view>
+            <view class="recharge-right">
+              充电金额：
+              <text class="recharge-money">￥1.00</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

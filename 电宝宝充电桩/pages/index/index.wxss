@@ -102,3 +102,11 @@
   margin:0 auto;
   margin-bottom: 5px;
 }
+.fixed{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  background: #23C675;
+  width: 50px;
+  height: 50px;
+}

@@ -8,7 +8,8 @@
     "pages/scan/index",
     "pages/mine/index",
     "pages/instruction/index",
-    "pages/recharge/index"
+    "pages/recharge/index",
+    "pages/order/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -27,7 +28,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/scan/index",
+        "pagePath": "pages/index/index",
         "iconPath": "static/images/menu_scan_default.png",
         "selectedIconPath": "static/images/menu_scan_clicked.png",
         "text": "扫一扫"

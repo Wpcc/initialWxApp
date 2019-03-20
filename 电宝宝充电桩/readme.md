@@ -18,10 +18,6 @@ icon图标选择：多色图标库-智能城市
 
 [weui-wxss](https://github.com/Tencent/weui-wxss)
 
-### 登录页
-
-
-
 ### 主页
 
 #### 搜索框
@@ -72,13 +68,21 @@ icon图标选择：多色图标库-智能城市
 <open-data type="userNickName"></open-data>
 ```
 
+### 支付页
+
 
 
 ## 逻辑说明
 
 ### 权限
 
-用户进入首页，获取用户地理位置，弹出权限框。
+#### 详情页
+
+用户详情页中的我要充电按钮获取用户权限：
+
+
+
+
 
 ### 登录页
 
@@ -145,6 +149,98 @@ API:
 ### 详情页
 
 输入框点击完成或搜索按钮------》跳转到首页，并将输入框内容以url参数的形势传值回首页。
+
+
+
+### 支付页
+
+用户点击微信支付，通过`wx.getStorageSync`同步获取用户的`userId`，通过用户`userId`判断用户是否在后台进行注册，如果存在`userId`也就是用户注册过，那么直接进行支付逻辑。如果不存在`userId`也就是用户没有注册，那么获取用户的信息权限。
+
+信息权限：
+
+
+
+### 兼容
+
+#### 权限兼容
+
+**用户地理位置：**
+
+
+
+### 改变样式
+
+具体逻辑：通过回调函数返回事件名中的id获取页面中的DOM节点，与页面中DOM节点ID进行对比，并通过改变页面中的三元操作符来进行样式修改。
+
+```html
+<!-- html页面 -->
+<view id="tabbar-underway" class="tabbar-underway" style="{{leftSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="changeStyle">
+	<text class="underway-text">进行中</text>
+</view>
+```
+
+```javascript
+// js页面
+ data: {
+    leftSelected: true, // 配合html三元运算符控制左边选中样式
+    rightSelected: false, // 右边选中样式
+  },
+  // 改变样式逻辑
+  changeStyle: function (e) {
+    if(e.currentTarget.id == 'tabbar-underway'){
+      this.setData({
+        leftSelected: true,
+        rightSelected: false
+      })
+    }
+    else if(e.currentTarget.id == 'tabbar-completed'){
+      this.setData({
+        leftSelected: false,
+        rightSelected: true
+      })
+    }
+  }
+```
+
+具体可查看[官方事件文档](https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxml/event.html)
+
+一个颇为麻烦的改变样式方式：
+
+```javascript
+ data: {
+    pileNum:[
+      { id: 0, content: '0', background: '#ffffff', color: '#23C675' },
+      { id: 1, content: '1', background: '#ffffff', color: '#23C675' },
+      { id: 2, content: '2', background: '#ffffff', color: '#23C675' },
+      { id: 3, content: '3', background: '#ffffff', color: '#23C675' },
+      { id: 4, content: '4', background: '#ffffff', color: '#23C675' },
+      { id: 5, content: '5', background: '#ffffff', color: '#23C675' },
+      { id: 6, content: '6', background: '#ffffff', color: '#23C675' },
+      { id: 7, content: '7', background: '#ffffff', color: '#23C675' },
+      { id: 8, content: '8', background: '#ffffff', color: '#23C675' },
+      { id: 9, content: '9', background: '#ffffff', color: '#23C675' }
+    ],
+    canIUse: wx.canIUse('button.open-type.getUserInfo')
+  },
+  clickedPileNum: function (e) {
+    // 通过数据模拟循环设置数据
+    for(let i=0; i<this.data.pileNum.length; i++){
+      var obj = {}
+      var background = 'pileNum[' + i + '].background'
+      var color = 'pileNum[' + i + '].color'
+      obj[background] = '#ffffff' 
+      obj[color] = '#23C675'
+      this.setData(obj)
+    }
+    var obj = {}
+    var background = 'pileNum[' + e._relatedInfo.anchorRelatedText + ']background'
+    var color = 'pileNum[' + e._relatedInfo.anchorRelatedText + '].color'
+    obj[background] = '#23C675'
+    obj[color] = '#ffffff'
+    this.setData(obj)
+    console.log(e._relatedInfo.anchorRelatedText) //获取点击按钮的值
+  }
+```
 
 
 

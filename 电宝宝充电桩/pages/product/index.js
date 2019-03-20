@@ -5,8 +5,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    maskIsShow: false,
+    maskIsShow: false
   },
+  
   popupShow: function () {
     // this.setData({
     //   maskIsShow: true

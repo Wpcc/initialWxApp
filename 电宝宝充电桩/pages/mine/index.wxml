@@ -23,7 +23,7 @@
   </view>
 </view>
 <view class="list-container">
-  <view class="list-box">
+  <view class="list-box" bindtap="goOrder">
     <view class="list-left">
       <image src="../../static/mine/icon_record.png" class="record"/>
       <text class="record-text">充电记录</text>
@@ -35,7 +35,7 @@
   <view class="list-box">
     <view class="list-left">
       <image src="../../static/mine/icon_recharge.png" class="record"/>
-      <text class="record-text">充电记录</text>
+      <text class="record-text">充值</text>
     </view>
     <view class="list-right">
       <image src="../../static/mine/icon_next.png" class="icon-next"/>
