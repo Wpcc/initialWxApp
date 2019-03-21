@@ -22,6 +22,7 @@ Page({
   goHome: function () {
     wx.navigateBack({
       delta:1
+    
     })
   }
 })

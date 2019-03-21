@@ -5,7 +5,6 @@
     "pages/list/index",
     "pages/logs/logs",
     "pages/payment/index",
-    "pages/scan/index",
     "pages/mine/index",
     "pages/instruction/index",
     "pages/recharge/index",

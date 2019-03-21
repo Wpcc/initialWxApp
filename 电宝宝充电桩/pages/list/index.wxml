@@ -21,37 +21,20 @@
         </view>
     </view>
     <!-- list页面 -->
-    <view class='container-list' bindtap="goProduct">
+    <view class='container-list' bindtap="goProduct" wx:for="{{listData}}" wx:key="{{item.id}}" data-longitude="{{item.longitude}}" data-latitude="{{item.latitude}}">
       <view class='list-left'>
         <view class="list-title-container">
-          <text class='list-title'>武汉市汉阳区汉阳大道知音西村2号1-2</text>
+          <text class='list-title'>{{item.address}}</text>
         </view>
         <view class='list-view'>
-          <text class="list-view-left">剩余2个充电位</text>
-          <text class="list-view-right">充电桩号：00000001</text>
+          <text class="list-view-left">剩余<text>{{item.port}}</text>个充电位</text>
+          <text class="list-view-right">充电桩号：<text>{{item.deviceNum}}</text></text>
         </view>
       </view>
       <view class='list-right'>
         <view class="list-icon-container">
           <image class='list-icon' src='../../static/images/location_go.png' style='width:25px;height:25px;'></image>
-          <text class='list-distance'>30m</text>
-        </view>
-      </view>
-    </view>
-    <view class='container-list'>
-      <view class='list-left'>
-        <view class="list-title-container">
-          <text class='list-title'>武汉市汉阳区汉阳大道汉阳大道知音西村2号1-2</text>
-        </view>
-        <view class='list-view'>
-          <text class="list-view-left">剩余2个充电位</text>
-          <text class="list-view-right">充电桩号：00000001</text>
-        </view>
-      </view>
-      <view class='list-right'>
-        <view class="list-icon-container">
-          <image class='list-icon' src='../../static/images/location_go.png' style='width:25px;height:25px;'></image>
-          <text class='list-distance'>30m</text>
+          <text class='list-distance'>{{item.distance}}</text>
         </view>
       </view>
     </view>

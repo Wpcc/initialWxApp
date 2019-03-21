@@ -1,6 +1,6 @@
 <!--pages/product/index.wxml-->
 <view class="container">
-    <map></map>
+    <map longitude="{{userLongitude}}" latitude="{{userLatitude}}" markers="{{markers}}" show-location scale="8"></map>
     <cover-view class="popup-container">
         <cover-view class="popup-box">
             <cover-view class="popup-title">
