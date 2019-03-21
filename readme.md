@@ -67,11 +67,29 @@ Page({
 
 ### 权限
 
+#### 位置权限
+
 当有些操作需要用户权限用户在最开始又拒绝的时候，通过`wx.openSetting`可以进行后续的权限引导。
 
 示例：
 
-比如，当用户打开小程序的时候，通过`wx.getLocation`获取用户地理位置，这个时候需要在app.json中定义位置权限弹窗`"permission":{"scope.userLocation":{"desc":"你的位置信息将用于小程序位置接口的效果展示"}}`，但是当用户拒绝APP获取权限的时候，小程序在后续操作就拿不到用户权限，这个时候通过`wx.openSetting`在后续点击过程中打开用户权限设置页面。
+通过DOM页面中map元素可以调用内部地图，其中`longitude`、`latitude`属性会定义map的中心位置，`markers`定义标点位置，`bindmarktap`绑定标点事件，`showLocation`会显示当前定位。
+
+```html
+<map longitude="{{longitude}}" latitude='{{latitude}}' markers="{{markers}}" show-location bindmarkertap="callout"></map>
+```
+
+
+
+比如，当用户打开小程序的时候，通过`wx.getLocation`获取用户地理位置，这个时候需要在app.json中定义位置权限弹窗。
+
+```javascript
+"permission":{
+    "scope.userLocation":{"desc":"你的位置信息将用于小程序位置接口的效果展示"}
+}
+```
+
+但是当用户拒绝APP获取权限的时候，小程序在后续操作就拿不到用户权限，这个时候通过`wx.openSetting`在后续点击过程中打开用户权限设置页面。
 
 ```javascript
 Page({
@@ -428,6 +446,41 @@ clickedPileNum: function (e) {
 button::after{
     border:none;
 }
+```
+
+### 组件
+
+特别注意地是组件中的根元素class必须设置为wrapper，否则不生效（在设置flex布局的时候，遇见的坑，当时设置container）。
+
+### 全局配置
+
+#### tabbar配置
+
+```javascript
+ "tabBar": {
+    "color": "#333333",
+    "selectedColor": "#23C675",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/menu_home_default.png",
+        "selectedIconPath": "static/images/menu_home_clicked.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/images/menu_scan_default.png",
+        "selectedIconPath": "static/images/menu_scan_clicked.png",
+        "text": "扫一扫"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "iconPath": "static/images/menu_mine_default.png",
+        "selectedIconPath": "static/images/menu_mine_clicked.png",
+        "text": "我的"
+      }
+    ]
+  }
 ```
 
 

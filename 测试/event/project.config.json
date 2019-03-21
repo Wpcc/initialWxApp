@@ -1,5 +1,5 @@
 {
-	"description": "项目配置文件",
+	"description": "项目配置文件。",
 	"packOptions": {
 		"ignore": []
 	},
@@ -8,17 +8,12 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true,
-		"autoAudits": false
+		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.2",
-	"appid": "wx663da65452ee2d87",
-	"projectname": "test",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
-	"isGameTourist": false,
+	"libVersion": "1.9.94",
+	"appid": "touristappid",
+	"projectname": "%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BB%84%E4%BB%B6%E5%B1%82%E7%BA%A7%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E7%A4%BA%E4%BE%8B",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -42,3 +42,16 @@
     </view>
   </view>
 </view>
+<!-- tabbar -->
+  <view class='tabbar-container'>
+    <tabbar>
+      <view class='menu-box' slot="home" bindtap="goHome">
+        <image class='menu-img' src='../../static/images/menu_home_default.png'></image>
+        <text class='menu-text'>首页</text>
+      </view>
+      <view class='menu-box clickedBox' slot="mine">
+        <image class='menu-img' src='../../static/images/menu_mine_clicked.png'></image>
+        <text class='menu-text'>我的</text>
+      </view>
+    </tabbar>
+  </view>

@@ -57,7 +57,7 @@
 /* list样式 */
 .list-container{
   width: 100%;
-  height: 100%;
+  height: calc(100% - 90px);
   box-sizing: border-box;
   padding: 0 10px;
 }
@@ -89,4 +89,32 @@
 .icon-next{
   width: 13px;
   height: 13px;
+}
+/* tabbar */
+/* tabbar */
+.tabbar-container{
+  width: 100%;
+  height: 55px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+}
+.menu-box{
+  height: 54px;
+  width: 60px;
+  padding-top: 5px;
+}
+.menu-img{
+  width: 28px;
+  height: 28px;
+  display: block;
+  margin: 0 auto;
+}
+.menu-text{
+  font-size: 12px;
+  text-align: center;
+  display: block;
+}
+.clickedBox{
+  color: #23C675;
 }

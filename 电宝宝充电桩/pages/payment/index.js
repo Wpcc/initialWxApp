@@ -56,6 +56,7 @@ Page({
                 wx.login({
                   success(res){
                     //将授权信息传递到后台
+                    console.log('getInf')
                     wx.request({
                       url:'https://backend.quanjieshop.com/api/login/login',
                       method:'post',

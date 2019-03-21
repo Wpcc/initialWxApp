@@ -1,0 +1,17 @@
+<!--pages/components/tabbar/index.wxml-->
+<view class='wrapper'>
+  <!-- <view class='menu-box clickedBox'>
+    <image class='menu-img' src='../../../static/images/menu_home_clicked.png'></image>
+    <text class='menu-text'>首页</text>
+  </view> -->
+  <slot name="home"></slot>
+  <view class='menu-box' bindtap='openScan'>
+    <image class='menu-img' src='../../../static/images/menu_scan_default.png'></image>
+    <text class='menu-text'>扫一扫</text>
+  </view>
+  <!-- <view class='menu-box'>
+    <image class='menu-img' src='../../../static/images/menu_mine_default.png'></image>
+    <text class='menu-text'>我的</text>
+  </view> -->
+  <slot name="mine"></slot>
+</view>

@@ -68,6 +68,10 @@
   background: #fff;
   line-height: 34px
 }
+.mapStyle{
+  width:100%;
+  height:calc(100% - 100px);
+}
 
 .page__box{
   width:100%;
@@ -109,4 +113,29 @@
   background: #23C675;
   width: 50px;
   height: 50px;
+}
+/* tabbar */
+.tabbar-container{
+  width: 100%;
+  height: 55px;
+}
+.menu-box{
+  box-sizing: border-box;
+  height: 54px;
+  width: 60px;
+  padding-top: 5px;
+}
+.menu-img{
+  width: 28px;
+  height: 28px;
+  display: block;
+  margin: 0 auto;
+}
+.menu-text{
+  font-size: 12px;
+  text-align: center;
+  display: block;
+}
+.clickedBox{
+  color: #23C675;
 }

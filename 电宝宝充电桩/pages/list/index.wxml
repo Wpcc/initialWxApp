@@ -10,7 +10,7 @@
                     <input
                      type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" 
                      value="{{inputVal}}" focus="{{FocusTrue}}" bindinput="inputTyping"
-                     bindconfirm="goBack" confirmType="done"
+                     bindconfirm="inputCompleted" confirmType="done"
                     />
                     <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
                         <icon type="clear" size="14"></icon>

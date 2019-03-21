@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -50,6 +50,13 @@
 					"id": -1,
 					"name": "支付页面",
 					"pathName": "pages/payment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "component",
+					"pathName": "pages/components/tabbar/index",
 					"scene": null
 				}
 			]

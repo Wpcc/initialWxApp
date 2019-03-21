@@ -17,13 +17,12 @@ Page({
         })
     },
     // 点击搜索logo或键盘完成===》跳转到首页
-    goBack: function () {
+    inputCompleted: function () {
+        console.log(this.data.inputVal)
         app.globalData.listInput = this.data.inputVal
-        wx.navigateBack({
-            delta: 1
-        })
+        // 从后台获取数据
     }, 
-    // 点击列表也，跳转到产品详情页
+    // 点击列表页，跳转到产品详情页
     goProduct: function () {
       wx.navigateTo({
         url:'../product/index' //赋带详细充电桩坐标

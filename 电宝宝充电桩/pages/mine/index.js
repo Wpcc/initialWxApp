@@ -18,6 +18,10 @@ Page({
     wx.navigateTo({
       url:'../order/index'
     })
+  },
+  goHome: function () {
+    wx.navigateBack({
+      delta:1
+    })
   }
-  
 })
