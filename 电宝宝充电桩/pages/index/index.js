@@ -56,60 +56,63 @@ Page({
         wx.getLocation({
             type: 'gcj02',
             success(res) {
+                // 存全局data中
+                app.globalData.longitude = res.longitude
+                app.globalData.latitude = res.latitude
+
                 that.setData({
                     longitude: res.longitude,
                     latitude: res.latitude
-                }),
-                    wx.request({
-                        url: 'https://backend.quanjieshop.com/api/Homepage/index',
-                        method: 'POST',
-                        data: {
-                            lng: res.longitude,
-                            lat: res.latitude
-                        },
-                        success(res) {
-                            var res = res.data
-                            var i = 0
-                            res.data.forEach(item => {
-                                /**
-                                 * value内容
-                                 */
-                                // 坐标点固定的值
-                                var fixedIconPath = '../../static/images/position_go.png'
-                                var fixedWidth = 40
-                                var fixedHeight = 38
-                                //  坐标点转数字
-                                var longitudeNum = parseFloat(item.lng)
-                                var latitudeNum = parseFloat(item.lat)
-                                /**
-                                 * key内容
-                                 */
-                                var longitude = 'markers[' + i + '].longitude'
-                                var latitude = 'markers[' + i + '].latitude'
-                                var id = 'markers[' + i + '].id'
-                                var iconPath = 'markers[' + i + '].iconPath'
-                                var width = 'markers[' + i + '].width'
-                                var height = 'markers[' + i + '].height'
+                })
+                wx.request({
+                    url: 'https://backend.quanjieshop.com/api/Homepage/index',
+                    method: 'POST',
+                    data: {
+                        lng: res.longitude,
+                        lat: res.latitude
+                    },
+                    success(res) {
+                        var res = res.data
+                        var i = 0
+                        res.data.forEach(item => {
+                            /**
+                             * value内容
+                             */
+                            // 坐标点固定的值
+                            var fixedIconPath = '../../static/images/position_go.png'
+                            var fixedWidth = 40
+                            var fixedHeight = 38
+                            //  坐标点转数字
+                            var longitudeNum = parseFloat(item.lng)
+                            var latitudeNum = parseFloat(item.lat)
+                            /**
+                             * key内容
+                             */
+                            var longitude = 'markers[' + i + '].longitude'
+                            var latitude = 'markers[' + i + '].latitude'
+                            var id = 'markers[' + i + '].id'
+                            var iconPath = 'markers[' + i + '].iconPath'
+                            var width = 'markers[' + i + '].width'
+                            var height = 'markers[' + i + '].height'
 
-                                that.setData({
-                                    [longitude]: longitudeNum,
-                                    [latitude]: latitudeNum,
-                                    [id]: item.id,
-                                    [iconPath]: fixedIconPath,
-                                    [width]: fixedWidth,
-                                    [height]: fixedHeight
-                                })
-                                i++
+                            that.setData({
+                                [longitude]: longitudeNum,
+                                [latitude]: latitudeNum,
+                                [id]: item.id,
+                                [iconPath]: fixedIconPath,
+                                [width]: fixedWidth,
+                                [height]: fixedHeight
                             })
-                        }
-                    })
+                            i++
+                        })
+                    }
+                })
             },
             fail(err) {
                 wx.showToast({
                     title: '请打开位置授权，否则无法正确定位',
                     icon: 'none',
                     duration: 3000
-
                 })
             }
         })

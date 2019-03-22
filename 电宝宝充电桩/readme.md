@@ -80,7 +80,27 @@ icon图标选择：多色图标库-智能城市
 
 #### 详情页
 
-用户详情页中的我要充电按钮获取用户权限：
+用户详情页中的我要充电按钮获取用户权限，通过`wx.getSetting`判断用户是否授权。
+
+```javascript
+wx.getSetting({
+    success (res){
+        if(res.authSetting['scope.userInfo']){
+        //如果授权
+        	//通过localstorage判断是否第一次授权
+        	if(!wx.getStorageSync('userId')){
+                //第一次授权，与后台交互
+        	}else{
+                //不是第一次授权，直接进行支付操作
+        	}
+        }else{
+        //如果未授权    
+        }
+    }
+})
+```
+
+
 
 
 

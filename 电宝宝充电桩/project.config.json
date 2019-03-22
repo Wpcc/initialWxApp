@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 4,
 			"list": [
 				{
 					"id": 0,
@@ -63,7 +63,15 @@
 				{
 					"id": -1,
 					"name": "list",
-					"pathName": "pages/list/index"
+					"pathName": "pages/list/index",
+					"query": ""
+				},
+				{
+					"id": 4,
+					"name": "payment",
+					"pathName": "pages/product/index",
+					"query": "address=湖北省武汉市硚口区金东&deviceNum=000000018&port=10&latitude=30.597913&longitude=114.242396",
+					"scene": null
 				}
 			]
 		}

@@ -17,7 +17,7 @@
             </view>
         </view>
     </view>
-    <map class='mapStyle' longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}" show-location scale="6" />
+    <map class='mapStyle' longitude="{{longitude}}" latitude="{{latitude}}" markers="{{markers}}" show-location scale="14" />
     <cover-view class="page__box">
         <cover-view class="page__iconbar">
             <cover-view class="iconbar_charge iconbar" bindtap="goList">

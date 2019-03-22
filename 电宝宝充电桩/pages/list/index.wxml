@@ -21,7 +21,16 @@
         </view>
     </view>
     <!-- list页面 -->
-    <view class='container-list' bindtap="goProduct" wx:for="{{listData}}" wx:key="{{item.id}}" data-longitude="{{item.longitude}}" data-latitude="{{item.latitude}}">
+    <view class='container-list'
+     bindtap="goProduct" 
+     wx:for="{{listData}}" 
+     wx:key="{{item.id}}" 
+     data-longitude="{{item.longitude}}" 
+     data-latitude="{{item.latitude}}"
+     data-address="{{item.address}}"
+     data-deviceNum="{{item.deviceNum}}"
+     data-port="{{item.port}}"
+    >
       <view class='list-left'>
         <view class="list-title-container">
           <text class='list-title'>{{item.address}}</text>

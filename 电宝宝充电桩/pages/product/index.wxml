@@ -1,15 +1,15 @@
 <!--pages/product/index.wxml-->
 <view class="container">
-    <map longitude="{{userLongitude}}" latitude="{{userLatitude}}" markers="{{markers}}" show-location scale="8"></map>
-    <cover-view class="popup-container">
+    <map longitude="{{userLongitude}}" latitude="{{userLatitude}}" markers="{{markers}}" show-location scale="12"></map>
+    <cover-view class="popup-container" bindtap="openLocation">
         <cover-view class="popup-box">
             <cover-view class="popup-title">
                 <cover-image class="popup-title-image" src="../../static/images/product-location.png"></cover-image>
-                <cover-view class="popup-title-text">武汉市汉阳区汉阳大道知音西村2号</cover-view>
+                <cover-view class="popup-title-text">{{markersContent.address}}</cover-view>
             </cover-view>
             <cover-view class="popup-view">
-                <cover-view class="view-left">充电桩情况：剩余6充电口</cover-view>
-                <cover-view class="view-right">充电桩号：00000001</cover-view>
+                <cover-view class="view-left">充电桩情况：剩余{{markersContent.port}}充电口</cover-view>
+                <cover-view class="view-right">充电桩号：{{markersContent.deviceNum}}</cover-view>
             </cover-view>
         </cover-view>
     </cover-view>

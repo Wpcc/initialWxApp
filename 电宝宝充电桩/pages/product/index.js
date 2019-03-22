@@ -17,16 +17,17 @@ Page({
         width:40,
         height:38
       }
-    ]
+    ],
+    markersContent:{
+    }
   },
   
   popupShow: function () {
-    // this.setData({
-    //   maskIsShow: true
-    // })
+
+    var that = this
     wx.showModal({
       title: '请核对充电桩号是否一致',
-      content: '00000001',
+      content: that.data.markersContent.deviceNum,
       confirmColor:'#23C675',
       success(res) {
         if (res.confirm) {
@@ -41,15 +42,28 @@ Page({
       }
     })
   },
+  openLocation: function () {
+    wx.getLocation({
+      type:'gcj02',
+      success(res) {
+        const latitude = res.latitude
+        const longitude = res.longitude
+        wx.openLocation({
+          latitude,
+          longitude,
+          scale:14
+        })
+      }
+    })
+  },
   /**
    * 生命周期函数
    */
   onLoad(option) {
+    console.log(option);
     // option可以获取跳转过来的参数
     if(option){
-      console.log(option)
-      console.log('longitude:' + option.longitude)
-      console.log('latitude:' + option.latitude)
+      console.log(option.deviceNum)
       var longitude = parseFloat(option.longitude)
       var latitude = parseFloat(option.latitude)
       var that = this
@@ -71,7 +85,10 @@ Page({
       }),
       that.setData({
         'markers[0].longitude':longitude,
-        'markers[0].latitude':latitude
+        'markers[0].latitude':latitude,
+        'markersContent.address':option.address,
+        'markersContent.deviceNum':option.deviceNum,
+        'markersContent.port':option.port
       })
     }
   }

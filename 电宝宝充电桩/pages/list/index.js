@@ -30,58 +30,73 @@ Page({
     app.globalData.listInput = this.data.inputVal
     // 用户输入数据校验
 
-    // 从后台获取数据
-    wx.request({
-      url: 'https://backend.quanjieshop.com//api/Chargelist/lst',
-      methods: 'POST',
-      data: {
-        search: this.data.inputVal // 搜索内容
-      },
-      success(res) {
-        var res = res.data
-        console.log(res)
-        var i = 0;
-        res.data.forEach(item => {
-          /**
-           * key内容
-           */
-          var longitudeNum = parseFloat(item.lng)
-          var latitudeNum = parseFloat(item.lat)
-          /**
-           * value的内容
-           */
-          var id = 'listData[' + i + '].id'
-          var longitude = 'listData[' + i + '].longitude'
-          var latitude = 'listData[' + i + '].latitude'
-          var address = 'listData[' + i + '].address'
-          var deviceNum = 'listData[' + i + '].deviceNum'
-          var port = 'listData[' + i + '].port'
-          var distance = 'listData[' + i + '].distance'
+    // 用户授权未授权两种状态
+    if(!app.globalData.longitude){
+      wx.showToast({
+        title: '请打开位置授权，否则无法正确定位',
+        icon: 'none',
+        duration: 3000
+      })
+    }else{
+      // 从后台获取数据
+      wx.request({
+        url: 'https://backend.quanjieshop.com/api/Chargelist/lst',
+        methods: 'POST',
+        data: {
+          search: this.data.inputVal, // 搜索内容
+          lng: app.globalData.longitude,
+          lat: app.globalData.latitude
+        },
+        success(res) {
+          var res = res.data
+          console.log(res)
+          var i = 0;
+          res.data.forEach(item => {
+            /**
+             * value内容
+             */
+            var longitudeNum = parseFloat(item.lng)
+            var latitudeNum = parseFloat(item.lat)
+            var distanceStr = parseInt(item.leng).toString() + 'm'
+            /**
+             * key的内容
+             */
+            var id = 'listData[' + i + '].id'
+            var longitude = 'listData[' + i + '].longitude'
+            var latitude = 'listData[' + i + '].latitude'
+            var address = 'listData[' + i + '].address'
+            var deviceNum = 'listData[' + i + '].deviceNum'
+            var port = 'listData[' + i + '].port'
+            var distance = 'listData[' + i + '].distance'
 
-          that.setData({
-            [id]:item.id,
-            [longitude]:longitudeNum,
-            [latitude]:latitudeNum,
-            [address]:item.address,
-            [deviceNum]:item.device_sn,
-            [port]:item.remaining,
-            [distance]:'400m'
+            that.setData({
+              [id]: item.id,
+              [longitude]: longitudeNum,
+              [latitude]: latitudeNum,
+              [address]: item.address,
+              [deviceNum]: item.device_sn,
+              [port]: item.remaining,
+              [distance]: distanceStr
+            })
+            i++
           })
-          i++
-          console.log('listData:' + JSON.stringify(that.data.listData))
-        })
-      }
-    })
+        }
+      })
+    }
   },
   // 点击列表页，跳转到产品详情页
   goProduct: function (e) {
-    console.log(e)
+    // 获取DOM自定义数据
     var longitude = e.currentTarget.dataset.longitude
     var latitude = e.currentTarget.dataset.latitude
-    console.log('longitude:' + longitude)
-    console.log('latitude:' + latitude)
+    var address = e.currentTarget.dataset.address
+    var deviceNum = e.currentTarget.dataset.devicenum
+    var port = e.currentTarget.dataset.port
+
+    // 通过url传值
     wx.navigateTo({
-      url: '../product/index?longitude=' + longitude + '&latitude=' + latitude //赋带详细充电桩坐标
+      url: '../product/index?longitude=' + longitude + '&latitude=' + latitude 
+      + '&address=' + address + '&deviceNum=' + deviceNum + '&port=' + port//赋带详细充电桩坐标
     })
   },
   /**
