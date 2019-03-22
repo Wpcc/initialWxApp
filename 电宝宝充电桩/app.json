@@ -9,7 +9,8 @@
     "pages/instruction/index",
     "pages/recharge/index",
     "pages/order/index",
-    "pages/components/tabbar/index"
+    "pages/components/tabbar/index",
+    "utils/payment"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -17,7 +18,7 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "white"
   },
-  "permission":{
+  "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于寻找附近的充电设备"
     }

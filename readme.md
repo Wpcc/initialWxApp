@@ -491,6 +491,48 @@ button::after{
   }
 ```
 
+### 支付功能
+
+**第一步：小程序登录**
+
+​	前端获取用户code传递给后端，后端获取code，通过`code2Session`接口换取用户唯一标识OpenID和会话密钥session_key。
+
+流程图：
+
+![](C:\Users\31062\Desktop\studyWxApp\readme\login.jpg)
+
+
+
+**第二步：下单**
+
+前端调用接口进行下单，后端通过该接口返回如下字段，其中数据包为必填选项，其余并必填选项。
+
+```javascript
+wx.requestPayment({
+    'timeStamp':'', //当前时间戳
+    'nonceStr':'', //随机字符串
+    'package':'', //统一下单接口返回的prepay_id参数值，提交格式如：prepay_id=*
+    'signType':'MD5', //签名类型，默认为MD5
+    'paySign':'', //签名
+    'success':function(res){},
+    'fail':function(res){}
+})
+```
+
+签名如下（需要提供appId，nonceStr，package，signType，timeStamp，key），其中key值为商户号中的设置的mch_id，具体如下：
+
+```javascript
+paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS&package=prepay_id=wx2017033010242291fcfe0db70013231072&signType=MD5&timeStamp=1490840662&key=qazwsxedcrfvtgbyhnujmikolp111111) = 22D9B4E54AB1950F51E0649E8810ACD6
+```
+
+
+
+微信小程序支付流程：
+
+![支付流程](C:\Users\31062\Desktop\studyWxApp\readme\payment.jpg)
+
+
+
 
 
 
