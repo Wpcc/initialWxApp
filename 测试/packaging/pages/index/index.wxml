@@ -1,0 +1,4 @@
+<!--index.wxml-->
+<view class="container">
+  <button bindtap="changeArr"> 点击 </button> 
+</view>

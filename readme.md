@@ -499,7 +499,7 @@ button::after{
 
 流程图：
 
-![](C:\Users\31062\Desktop\studyWxApp\readme\login.jpg)
+![](./readme/login.jpg)
 
 
 
@@ -529,7 +529,7 @@ paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS
 
 微信小程序支付流程：
 
-![支付流程](C:\Users\31062\Desktop\studyWxApp\readme\payment.jpg)
+![支付流程](./readme/payment.jpg)
 
 
 

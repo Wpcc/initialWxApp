@@ -9,8 +9,7 @@
     "pages/instruction/index",
     "pages/recharge/index",
     "pages/order/index",
-    "pages/components/tabbar/index",
-    "utils/payment"
+    "pages/components/tabbar/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

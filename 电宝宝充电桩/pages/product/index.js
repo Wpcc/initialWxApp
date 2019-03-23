@@ -25,6 +25,7 @@ Page({
   popupShow: function () {
 
     var that = this
+    console.log('id:' + that.data.markersContent.id)
     wx.showModal({
       title: '请核对充电桩号是否一致',
       content: that.data.markersContent.deviceNum,
@@ -33,7 +34,7 @@ Page({
         if (res.confirm) {
           // 点击确认按钮 跳转到支付页面
           wx.navigateTo({
-            url:'../payment/index'
+            url:'../payment/index?id=' + that.data.markersContent.id
           })
           
         } else if (res.cancel) {
@@ -60,10 +61,10 @@ Page({
    * 生命周期函数
    */
   onLoad(option) {
-    console.log(option);
     // option可以获取跳转过来的参数
     if(option){
-      console.log(option.deviceNum)
+      console.log(option)
+      console.log(option.id)
       var longitude = parseFloat(option.longitude)
       var latitude = parseFloat(option.latitude)
       var that = this
@@ -88,7 +89,8 @@ Page({
         'markers[0].latitude':latitude,
         'markersContent.address':option.address,
         'markersContent.deviceNum':option.deviceNum,
-        'markersContent.port':option.port
+        'markersContent.port':option.port,
+        'markersContent.id':option.id
       })
     }
   }

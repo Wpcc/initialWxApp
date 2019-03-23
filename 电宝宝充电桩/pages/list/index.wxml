@@ -30,6 +30,7 @@
      data-address="{{item.address}}"
      data-deviceNum="{{item.deviceNum}}"
      data-port="{{item.port}}"
+     data-id="{{item.id}}"
     >
       <view class='list-left'>
         <view class="list-title-container">

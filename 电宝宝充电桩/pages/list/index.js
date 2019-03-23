@@ -87,6 +87,7 @@ Page({
   // 点击列表页，跳转到产品详情页
   goProduct: function (e) {
     // 获取DOM自定义数据
+    var id = e.currentTarget.dataset.id
     var longitude = e.currentTarget.dataset.longitude
     var latitude = e.currentTarget.dataset.latitude
     var address = e.currentTarget.dataset.address
@@ -96,7 +97,8 @@ Page({
     // 通过url传值
     wx.navigateTo({
       url: '../product/index?longitude=' + longitude + '&latitude=' + latitude 
-      + '&address=' + address + '&deviceNum=' + deviceNum + '&port=' + port//赋带详细充电桩坐标
+      + '&address=' + address + '&deviceNum=' + deviceNum + '&port=' + port
+      + '&id=' + id//赋带详细充电桩坐标
     })
   },
   /**
