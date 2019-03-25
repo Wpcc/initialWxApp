@@ -1,5 +1,34 @@
 ## 项目说明
 
+### 产品目录
+
+```shell
+├── api
+|	└── request.js // 封装promise请求，并做简单拦截
+├── modules // 第三方库
+|	└── md5.js // md5加密，用于支付流程
+├── pages
+├── router
+|	└── routes.js // 路由跳转
+├── static // 静态文件
+├── utils // 业务逻辑
+```
+
+### 全局变量定义
+
+```javascript
+globalData:{
+    url:'https://backend.quanjieshop.com', //promise封装调用
+    appId:'wx663da65452ee2d87', //appId也抽取出来
+    listInput:'', //主页输入框和列表页搜索框文字显示
+    //用户坐标
+    longitude:114.207034 
+    latitude:30.550434 
+}
+```
+
+
+
 ### 图标风格
 
 #### 底部图标
@@ -99,12 +128,6 @@ wx.getSetting({
     }
 })
 ```
-
-
-
-
-
-
 
 ### 登录页
 
@@ -264,31 +287,7 @@ API:
   }
 ```
 
-
-
-## 接口
-
-map接口，使用gcj02国测局坐标系：
-
-```javascript
-// response 返回值
-{
-    code:2000,
-    markers:[
-        {
-            latitude:30.593099, //number 维度
-            longitude:114.305393, //number 经度
-            name:"良品铺子店", //string 名字
-            address:"武汉市汉阳区汉阳大道知音西村2号1-2", //string 地点
-            pileNumber:00000001, //number 充电桩号
-            use:false, //boolean 充电桩能否使用
-            distance：200, //number 距离
-        }
-    ]
-}
-```
-
-
+**由于小程序原生更改数据需要调用`this.setData`方法，该方法颇为麻烦，特别需要批量更改数组中的数据，则必须进行key值的字符串拼接。**
 
 
 

@@ -1,4 +1,6 @@
 // pages/list/index.js
+import {goBack} from '../../router/routes'
+import {request} from '../../api/request'
 const app = getApp();
 Page({
   data: {
@@ -7,6 +9,7 @@ Page({
     // 后台地址列表
     listData: []
   },
+  goBack,
   clearInput: function () {
     this.setData({
       inputVal: ""
@@ -16,11 +19,6 @@ Page({
   inputTyping: function (e) {
     this.setData({
       inputVal: e.detail.value
-    })
-  },
-  goBack: function () {
-    wx.navigateBack({
-      delte:1
     })
   },
   // 点击搜索logo或键盘完成===》跳转到首页
@@ -39,48 +37,45 @@ Page({
       })
     }else{
       // 从后台获取数据
-      wx.request({
-        url: 'https://backend.quanjieshop.com/api/Chargelist/lst',
-        methods: 'POST',
-        data: {
+      request('POST','/api/Chargelist/lst',{
+        data:{
           search: this.data.inputVal, // 搜索内容
           lng: app.globalData.longitude,
           lat: app.globalData.latitude
-        },
-        success(res) {
-          var res = res.data
-          console.log(res)
-          var i = 0;
-          res.data.forEach(item => {
-            /**
-             * value内容
-             */
-            var longitudeNum = parseFloat(item.lng)
-            var latitudeNum = parseFloat(item.lat)
-            var distanceStr = parseInt(item.leng).toString() + 'm'
-            /**
-             * key的内容
-             */
-            var id = 'listData[' + i + '].id'
-            var longitude = 'listData[' + i + '].longitude'
-            var latitude = 'listData[' + i + '].latitude'
-            var address = 'listData[' + i + '].address'
-            var deviceNum = 'listData[' + i + '].deviceNum'
-            var port = 'listData[' + i + '].port'
-            var distance = 'listData[' + i + '].distance'
-
-            that.setData({
-              [id]: item.id,
-              [longitude]: longitudeNum,
-              [latitude]: latitudeNum,
-              [address]: item.address,
-              [deviceNum]: item.device_sn,
-              [port]: item.remaining,
-              [distance]: distanceStr
-            })
-            i++
-          })
         }
+      })
+      .then(res => {
+        res = res.data
+        let i = 0
+        res.forEach(item => {
+          /**
+           * value内容
+           */
+          var longitudeNum = parseFloat(item.lng)
+          var latitudeNum = parseFloat(item.lat)
+          var distanceStr = parseInt(item.leng).toString() + 'm'
+          /**
+           * key的内容
+           */
+          var id = 'listData[' + i + '].id'
+          var longitude = 'listData[' + i + '].longitude'
+          var latitude = 'listData[' + i + '].latitude'
+          var address = 'listData[' + i + '].address'
+          var deviceNum = 'listData[' + i + '].deviceNum'
+          var port = 'listData[' + i + '].port'
+          var distance = 'listData[' + i + '].distance'
+
+          that.setData({
+            [id]: item.id,
+            [longitude]: longitudeNum,
+            [latitude]: latitudeNum,
+            [address]: item.address,
+            [deviceNum]: item.device_sn,
+            [port]: item.remaining,
+            [distance]: distanceStr
+          })
+          i++
+        })
       })
     }
   },

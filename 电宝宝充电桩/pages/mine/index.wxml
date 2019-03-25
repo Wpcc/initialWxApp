@@ -45,7 +45,7 @@
 <!-- tabbar -->
   <view class='tabbar-container'>
     <tabbar>
-      <view class='menu-box' slot="home" bindtap="goHome">
+      <view class='menu-box' slot="home" bindtap="goBack">
         <image class='menu-img' src='../../static/images/menu_home_default.png'></image>
         <text class='menu-text'>首页</text>
       </view>

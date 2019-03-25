@@ -1,4 +1,5 @@
 // pages/mine/index.js
+import {goOrder, goBack} from '../../router/routes'
 Page({
 
   /**
@@ -14,15 +15,6 @@ Page({
   onLoad: function (options) {
 
   },
-  goOrder: function () {
-    wx.navigateTo({
-      url:'../order/index'
-    })
-  },
-  goHome: function () {
-    wx.navigateBack({
-      delta:1
-    
-    })
-  }
+  goOrder,
+  goBack,
 })
