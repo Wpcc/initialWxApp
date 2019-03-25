@@ -3,7 +3,7 @@
     <view class="userinfo" @tap="handleViewTap">
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
       <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
-      <button open-type="getUserInfo" bindgetuserinfo="getUserInfo">获取头像昵称</button>
+      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">获取头像昵称</button>
     </view>
 
     <panel>
@@ -73,11 +73,11 @@
 
   console.log('moduleA ignored: ', moduleA) // => moduleA ignored: {}
 
-
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: 'test'
     }
+    // 组件
     components = {
       panel: Panel,
       counter1: Counter,
@@ -92,7 +92,8 @@
     data = {
       mynum: 20,
       userInfo: {
-        nickName: '加载中...'
+        nickName: '加载中...',
+        avatarUrl:'',
       },
       normalTitle: '原始标题',
       setTimeoutTitle: '标题三秒后会被修改',
@@ -151,6 +152,9 @@
     }
 
     methods = {
+      bindGetUserInfo (e) {
+        console.log(e.detail)
+      },
       plus () {
         this.mynum++
       },
