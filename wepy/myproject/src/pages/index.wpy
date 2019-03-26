@@ -1,11 +1,12 @@
 <template>
   <view class="container">
-    <view class="userinfo" @tap="handleViewTap">
+    <!-- 1.获取用户信息知识点：获取API变动，ES7中的await和async，脏数据 -->
+    <view class="userinfo">
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
       <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">获取头像昵称</button>
     </view>
-
+    <!-- 2.修改数据 -->
     <panel>
       <view class="title" slot="title">测试数据绑定</view>
 
@@ -92,8 +93,7 @@
     data = {
       mynum: 20,
       userInfo: {
-        nickName: '加载中...',
-        avatarUrl:'',
+        nickName: '加载中...'
       },
       normalTitle: '原始标题',
       setTimeoutTitle: '标题三秒后会被修改',
@@ -152,8 +152,11 @@
     }
 
     methods = {
+      // 修改用户信息
       bindGetUserInfo (e) {
         console.log(e.detail)
+        this.userInfo = e.detail.userInfo
+        this.changeInfo && this.changeInfo() // 修改data，自定义事件需和method平级
       },
       plus () {
         this.mynum++
@@ -199,6 +202,16 @@
       }
     }
 
+    changeInfo () {
+      console.log('hello')
+      this.normalTitle = '标题已被修改'
+      this.setTimeoutTitle = '标题三秒后会被修改'
+      setTimeout(() => {
+        this.setTimeoutTitle = '到三秒了'
+        this.$apply()
+      }, 3000)
+    }
+
     events = {
       'index-emit': (...args) => {
         let $event = args[args.length - 1]
@@ -206,22 +219,16 @@
       }
     }
 
-    onLoad() {
-      let self = this
-      this.$parent.getUserInfo(function (userInfo) {
-        if (userInfo) {
-          self.userInfo = userInfo
-        }
-        self.normalTitle = '标题已被修改'
-
-        self.setTimeoutTitle = '标题三秒后会被修改'
-        setTimeout(() => {
-          self.setTimeoutTitle = '到三秒了'
-          self.$apply()
-        }, 3000)
-
-        self.$apply()
-      })
+    async onLoad() {
+      const res = await wepy.getSetting()
+      console.log(res)
+      if (res.authSetting['scope.userInfo']) {
+        const info = await wepy.getUserInfo()
+        this.userInfo = info.userInfo
+        console.log(this.userInfo)
+      }
+      this.changeInfo && this.changeInfo()
+      this.$apply()
     }
   }
 </script>

@@ -1,13 +1,13 @@
 <script>
 import wepy from 'wepy'
-import 'wepy-async-function'
+import 'wepy-async-function' // 引入promise类
 
 export default class extends wepy.app {
   config = {  // json 配置
     pages: [ // 页面配置
       'pages/index'
     ],
-    window: {
+    window: { // 原生window配置
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
@@ -20,8 +20,10 @@ export default class extends wepy.app {
   }
 
   constructor () { // 构造函数？？
-    super()
-    this.use('requestfix')
+    super() // 继承
+    // 中间件
+    this.use('requestfix') // 修复原生小程序请求并发
+    this.use('promisify') // 请求promise化
   }
 
   onLaunch() { // 生命周期：当APP初次加载时触发
@@ -41,18 +43,7 @@ export default class extends wepy.app {
     console.log(data)
   }
 
-  getUserInfo(cb) { // 微信提供获取用户信息API
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
-  }
+
 }
 </script>
 
