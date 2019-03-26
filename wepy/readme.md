@@ -387,9 +387,134 @@ index.wpy引入mixin:
 **知识点：**
 
 - wepy框架中computed计算属性，小技巧`+new Date()`将UTC类型的日期格式转换成时间戳
-
 - wepy框架中的事件传参，[官方文档](https://tencent.github.io/wepy/document.html#/?id=_2-%E4%BC%98%E5%8C%96%E4%BA%8B%E4%BB%B6%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92)
-
 - mixin，类似于js中的原型，定义的属性和方法可以在引入中使用，如果页面中定义相同的属性和方法，则覆盖，[官方文档](https://tencent.github.io/wepy/document.html#/?id=mixin-%E6%B7%B7%E5%90%88)
 
-  
+#### 添加列表
+
+index.wpy中结构异常简单：
+
+```vue
+<template>
+	<panel>
+        <!-- slot插槽，这个地方的值会传递到panel组件中去 -->
+        <view class="title" slot="title">测试列表</view> 
+        <list></list> <!-- 这是个组件 -->
+	</panel>
+</template>
+<script>
+	import wepy from 'wepy'
+    import List from '../componnets/list'
+    
+    export default class Index extends wepy.page {
+        //组件
+        components = {
+            list: List
+        }
+    }
+</script>
+
+```
+
+list.wpy结构：
+
+```vue
+<style lang="less">
+  .mylist:odd {
+    color: red;
+  }
+  .mylist:even {
+    color: green;
+  }
+</style>
+<template>
+  <view class="list">
+  <view>
+    <button @tap="add" size="mini">添加列表</button> <!-- 这里有个add方法 -->
+  </view>
+    <!-- 
+		循环list数据，wx:for-index="index"指定数组当前下标为index，
+		wx:for-item="item"指定数组当前项变量名为item，
+		其实这个地方不必要，数组循环中，下标和变量名默认为index,item
+	-->
+    <block wx:for-items="{{list}}" wx:for-index="index" wx:for-item="item" wx:key="id">
+      <view @tap="tap" class="mylist"> <!-- 绑定tap事件 -->
+        <text>{{item.id}}</text>: {{item.title}}
+      </view>
+    </block>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class List extends wepy.component {
+    data = {
+      list: [
+        {
+          id: '0',
+          title: 'loading'
+        }
+      ]
+    }
+
+    events = {
+      'index-broadcast': (...args) => {
+        let $event = args[args.length - 1]
+        console.log(`${this.$name} receive ${$event.name} from ${$event.source.name}`)
+      }
+    }
+
+    methods = {
+      tap () {
+        // this.num = this.num + 1
+        console.log(this.$name + ' tap')
+      },
+      add () {
+        let len = this.list.length
+        this.list.push({id: len + 1, title: 'title_' + len}) // wepy修改数组中数据可以用push
+      }
+    }
+
+    onLoad () {
+    }
+  }
+</script>
+
+```
+
+**wx:for相关说明**
+
+使用`wx:for-item`可以指定数组当前元素的变量名，
+
+使用`wx:for-index`可以指定数据当前下标的变量名
+
+**slot插槽**
+
+组件中定义的插槽，会被父组件中相对应的插槽替换掉。
+
+组件定义：
+
+```vue
+<view class="panel">
+	<slot name="title">默认标题</slot>
+    <slot name="content">默认内容</slot>
+</view>
+```
+
+在父组件使用panel组件时，内容定义：
+
+```vue
+<panel>
+    <view slot="title">新的标题</view>
+    <view slot="content">
+    	<text>新的内容</text>
+    </view>
+</panel>
+```
+
+**events**
+
+wepy组件实践处理函数对象，存放响应组件之间通过`$broadcast(广播)`、`$emit（分发）`、`$invoke（调用）`所传递的事件的函数。
+
+[组件通信与交互](https://tencent.github.io/wepy/document.html#/?id=%E7%BB%84%E4%BB%B6%E9%80%9A%E4%BF%A1%E4%B8%8E%E4%BA%A4%E4%BA%92)
+

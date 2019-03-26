@@ -1,0 +1,15 @@
+{
+	"description": "charging pile reconstruction",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": false,
+		"minified": false,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"appid": "wx663da65452ee2d87",
+	"projectname": "reconstruction",
+	"miniprogramRoot": "dist/",
+	"condition": {}
+}

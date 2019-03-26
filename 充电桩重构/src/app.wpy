@@ -1,0 +1,43 @@
+<style lang="less">
+</style>
+
+<script>
+import wepy from 'wepy'
+import 'wepy-async-function' // 引入promise类
+
+export default class extends wepy.app {
+  config = {
+    pages: [
+      'pages/index'
+    ],
+    window: {
+      backgroundTextStyle: 'light',
+      navigationBarBackgroundColor: '#23C675',
+      navigationBarTitleText: 'WeChat',
+      navigationBarTextStyle: 'white'
+    },
+    permission:{
+      'scope.userLocation':{
+        desc:"你的位置信息将用于寻找附近的充电设备"
+      }
+    }
+  }
+
+  constructor () { // 构造函数
+    super() // 继承
+    // 中间件
+    this.use('requestfix') // 修复原生小程序请求并发
+    this.use('promisify') // 请求promise化
+  }
+
+  onLaunch() {
+    console.log('on launch')
+  }
+
+  globalData = {
+    url:'http://backend.quanjieshop.com',
+    appId:'wx663da65452ee2d87'
+
+  }
+}
+</script>
