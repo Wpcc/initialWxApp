@@ -18,28 +18,42 @@ Page({
       { id: 7, content: '7', background: '#ffffff', color: '#23C675', disable:false },
       { id: 8, content: '8', background: '#ffffff', color: '#23C675', disable:false },
       { id: 9, content: '9', background: '#ffffff', color: '#23C675', disable:false }
-    ]
+    ],
+    rechargePile:{
+      id:'',
+      port:''
+    }
   },
   clickedPileNum: function (e) {
     const currentTarget = e.currentTarget 
+    const num = currentTarget.dataset.num
+    // 选中端口
+    const port = parseInt(this.data.pileNum[num].content) + 1
     // 通过数据模拟循环设置数据
     for(let i=0; i<this.data.pileNum.length; i++){
-      var obj = {}
-      var background = 'pileNum[' + i + '].background'
-      var color = 'pileNum[' + i + '].color'
+      let obj = {}
+      let background = 'pileNum[' + i + '].background'
+      let color = 'pileNum[' + i + '].color'
       obj[background] = '#ffffff' 
       obj[color] = '#23C675'
       this.setData(obj)
     }
-    var obj = {}
-    var background = 'pileNum[' + currentTarget.dataset.num + ']background'
-    var color = 'pileNum[' + currentTarget.dataset.num + '].color'
+    let obj = {}
+    let background = 'pileNum[' + num + ']background'
+    let color = 'pileNum[' + num + '].color'
     obj[background] = '#23C675'
     obj[color] = '#ffffff'
+    // 设置数据
     this.setData(obj)
+    this.setData({
+      'rechargePile.port': port.toString()
+    })
   },
   // onLoad生命周期
   onLoad(option) {
+    this.setData({
+      'rechargePile.id': option.id.toString()
+    })
     request('POST','/api/choiceport/index',{
     data:{
         id:option.id
@@ -49,17 +63,21 @@ Page({
       console.log(res.data)
       let obj = res.data
       let port = /^(port)/
+      let i = 0
       for(var item in obj){
         if(port.test(item)){ //正则去除id
           //如果端口号为0，代表未占用。1则为占用
-          if(obj[item] === 0){
-            
-          }       
+          // if(obj[item] === 0){
+          //   let pilePort = {}
+          //   let disable = 'pileNum[' + i + '].disable'
+          // }
+        i++       
         }
       }
     })
   },
-  getUserInfo: e => {
+  getUserInfo: function(e) {
+    let that = this
     // 查看是否授权
     wx.getSetting({
       success(res) {
@@ -73,6 +91,7 @@ Page({
               // 获取code的值
               wx.login({
                 success(res) {
+                  console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
                   //将授权信息传递到后台
                   request('POST','/api/login/login',{
                     data:{
@@ -90,8 +109,8 @@ Page({
                         'session3rd':userId
                       },
                       data:{
-                        id:1,
-                        port:1
+                        id: that.data.rechargePile.id,
+                        port: that.data.rechargePile.port
                       }
                     })
                     .then(res => {

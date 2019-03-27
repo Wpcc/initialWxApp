@@ -30,6 +30,18 @@
 .avatar-nickname{
   margin-bottom: 5px;
 }
+/* 授权样式设置 */
+.auth-box{
+  display: inline;
+  color:#fff;
+  background: none;
+  font-size: 14px;
+  padding: 0;
+  line-height: 0;
+}
+.auth-box::after{
+  border:none;
+}
 /* 未授权样式 */
 .noAuthText {
   font-size: 12px;

@@ -1,0 +1,183 @@
+<style lang="less">
+  /* pages/product/index.wxss */
+  map{
+    width: 100%;
+    height: calc(100% - 50px);
+  }
+  .payment-container{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .payment-button{
+    width:235px;
+    height:40px;
+    line-height: 40px;
+    background: #23C675;
+    color: #ffffff;
+  }
+  .payment-button::after{
+    border:none;
+  }
+
+  .popup-container{
+    width: 100%;
+    height: 75px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    padding:0 10px;
+    z-index: 2;
+    box-sizing: border-box;
+  }
+  .popup-box{
+    width: 100%;
+    height: 70px;
+    background: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 3px 3px rgba(0,0,0,0.4);
+  }
+
+  .popup-title{
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+  }
+  .popup-title-image{
+    width: 22px;
+    height: 20px;
+    margin-right: 20rpx;
+  }
+  .popup-title-text{
+    font-size: 16px;
+    width: 600rpx;
+    text-overflow: ellipsis;
+  }
+
+  .popup-view{
+    font-size: 13px;
+    padding: 0 10px;
+    color: #666666;
+  }
+  .view-left{
+    float: left;
+  }
+  .view-right{
+    float: right;
+  }
+</style>
+<template>
+  <!--pages/product/index.wxml-->
+  <view class="container">
+      <map longitude="{{userLongitude}}" latitude="{{userLatitude}}" markers="{{markers}}" show-location scale="12"></map>
+      <cover-view class="popup-container" bindtap="openLocation">
+          <cover-view class="popup-box">
+              <cover-view class="popup-title">
+                  <cover-image class="popup-title-image" src="../static/images/product-location.png"></cover-image>
+                  <cover-view class="popup-title-text">{{markersContent.address}}</cover-view>
+              </cover-view>
+              <cover-view class="popup-view">
+                  <cover-view class="view-left">充电桩情况：剩余{{markersContent.port}}充电口</cover-view>
+                  <cover-view class="view-right">充电桩号：{{markersContent.deviceNum}}</cover-view>
+              </cover-view>
+          </cover-view>
+      </cover-view>
+      <view class="payment-container">
+          <button class="payment-button" bindtap="popupShow">我要充电</button>
+      </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  export default class Product extends wepy.page {
+    data = {
+      maskIsShow: false,
+      userLongitude: 114.207034,
+      userLatitude: 30.550434,
+      markers: [
+        {
+          iconPath: '../static/images/position_go.png',
+          id: 0,
+          longitude: 114.207034,
+          latitude: 30.550434,
+          width: 40,
+          height: 38
+        }
+      ],
+      markersContent: {
+      }
+    }
+
+    methods = {
+      popupShow: function () {
+        var that = this
+        console.log('id:' + that.data.markersContent.id)
+        wx.showModal({
+          title: '请核对充电桩号是否一致',
+          content: that.data.markersContent.deviceNum,
+          confirmColor: '#23C675',
+          success(res) {
+            if (res.confirm) {
+              // 点击确认按钮 跳转到支付页面
+              wx.navigateTo({
+                url: './payment?id=' + that.data.markersContent.id
+              })
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+      },
+      openLocation: function () {
+        wx.getLocation({
+          type: 'gcj02',
+          success(res) {
+            const latitude = res.latitude
+            const longitude = res.longitude
+            wx.openLocation({
+              latitude,
+              longitude,
+              scale: 14
+            })
+          }
+        })
+      }
+    }
+  
+    onLoad(option) {
+      // option可以获取跳转过来的参数
+      if (option) {
+        console.log(option)
+        console.log(option.id)
+        let longitude = parseFloat(option.longitude)
+        let latitude = parseFloat(option.latitude)
+        let that = this
+        wx.getLocation({
+          type: 'gcj02',
+          success(res) {
+            that.userLongitude = res.longitude
+            that.userLatitude = res.latitude
+          },
+          fail() {
+            wx.showToast({
+              title: '请打开位置授权，否则无法正确定位',
+              icon: 'none',
+              dutation: 3000
+            })
+          }
+        })
+        that.markers[0].longitude = longitude
+        that.markers[0].latitude = latitude
+        that.markersContent.address = option.address
+        that.markersContent.deviceNum = option.deviceNum
+        that.markersContent.port = option.port
+        that.markersContent.id = option.id
+      }
+    }
+  }
+</script>

@@ -197,10 +197,16 @@
 <script>
   import wepy from 'wepy'
   import {goList, goRecharge, goInstruction, goMine} from '../router/routes'
+  import {request} from '../api/request'
+  import Tabbar from '../components/Tabbar'
 
   export default class Index extends wepy.page {
     config = {
       navigationBarTitleText: '首页'
+    }
+
+    components = {
+      tabbar: Tabbar
     }
 
     data = {
@@ -237,14 +243,14 @@
       wx.getLocation({
         type: 'gcj02',
         success(res) {
-                // 存全局data中
-          this.$parent.globalData.longitude = res.longitude
-          this.$parent.globalData.latitude = res.latitude
+          // 存全局data中
+          that.$parent.globalData.longitude = res.longitude
+          that.$parent.globalData.latitude = res.latitude
 
-          this.longitude = res.longitude
-          this.latitude = res.latitude
+          that.longitude = res.longitude
+          that.latitude = res.latitude
 
-          wepy.request('/api/Homepage/index', {
+          request('POST', '/api/Homepage/index', {
             data: {
               lng: res.longitude,
               lat: res.latitude
@@ -254,14 +260,15 @@
             res = res.data
             res.forEach(item => {
               let obj = {
-                iconPath: '../../static/images/position_go.png',
+                iconPath: '../static/images/position_go.png',
                 width: 40,
                 height: 38,
                 id: item.id,
-                longitude: item.lng,
-                latitude: item.lat
-              }            
-              that.markers.push(obj)              
+                longitude: parseFloat(item.lng),
+                latitude: parseFloat(item.lat)
+              }
+              that.markers.push(obj)
+              that.$apply()
             })
           })
         },

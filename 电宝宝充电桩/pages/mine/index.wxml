@@ -8,11 +8,16 @@
       <view class="avatar-text">
         <view class="avatar-nickname">
           <open-data type="userNickName" style="font-size:16px;"></open-data>
-          <text class="noAuthText">未授权</text>
+          <text class="noAuthText">{{auth ? '已授权' : '未授权'}}</text>
         </view>
         <view class="setAuth">
-          <text class="auth-text">点击授权</text>
-          <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
+          <button wx:if="{{ !auth }}" class="auth-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+            <text class="auth-text" bindtap="onAuth">点击授权</text>
+            <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
+          </button>
+          <view wx:else>
+            <text class="auth-text"> VIP用户</text>
+          </view>
         </view>
       </view>
     </view>

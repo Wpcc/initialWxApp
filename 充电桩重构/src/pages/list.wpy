@@ -1,0 +1,273 @@
+<style lang="less">
+/* pages/list/index.wxss */
+  .page__bd {
+    width: 100%;
+    border-bottom: 1px solid #d7d6dc;
+  }
+  
+  .weui-search-bar {
+    position: relative;
+    padding: 8px 10px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    background: #23C675;
+  }
+  
+  .weui-icon-search {
+    margin-right: 8px;
+    font-size: inherit
+  }
+  
+  .weui-icon-search_in-box {
+    position: absolute;
+    left: 10px;
+    top: 10px
+  }
+  
+  .weui-search-bar__form {
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: auto;
+    flex: auto;
+    border-radius: 5px;
+    background: #fff;
+    border: 1rpx solid #e6e6ea
+  }
+  
+  .weui-search-bar__box {
+    position: relative;
+    padding-left: 30px;
+    padding-right: 30px;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1
+  }
+  
+  .weui-search-bar__input {
+    height: 34px;
+    font-size: 14px;
+  }
+  
+  .weui-icon-clear {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px 8px;
+    font-size: 0
+  }
+  
+  .weui-search-bar__cancel-btn {
+    margin-left: 10px;
+    line-height: 34px;
+    color: #fff;
+    white-space: nowrap;
+    font-size: 16px;
+  }
+  
+  .page__iconbar{
+    width:100%;
+    padding-bottom: 10px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    box-sizing: border-box;
+    justify-content: space-around;
+    font-size: 14px;
+  }
+  .iconbar{
+    text-align: center
+  }
+
+  /* list page  */
+  .container-list{
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #d7d6dc;
+  }
+  .list-left{
+    box-sizing: border-box;
+    width: 75%;
+    float: left;
+    font-size: 15px;
+    padding-left: 10px;
+  }
+  .list-title-container{
+    width: 100%;
+    height: 40px;
+    overflow: hidden;
+    margin-bottom: 10px;
+  }
+  .list-title{
+    display: block;
+  }
+  .list-view{
+    height: 20px;
+    font-size: 14px;
+    color: #666666;
+    overflow: hidden;
+  }
+  .list-view-left{
+    float: left;
+  }
+  .list-view-right{
+    float:right;
+  }
+  .list-right{
+    width: 25%;
+    height: 70px;
+    float: left;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
+  .list-icon-container{
+    padding: 10px;
+  }
+  .list-icon{
+    display: block;
+  }
+ .list-distance{
+   display: block;
+   width: 30px;
+   height: 20px;
+   font-size: 12px;
+ }
+  
+</style>
+<template>
+<!--pages/list/index.wxml-->
+<view class="container">
+    <!-- input页面 -->
+    <view class="page__bd">
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <!-- 输入框获取焦点显示内容 -->
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box" type="search" size="14" bindtap="goBack"></icon>
+                    <input
+                     type="text" placeholder-class="input-placeholder" class="weui-search-bar__input" 
+                     value="{{inputVal}}" focus="{{FocusTrue}}" bindinput="inputTyping"
+                     bindconfirm="inputCompleted" confirmType="done"
+                    />
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                        <icon type="clear" size="14"></icon>
+                    </view>
+                </view>
+            </view>
+            <view class="weui-search-bar__cancel-btn" bindtap="goBack">取消</view>
+        </view>
+    </view>
+    <!-- list页面 -->
+    <view class='container-list'
+     bindtap="goProduct" 
+     wx:for="{{listData}}" 
+     wx:key="{{item.id}}" 
+     data-longitude="{{item.longitude}}" 
+     data-latitude="{{item.latitude}}"
+     data-address="{{item.address}}"
+     data-deviceNum="{{item.deviceNum}}"
+     data-port="{{item.port}}"
+     data-id="{{item.id}}"
+    >
+      <view class='list-left'>
+        <view class="list-title-container">
+          <text class='list-title'>{{item.address}}</text>
+        </view>
+        <view class='list-view'>
+          <text class="list-view-left">剩余<text>{{item.port}}</text>个充电位</text>
+          <text class="list-view-right">充电桩号：<text>{{item.deviceNum}}</text></text>
+        </view>
+      </view>
+      <view class='list-right'>
+        <view class="list-icon-container">
+          <image class='list-icon' src='../../static/images/location_go.png' style='width:25px;height:25px;'></image>
+          <text class='list-distance'>{{item.distance}}</text>
+        </view>
+      </view>
+    </view>
+</view>
+
+</template>
+<script>
+import wepy from 'wepy'
+import {goBack, goProduct} from '../router/routes'
+import {request} from '../api/request'
+export default class List extends wepy.page {
+  config = {
+    navigationBarTitleText: '列表页'
+  }
+
+  data = {
+    FocusTrue: true, // 焦距显示
+    inputVal: '',
+    // 后台地址列表
+    listData: []
+  }
+
+  methods = {
+    goBack,
+    goProduct,
+
+    clearInput: function () {
+      this.inputVal = ''
+    },
+    // 点击输入框，给全局变量赋值
+    inputTyping: function (e) {
+      this.inputVal = e.detail.value
+    },
+    // 点击搜索logo或键盘完成 ===》 开始搜索
+    inputCompleted: function () {
+      let that = this
+      // 清空列表
+      this.listData = []
+      this.$parent.globalData.listInput = this.inputVal
+      // 用户输入数据校验
+
+      // 用户授权未授权两种状态
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.userLocation']) {
+            wx.showToast({
+              title: '请打开位置授权，否则无法正确定位',
+              icon: 'none',
+              duration: 3000
+            })
+          } else {
+            // 从后台获取数据
+            request('POST', '/api/Chargelist/lst', {
+              data: {
+                search: that.inputVal, // 搜索内容
+                lng: that.$parent.globalData.longitude,
+                lat: that.$parent.globalData.latitude
+              }
+            })
+            .then(res => {
+              res = res.data
+              res.forEach(item => {
+                let obj = {
+                  id: item.id,
+                  longitude: parseFloat(item.lng),
+                  latitude: parseFloat(item.lat),
+                  distance: parseInt(item.leng).toString() + 'm',
+                  address: item.address,
+                  port: item.remaining,
+                  deviceNum: item.device_sn
+                }
+                that.listData.push(obj)
+                that.$apply()
+              })
+            })
+          }
+        }
+      })
+    }
+  }
+
+  // 页面显示时，初始化input的值
+  onShow = function () {
+    this.inputVal = this.$parent.globalData.listInput
+  }
+}
+</script>
