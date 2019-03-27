@@ -1,6 +1,7 @@
 // pages/payment/index.js
 import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
+import {throttle} from '../../utils/throttle'
 
 Page({
   /**
@@ -89,37 +90,40 @@ Page({
             success(res) {
               const userInfo = res.userInfo
               // 获取code的值
-              wx.login({
-                success(res) {
-                  console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
-                  //将授权信息传递到后台
-                  request('POST','/api/login/login',{
-                    data:{
-                      nickname: userInfo.nickName, // 用户姓名
-                      headimgurl: userInfo.avatarUrl, // 用户头像
-                      sex: userInfo.gender, //性别
-                      code: res.code  //后台服务器解析用的code
-                    }
-                  })
-                  .then(res => {
-                    let userId = res.data.session3rd.toString()
-                    // 下单
-                    request('POST','/api/Build/buildOrder',{
-                      header:{
-                        'session3rd':userId
-                      },
-                      data:{
-                        id: that.data.rechargePile.id,
-                        port: that.data.rechargePile.port
-                      }
-                    })
-                    .then(res => {
-                      // 下单成功进行支付
-                      pay(res.data)
-                    })   
-                  })
-                }
-              })
+              throttle(() => { // 此处节流处理：减少用户点击支付按钮
+                console.log('hello')
+                // wx.login({
+                //   success(res) {
+                //     console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
+                //     //将授权信息传递到后台
+                //     request('POST','/api/login/login',{
+                //       data:{
+                //         nickname: userInfo.nickName, // 用户姓名
+                //         headimgurl: userInfo.avatarUrl, // 用户头像
+                //         sex: userInfo.gender, //性别
+                //         code: res.code  //后台服务器解析用的code
+                //       }
+                //     })
+                //     .then(res => {
+                //       let userId = res.data.session3rd.toString()
+                //       // 下单
+                //       request('POST','/api/Build/buildOrder',{
+                //         header:{
+                //           'session3rd':userId
+                //         },
+                //         data:{
+                //           id: that.data.rechargePile.id,
+                //           port: that.data.rechargePile.port
+                //         }
+                //       })
+                //       .then(res => {
+                //         // 下单成功进行支付
+                //         pay(res.data)
+                //       })   
+                //     })
+                //   }
+                // })
+              }, 5000)
             }
           })
         } else {
