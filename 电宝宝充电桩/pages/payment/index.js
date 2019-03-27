@@ -23,7 +23,8 @@ Page({
     rechargePile:{
       id:'',
       port:''
-    }
+    },
+    start:0 // 节流时间变量
   },
   clickedPileNum: function (e) {
     const currentTarget = e.currentTarget 
@@ -91,39 +92,38 @@ Page({
               const userInfo = res.userInfo
               // 获取code的值
               throttle(() => { // 此处节流处理：减少用户点击支付按钮
-                console.log('hello')
-                // wx.login({
-                //   success(res) {
-                //     console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
-                //     //将授权信息传递到后台
-                //     request('POST','/api/login/login',{
-                //       data:{
-                //         nickname: userInfo.nickName, // 用户姓名
-                //         headimgurl: userInfo.avatarUrl, // 用户头像
-                //         sex: userInfo.gender, //性别
-                //         code: res.code  //后台服务器解析用的code
-                //       }
-                //     })
-                //     .then(res => {
-                //       let userId = res.data.session3rd.toString()
-                //       // 下单
-                //       request('POST','/api/Build/buildOrder',{
-                //         header:{
-                //           'session3rd':userId
-                //         },
-                //         data:{
-                //           id: that.data.rechargePile.id,
-                //           port: that.data.rechargePile.port
-                //         }
-                //       })
-                //       .then(res => {
-                //         // 下单成功进行支付
-                //         pay(res.data)
-                //       })   
-                //     })
-                //   }
-                // })
-              }, 5000)
+                wx.login({
+                  success(res) {
+                    console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
+                    //将授权信息传递到后台
+                    request('POST','/api/login/login',{
+                      data:{
+                        nickname: userInfo.nickName, // 用户姓名
+                        headimgurl: userInfo.avatarUrl, // 用户头像
+                        sex: userInfo.gender, //性别
+                        code: res.code  //后台服务器解析用的code
+                      }
+                    })
+                    .then(res => {
+                      let userId = res.data.session3rd.toString()
+                      // 下单
+                      request('POST','/api/Build/buildOrder',{
+                        header:{
+                          'session3rd':userId
+                        },
+                        data:{
+                          id: that.data.rechargePile.id,
+                          port: that.data.rechargePile.port
+                        }
+                      })
+                      .then(res => {
+                        // 下单成功进行支付
+                        pay(res.data)
+                      })   
+                    })
+                  }
+                })
+              }, 5000, that)
             }
           })
         } else {
