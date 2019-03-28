@@ -58,6 +58,15 @@ Page({
                   res = res.data
                   let i = 0
                   res.forEach(item => {
+                    // let obj = { // 设置markers
+                    //   ['markers[' + i + '].longitude']: parseFloat(item.lng),
+                    //   ['markers[' + i + '].latitude']: parseFloat(item.lat),
+                    //   ['markers[' + i + '].id']: item.id,
+                    //   ['markers[' + i + '].iconPath']: '../../static/images/position_go.png',
+                    //   ['markers[' + i + '].width']: 40,
+                    //   ['markers[' + i + '].height']: 38
+                    // }
+                    // that.setData(obj)
                     /**
                      * value内容
                      */

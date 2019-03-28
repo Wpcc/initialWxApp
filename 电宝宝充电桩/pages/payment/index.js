@@ -28,35 +28,34 @@ Page({
     start:0 // 节流时间变量
   },
   clickedPileNum: function (e) {
-    const currentTarget = e.currentTarget 
-    const num = currentTarget.dataset.num
-    // 选中端口
-    const port = parseInt(this.data.pileNum[num].content) + 1
-    // 通过数据模拟循环设置数据
+    let currentTarget = e.currentTarget 
+    let num = currentTarget.dataset.num
+    
+    // 循环初始化样式
     for(let i=0; i<this.data.pileNum.length; i++){
       if(this.data.pileNum[i].disable){
-        let obj = {}
-        let background = 'pileNum[' + i + '].background'
-        let color = 'pileNum[' + i + '].color'
-        obj[background] = 'rgba(35,198,117,0.6)' 
-        obj[color] = 'rgba(255,255,255,0.9)'
+        // ES6对象字面量赋值
+        let obj = {
+          ['pileNum[' + i + '].background']: 'rgba(35,198,117,0.6)',
+          ['pileNum[' + i + '].color']: 'rgba(255,255,255,0.9)'
+        }
         this.setData(obj)
       }else{
-        let obj = {}
-        let background = 'pileNum[' + i + '].background'
-        let color = 'pileNum[' + i + '].color'
-        obj[background] = '#ffffff' 
-        obj[color] = '#23C675'
+        let obj = {
+          ['pileNum[' + i + '].background']: '#ffffff',
+          ['pileNum[' + i + '].color']: '#23C675'
+        }
         this.setData(obj)
       }
     }
-    let obj = {}
-    let background = 'pileNum[' + num + ']background'
-    let color = 'pileNum[' + num + '].color'
-    obj[background] = '#23C675'
-    obj[color] = '#ffffff'
-    // 设置数据
-    this.setData(obj)
+    let obj = {
+      ['pileNum[' + num + '].background']: '#23C675',
+      ['pileNum[' + num + '].color']: '#ffffff'
+    }
+    this.setData(obj) // 设置数据
+
+    // 选中端口
+    let port = parseInt(this.data.pileNum[num].content) + 1
     this.setData({
       'rechargePile.port': port.toString()
     })
@@ -73,28 +72,23 @@ Page({
     })
     .then(res => {
       console.log(res.data)
-      let obj = res.data
+      res = res.data
       let port = /^(port)/
       let i = 0
-      for(var item in obj){
-        if(port.test(item)){ //正则去除id
-          //如果端口号为0，代表未占用。1则为占用
-          if(obj[item] === 1){
-            let pilePort = {}
-            // key
-            let disable = 'pileNum[' + i + '].disable'
-            let color = 'pileNum[' + i + '].color'
-            let background = 'pileNum[' + i + '].background'
-            // value
-            pilePort[disable] = true
-            pilePort[color] = 'rgba(255,255,255,0.9)'
-            pilePort[background] = 'rgba(35,198,117,0.6)'
-            // setData
-            this.setData(pilePort) 
+      for(var item in res){
+        if(port.test(item)){ // 正则去除id
+          if(res[item] === 1){ // 端口号为0，代表未占用。1则为占用
+            let obj = {
+              ['pileNum[' + i + '].disable']: true,
+              ['pileNum[' + i + '].color']: 'rgba(255,255,255,0.9)',
+              ['pileNum[' + i + '].background']: 'rgba(35,198,117,0.6)'
+            }
+            this.setData(obj) 
           }
         i++       
         }
       }
+      i = 0
     })
   },
   getUserInfo: function(e) {
@@ -159,7 +153,7 @@ Page({
       }
     })
     .then(res => { // 下单成功进行支付
-      if(res.status === 0) { // 缓存登录态失效
+      if(res.status === 0) { // 缓存登录态失效处理
         wx.removeStorageSync('session3rd')
         that.getUserInfo(e)
         return
