@@ -1,9 +1,11 @@
 import MD5 from '../modules/md5'
+import {request} from '../api/request'
 
 const app = getApp()
 
 export const pay = (data) => {
   console.log(data)
+  let orderNum = data.order_sn // 订单号，查询订单用
   let appId = app.globalData.appId
   let timeStamp = Date.now().toString()
   let signType = 'MD5'
@@ -21,10 +23,32 @@ export const pay = (data) => {
     signType:signType, // 签名算法
     paySign:paySign,  // 签名内容
     success(res){
-      console.log('支付成功:' + res)
+      searchOrder(orderNum)
+      console.log(JSON.stringify(res))
     },
-    fail(res){
-      console.log('支付失败:' + res)
+    fail(err){
+      console.log('支付失败:' + JSON.stringify(err))
     }
+  })
+}
+
+function searchOrder (orderNum) {
+  request('POST', '/api/Queryorder/index', {
+    header: {
+      session3rd: wx.getStorageSync('session3rd')
+    },
+    data: {
+      order_sn: orderNum
+    }
+  })
+  .then((res) => {
+    if(res.status === 1) { // 1 支付成功
+      console.log('支付成功')
+    }else{ // 非1支付失败
+      console.log('支付失败')
+    }
+  })
+  .catch((err) => {
+    console.log(err)
   })
 }

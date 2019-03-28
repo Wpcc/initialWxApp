@@ -3,6 +3,7 @@ import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
 import { throttle } from '../../utils/throttle'
 
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -98,52 +99,37 @@ Page({
   },
   getUserInfo: function(e) {
     let that = this
-    // 查看是否授权
-    wx.getSetting({
+    wx.getSetting({ // 查看是否授权
       success(res) {
-        if (res.authSetting['scope.userInfo']) { // 授权
-          // 端口筛选
-          if(that.data.rechargePile.port){ // 用户选择端口
-            // 由于code与用户信息是一起发送给后台，顾每次用户点击支付，都需要用code进行login
-            wx.getUserInfo({
-              success(res) {
-                const userInfo = res.userInfo
-                // 获取code的值
-                throttle(() => { // 此处节流处理：减少用户点击支付按钮
-                  wx.login({
-                    success(res) {
-                      console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
-                      //将授权信息传递到后台
-                      request('POST','/api/login/login',{
-                        data:{
-                          nickname: userInfo.nickName, // 用户姓名
-                          headimgurl: userInfo.avatarUrl, // 用户头像
-                          sex: userInfo.gender, //性别
-                          code: res.code  //后台服务器解析用的code
-                        }
-                      })
-                      .then(res => {
-                        let userId = res.data.session3rd.toString()
-                        // 下单
-                        request('POST','/api/Build/buildOrder',{
-                          header:{
-                            'session3rd':userId
-                          },
+        if (res.authSetting['scope.userInfo']) { // 是否授权 ==> 授权
+          if(that.data.rechargePile.port){ // 是否选择端口 ==》 选择端口
+            if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
+              that.placeOrderAndPay(that, e) // 下单并支付
+            }else{
+              wx.getUserInfo({
+                success(res) {
+                  const userInfo = res.userInfo
+                  throttle(() => { // 节流：减少用户点击支付按钮
+                    wx.login({ // 获取code的值
+                      success(res) {
+                        request('POST','/api/login/login',{ // 注册
                           data:{
-                            id: that.data.rechargePile.id,
-                            port: that.data.rechargePile.port
+                            nickname: userInfo.nickName, // 用户姓名
+                            headimgurl: userInfo.avatarUrl, // 用户头像
+                            sex: userInfo.gender, // 性别
+                            code: res.code  // 后台服务器解析用的code
                           }
                         })
                         .then(res => {
-                          // 下单成功进行支付
-                          pay(res.data)
-                        })   
-                      })
-                    }
-                  })
-                }, 4000, that)
-              }
-            })
+                          wx.setStorageSync('session3rd',res.data.session3rd)
+                          that.placeOrderAndPay(that, e) // 下单并支付   
+                        })
+                      }
+                    })
+                  }, 4000, that)
+                }
+              })
+            }
           }else{ // 用户未选择端口
             wx.showToast({
               title: '请选择对应端口，绿色按钮代表占用',
@@ -160,5 +146,25 @@ Page({
         }
       }
     })
+  },
+  // 自定义函数
+  placeOrderAndPay: function (that, e) {
+    request('POST','/api/Build/buildOrder',{ // 下单
+      header:{
+        'session3rd':wx.getStorageSync('session3rd')
+      },
+      data:{
+        id: that.data.rechargePile.id,
+        port: that.data.rechargePile.port
+      }
+    })
+    .then(res => { // 下单成功进行支付
+      if(res.status === 0) { // 缓存登录态失效
+        wx.removeStorageSync('session3rd')
+        that.getUserInfo(e)
+        return
+      }
+      pay(res.data)
+    }) 
   }
 })

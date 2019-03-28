@@ -1,10 +1,9 @@
 // pages/mine/index.js
 import {goOrder, goBack} from '../../router/routes'
-Page({
+import {request} from '../../api/request'
 
-  /**
-   * 页面的初始数据
-   */
+Page({
+  // 数据
   data: {
     auth: false
   },
@@ -13,9 +12,23 @@ Page({
   goBack,
   // 点击授权
   getUserInfo: function(e) {
-    // 这里授权，让点击支付按钮没有弹窗
-    console.log(e)
-    this.setAuth()
+    const userInfo = e.detail.userInfo
+    wx.login({ // 获取code的值
+      success(res) {
+        request('POST', '/api/login/login', {
+          data:{
+            nickname: userInfo.nickName, // 用户姓名
+            headimgurl: userInfo.avatarUrl, // 用户头像
+            sex: userInfo.gender, // 性别
+            code: res.code  // 后台服务器解析用的code
+          }
+        })
+        .then(res => {
+          wx.setStorageSync(res.data.session3rd) // 保存用户登录凭证
+          this.setAuth()
+        })
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -23,6 +36,7 @@ Page({
   onShow: function () {
     this.setAuth()
   },
+  // 自定义函数
   setAuth: function () {
     let that = this
     wx.getSetting({
@@ -31,7 +45,6 @@ Page({
           that.setData({
             auth: true
           })
-          
         }
       }
     })
