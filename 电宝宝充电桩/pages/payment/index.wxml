@@ -12,13 +12,13 @@
             wx:key='{{item.id}}'
             bindtap="clickedPileNum" 
             style="background:{{item.background}};color:{{item.color}}"
-            disable="{{disable}}"
+            disabled="{{item.disable}}"
             >
               {{item.content}}
           </button>
         </view>
     </view>
     <button class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        <text>微信支付 ￥1.00</text>
+        <text>微信支付 ￥0.01</text>
     </button>
 </view>

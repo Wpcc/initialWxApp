@@ -136,7 +136,7 @@
       wx.getSetting({
         success(res) {
           if (res.authSetting['scope.userInfo']) {
-          // 授权
+            // 授权
             // 由于code与用户信息是一起发送给后台，顾每次用户点击支付，都需要用code进行login
             wx.getUserInfo({
               success(res) {
@@ -175,7 +175,6 @@
               }
             })
           } else {
-            console.log('fail')
             // 未授权，提示用户授权
             wx.showToast({
               title: '请打开授权，否则无法支付',

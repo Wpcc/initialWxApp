@@ -44,18 +44,14 @@ Page({
     })
   },
   openLocation: function () {
-    wx.getLocation({
-      type:'gcj02',
-      success(res) {
-        const latitude = res.latitude
-        const longitude = res.longitude
-        wx.openLocation({
-          latitude,
-          longitude,
-          scale:14
-        })
-      }
-    })
+    const location = {
+      latitude: this.data.markers[0].latitude,
+      longitude: this.data.markers[0].longitude,
+      scale: 14,
+      address: this.data.markersContent.address,
+      name:'充电桩'
+    }
+    wx.openLocation(location)
   },
   /**
    * 生命周期函数

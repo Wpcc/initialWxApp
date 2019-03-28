@@ -1,7 +1,7 @@
 // pages/payment/index.js
 import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
-import {throttle} from '../../utils/throttle'
+import { throttle } from '../../utils/throttle'
 
 Page({
   /**
@@ -33,12 +33,21 @@ Page({
     const port = parseInt(this.data.pileNum[num].content) + 1
     // 通过数据模拟循环设置数据
     for(let i=0; i<this.data.pileNum.length; i++){
-      let obj = {}
-      let background = 'pileNum[' + i + '].background'
-      let color = 'pileNum[' + i + '].color'
-      obj[background] = '#ffffff' 
-      obj[color] = '#23C675'
-      this.setData(obj)
+      if(this.data.pileNum[i].disable){
+        let obj = {}
+        let background = 'pileNum[' + i + '].background'
+        let color = 'pileNum[' + i + '].color'
+        obj[background] = 'rgba(35,198,117,0.6)' 
+        obj[color] = 'rgba(255,255,255,0.9)'
+        this.setData(obj)
+      }else{
+        let obj = {}
+        let background = 'pileNum[' + i + '].background'
+        let color = 'pileNum[' + i + '].color'
+        obj[background] = '#ffffff' 
+        obj[color] = '#23C675'
+        this.setData(obj)
+      }
     }
     let obj = {}
     let background = 'pileNum[' + num + ']background'
@@ -69,10 +78,19 @@ Page({
       for(var item in obj){
         if(port.test(item)){ //正则去除id
           //如果端口号为0，代表未占用。1则为占用
-          // if(obj[item] === 0){
-          //   let pilePort = {}
-          //   let disable = 'pileNum[' + i + '].disable'
-          // }
+          if(obj[item] === 1){
+            let pilePort = {}
+            // key
+            let disable = 'pileNum[' + i + '].disable'
+            let color = 'pileNum[' + i + '].color'
+            let background = 'pileNum[' + i + '].background'
+            // value
+            pilePort[disable] = true
+            pilePort[color] = 'rgba(255,255,255,0.9)'
+            pilePort[background] = 'rgba(35,198,117,0.6)'
+            // setData
+            this.setData(pilePort) 
+          }
         i++       
         }
       }
@@ -83,51 +101,57 @@ Page({
     // 查看是否授权
     wx.getSetting({
       success(res) {
-        if (res.authSetting['scope.userInfo']) {
-        // 授权
-          console.log('授权：' + wx.getStorageSync('userId'))
-          // 由于code与用户信息是一起发送给后台，顾每次用户点击支付，都需要用code进行login
-          wx.getUserInfo({
-            success(res) {
-              const userInfo = res.userInfo
-              // 获取code的值
-              throttle(() => { // 此处节流处理：减少用户点击支付按钮
-                wx.login({
-                  success(res) {
-                    console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
-                    //将授权信息传递到后台
-                    request('POST','/api/login/login',{
-                      data:{
-                        nickname: userInfo.nickName, // 用户姓名
-                        headimgurl: userInfo.avatarUrl, // 用户头像
-                        sex: userInfo.gender, //性别
-                        code: res.code  //后台服务器解析用的code
-                      }
-                    })
-                    .then(res => {
-                      let userId = res.data.session3rd.toString()
-                      // 下单
-                      request('POST','/api/Build/buildOrder',{
-                        header:{
-                          'session3rd':userId
-                        },
+        if (res.authSetting['scope.userInfo']) { // 授权
+          // 端口筛选
+          if(that.data.rechargePile.port){ // 用户选择端口
+            // 由于code与用户信息是一起发送给后台，顾每次用户点击支付，都需要用code进行login
+            wx.getUserInfo({
+              success(res) {
+                const userInfo = res.userInfo
+                // 获取code的值
+                throttle(() => { // 此处节流处理：减少用户点击支付按钮
+                  wx.login({
+                    success(res) {
+                      console.log('rechargePile: ' + JSON.stringify(that.data.rechargePile))
+                      //将授权信息传递到后台
+                      request('POST','/api/login/login',{
                         data:{
-                          id: that.data.rechargePile.id,
-                          port: that.data.rechargePile.port
+                          nickname: userInfo.nickName, // 用户姓名
+                          headimgurl: userInfo.avatarUrl, // 用户头像
+                          sex: userInfo.gender, //性别
+                          code: res.code  //后台服务器解析用的code
                         }
                       })
                       .then(res => {
-                        // 下单成功进行支付
-                        pay(res.data)
-                      })   
-                    })
-                  }
-                })
-              }, 5000, that)
-            }
-          })
-        } else {
-          // 未授权，提示用户授权
+                        let userId = res.data.session3rd.toString()
+                        // 下单
+                        request('POST','/api/Build/buildOrder',{
+                          header:{
+                            'session3rd':userId
+                          },
+                          data:{
+                            id: that.data.rechargePile.id,
+                            port: that.data.rechargePile.port
+                          }
+                        })
+                        .then(res => {
+                          // 下单成功进行支付
+                          pay(res.data)
+                        })   
+                      })
+                    }
+                  })
+                }, 4000, that)
+              }
+            })
+          }else{ // 用户未选择端口
+            wx.showToast({
+              title: '请选择对应端口，绿色按钮代表占用',
+              icon: 'none',
+              duration: 3000
+            })
+          }
+        } else { // 未授权，提示用户授权
           wx.showToast({
             title: '请打开授权，否则无法支付',
             icon: 'none',
