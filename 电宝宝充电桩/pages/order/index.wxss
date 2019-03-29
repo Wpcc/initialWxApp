@@ -7,6 +7,10 @@
   justify-content: flex-start;
   font-size: 16px;
   padding: 0 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: #fff;
 }
 .tabbar-underway{
   width: 50%;
@@ -28,6 +32,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 10px;
+  margin: 40px 0 10px;
 }
 .underway-ul{
   width: 100%;
