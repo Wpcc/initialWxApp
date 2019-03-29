@@ -77,7 +77,7 @@ Page({
       let i = 0
       for(var item in res){
         if(port.test(item)){ // 正则去除id
-          if(res[item] === 1){ // 端口号为0，代表未占用。1则为占用
+          if(res[item] >= 1){ // 端口号为0，代表未占用。1则为占用
             let obj = {
               ['pileNum[' + i + '].disable']: true,
               ['pileNum[' + i + '].color']: 'rgba(255,255,255,0.9)',

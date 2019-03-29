@@ -12,19 +12,9 @@ export const request = (method = 'POST', path, args) => {
       url:url,
       header:header,
       data:data,
-      success(res){
+      success(res){ // 不做拦截处理
         res = res.data
-        // 如果返回值为0，失败
-        if(res.data === 0){
-          wx.showToast({
-            title:res.msg,
-            icon:'none',
-            duration:2000
-          })
-        }else{
-          // 如果返回值为1，成功
-          resolve(res)
-        }
+        resolve(res)
       },
       fail(err){
         reject(err)

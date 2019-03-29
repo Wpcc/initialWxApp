@@ -25,7 +25,6 @@ Page({
   popupShow: function () {
 
     var that = this
-    console.log('id:' + that.data.markersContent.id)
     wx.showModal({
       title: '请核对充电桩号是否一致',
       content: that.data.markersContent.deviceNum,
@@ -59,8 +58,6 @@ Page({
   onLoad(option) {
     // option可以获取跳转过来的参数
     if(option){
-      console.log(option)
-      console.log(option.id)
       var longitude = parseFloat(option.longitude)
       var latitude = parseFloat(option.latitude)
       var that = this
