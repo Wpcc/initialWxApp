@@ -1,5 +1,6 @@
 // pages/payment/index.js
 import { request } from '../../api/request'
+import { goOrder } from '../../router/routes'
 import { pay } from '../../utils/pay'
 import { throttle } from '../../utils/throttle'
 
@@ -25,7 +26,17 @@ Page({
       id:'',
       port:''
     },
-    start:0 // 节流时间变量
+    start: 0, // 节流时间变量
+    // 第三方组件弹窗
+    show: false,
+    actions: [
+      {
+        name: '微信支付'
+      },
+      {
+        name: '余额支付'
+      }
+    ]
   },
   clickedPileNum: function (e) {
     let currentTarget = e.currentTarget 
@@ -93,37 +104,13 @@ Page({
   },
   getUserInfo: function(e) {
     let that = this
-    wx.getSetting({ // 查看是否授权
+    wx.getSetting({
       success(res) {
         if (res.authSetting['scope.userInfo']) { // 是否授权 ==> 授权
           if(that.data.rechargePile.port){ // 是否选择端口 ==》 选择端口
-            if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
-              that.placeOrderAndPay(that, e) // 下单并支付
-            }else{
-              wx.getUserInfo({
-                success(res) {
-                  const userInfo = res.userInfo
-                  throttle(() => { // 节流：减少用户点击支付按钮
-                    wx.login({ // 获取code的值
-                      success(res) {
-                        request('POST','/api/login/login',{ // 注册
-                          data:{
-                            nickname: userInfo.nickName, // 用户姓名
-                            headimgurl: userInfo.avatarUrl, // 用户头像
-                            sex: userInfo.gender, // 性别
-                            code: res.code  // 后台服务器解析用的code
-                          }
-                        })
-                        .then(res => {
-                          wx.setStorageSync('session3rd',res.data.session3rd)
-                          that.placeOrderAndPay(that, e) // 下单并支付   
-                        })
-                      }
-                    })
-                  }, 4000, that)
-                }
-              })
-            }
+            that.setData({  // 做弹出层
+              show: true
+            })
           }else{ // 用户未选择端口
             wx.showToast({
               title: '请选择对应端口，绿色按钮代表占用',
@@ -141,24 +128,101 @@ Page({
       }
     })
   },
-  // 自定义函数
-  placeOrderAndPay: function (that, e) {
-    request('POST','/api/Build/buildOrder',{ // 下单
+  // 第三方组件事件
+  onClose: function () {
+    this.setData({
+      show: false
+    })
+  },
+  onSelect: function (e) {
+    if(e.detail.name === '微信支付'){
+      this.loginThenOrder(this.wxPay) // 登录、支付
+    }
+    else if(e.detail.name === '余额支付'){
+      this.loginThenOrder(this.balancePay) 
+    }
+  },
+  // 支付流程
+  loginThenOrder: function(wxPay) {
+    const that = this
+    if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
+      wxPay() // 下单并支付
+    }else{
+      wx.getUserInfo({
+        success(res) {
+          console.log('打印一下this:' + this)
+          const userInfo = res.userInfo
+          throttle(() => { // 节流：减少用户点击支付按钮
+            wx.login({ // 获取code的值
+              success(res) {
+                request('POST','/api/login/login',{ // 注册
+                  data:{
+                    nickname: userInfo.nickName, // 用户姓名
+                    headimgurl: userInfo.avatarUrl, // 用户头像
+                    sex: userInfo.gender, // 性别
+                    code: res.code  // 后台服务器解析用的code
+                  }
+                })
+                .then(res => {
+                  wx.setStorageSync('session3rd',res.data.session3rd)
+                  wxPay() // 下单并支付   
+                })
+              }
+            })
+          }, 4000, that)
+        }
+      })
+    }
+  },
+  wxPay: function() { // 微信支付
+    request('POST','/api/Build/buildOrder', { // 下单
       header:{
         'session3rd':wx.getStorageSync('session3rd')
       },
       data:{
-        id: that.data.rechargePile.id,
-        port: that.data.rechargePile.port
+        id: this.data.rechargePile.id,
+        port: this.data.rechargePile.port
       }
     })
     .then(res => { // 下单成功进行支付
       if(res.status === 0) { // 缓存登录态失效处理
-        wx.removeStorageSync('session3rd')
-        that.getUserInfo(e)
+        wx.removeStorageSync('session3rd') // 清除缓存
+        this.loginThenOrder()
         return
       }
       pay(res.data)
+    }) 
+  },
+  balancePay: function() { // 余额支付
+    request('POST','/api/Payment/yePay', { // 下单
+      header:{
+        'session3rd':wx.getStorageSync('session3rd')
+      },
+      data:{
+        id: this.data.rechargePile.id,
+        port: this.data.rechargePile.port
+      }
+    })
+    .then(res => { // 下单成功进行支付
+      if(res.status === 0) { // 余额不足
+        wx.showToast({
+          title: res.msg,
+          icon: 'none',
+          duration: 3000
+        })
+        return
+      }
+      wx.showModal({
+        title: '提示',
+        content: '你已支付成功，点击确认跳转到订单页，或点击取消停留在此页',
+        success(res) {
+          if (res.confirm) {
+            goOrder()
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
     }) 
   }
 })

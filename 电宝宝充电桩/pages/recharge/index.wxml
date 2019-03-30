@@ -1,4 +1,9 @@
 <!--pages/recharge/index.wxml-->
 <view class='container'>
-  <text>开发中，请等待</text>
+  <view class="container-box">
+    <van-button primary="primary" id="1" bind:click="onCharge">10元</van-button>
+    <van-button primary="primary" id="2" bind:click="onCharge">20元</van-button>
+    <van-button primary="primary" id="3" bind:click="onCharge">50元</van-button>
+    <van-button primary="primary" id="4" bind:click="onCharge">100元</van-button>
+  </view>
 </view>

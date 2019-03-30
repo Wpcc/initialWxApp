@@ -1,66 +1,83 @@
 // pages/recharge/index.js
+import {pay} from '../../utils/pay'
+import {request} from '../../api/request'
+import {throttle} from '../../utils/throttle'
 Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-
+  data:{
+    id:'', // 用户选择ID
+    start:'' // 节流时间
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  onCharge(e) {
+    this.setData({ // 设置ID
+      id:e.currentTarget.id
+    })
+    let that = this
+    wx.getSetting({
+      success(res) {
+        if(res.authSetting['scope.userInfo']) { // 如果用户授权
+          that.loginThenOrder()
+        }else{
+          wx.showToast({ // 未授权，提示用户授权
+            title: '请打开授权，否则无法支付',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  // 支付流程
+  loginThenOrder: function() {
+    console.log('login')
+    console.log(wx.getStorageSync('session3rd'))
+    const that = this
+    if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
+      this.placeOrderAndPay() // 下单并支付
+    }else{
+      wx.getUserInfo({
+        success(res) {
+          console.log('getUserInfo')
+          const userInfo = res.userInfo
+          throttle(() => { // 节流：减少用户点击支付按钮
+            wx.login({ // 获取code的值
+              success(res) {
+                console.log('hello')
+                request('POST','/api/login/login',{ // 注册
+                  data:{
+                    nickname: userInfo.nickName, // 用户姓名
+                    headimgurl: userInfo.avatarUrl, // 用户头像
+                    sex: userInfo.gender, // 性别
+                    code: res.code  // 后台服务器解析用的code
+                  }
+                })
+                .then(res => {
+                  wx.setStorageSync('session3rd',res.data.session3rd)
+                  that.placeOrderAndPay() // 下单并支付   
+                })
+              }
+            })
+          }, 4000, that)
+        }
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  placeOrderAndPay: function() {
+    console.log('place')
+    request('POST','/api/Build/chargeMoney', { // 下单
+      header:{
+        'session3rd':wx.getStorageSync('session3rd')
+      },
+      data:{
+        btn_num: this.data.id
+      }
+    })
+    .then(res => { // 下单成功进行支付
+      if(res.status === 0) { // 缓存登录态失效处理
+        wx.removeStorageSync('session3rd') // 清除缓存
+        this.loginThenOrder()
+        return
+      }
+      pay(res.data)
+    }) 
   }
 })

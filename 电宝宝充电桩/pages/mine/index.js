@@ -1,17 +1,20 @@
 // pages/mine/index.js
-import {goOrder, goBack} from '../../router/routes'
+import {goOrder, goBack, goRecharge} from '../../router/routes'
 import {request} from '../../api/request'
 
 Page({
   // 数据
   data: {
-    auth: false
+    auth: false,
+    balance: '0.00'
   },
   // 路由
   goOrder,
   goBack,
+  goRecharge,
   // 点击授权
   getUserInfo: function(e) {
+    const that = this
     const userInfo = e.detail.userInfo
     wx.login({ // 获取code的值
       success(res) {
@@ -24,8 +27,9 @@ Page({
           }
         })
         .then(res => {
-          wx.setStorageSync(res.data.session3rd) // 保存用户登录凭证
-          this.setAuth()
+          wx.setStorageSync('session3rd',res.data.session3rd) // 保存用户登录凭证
+          that.setAuth()
+          that.balance()
         })
       }
     })
@@ -35,6 +39,7 @@ Page({
    */
   onShow: function () {
     this.setAuth()
+    this.balance()
   },
   // 自定义函数
   setAuth: function () {
@@ -46,6 +51,20 @@ Page({
             auth: true
           })
         }
+      }
+    })
+  },
+  balance: function () {
+    request('POST','/api/Center/personal',{
+      header:{
+        session3rd: wx.getStorageSync('session3rd')
+      }
+    })
+    .then((res) => {
+      if(res.status === 1){
+        this.setData({
+          balance:res.data.balance.toString()
+        })
       }
     })
   }

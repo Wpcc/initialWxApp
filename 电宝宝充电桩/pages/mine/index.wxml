@@ -24,7 +24,7 @@
   </view>
   <view class="account-container">
     <view class="accountTitle">账户余额</view>
-    <view class="accountBalance">￥0.00</view>
+    <view class="accountBalance">￥{{balance}}</view>
   </view>
 </view>
 <view class="list-container">
@@ -37,7 +37,7 @@
       <image src="../../static/mine/icon_next.png" class="icon-next"/>
     </view>
   </view>
-  <view class="list-box">
+  <view class="list-box" bindtap="goRecharge">
     <view class="list-left">
       <image src="../../static/mine/icon_recharge.png" class="record"/>
       <text class="record-text">充值</text>

@@ -18,7 +18,16 @@
           </button>
         </view>
     </view>
+    <!-- 弹窗 -->
+    <van-action-sheet
+      show="{{ show }}"
+      actions="{{ actions }}"
+      cancel-text="取消"
+      bind:close="onClose"
+      bind:cancel="onClose"
+      bind:select="onSelect"
+    />
     <button class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        <text>微信支付 ￥0.01</text>
+        <text>支付 ￥0.01</text>
     </button>
 </view>

@@ -37,7 +37,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 5,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -78,6 +78,12 @@
 					"name": "order",
 					"pathName": "pages/order/index",
 					"query": "id=12",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "recharge",
+					"pathName": "pages/recharge/index",
 					"scene": null
 				}
 			]

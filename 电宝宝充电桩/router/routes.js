@@ -5,10 +5,30 @@ export function goList() {
   })
 }
 
-// 跳转充电页
+// 充值
 export function goRecharge() {
-  wx.navigateTo({
-    url: '../recharge/index'
+  wx.getSetting({
+    success(res) {
+      if(res.authSetting['scope.userInfo']) { // 如果用户授权
+        if(wx.getStorageSync('session3rd')){
+          wx.navigateTo({
+            url: '../recharge/index'
+          })
+        }else{
+          wx.showToast({
+            title: '你需要到个人中心进行授权，才能进行该操作',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      }else{
+        wx.showToast({
+          title: '你需要到个人中心进行授权，才能进行该操作',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+    }
   })
 }
 
@@ -33,9 +53,30 @@ export function goBack() {
   })
 }
 
+// 订单页
 export function goOrder() {
-  wx.navigateTo({
-    url:'../order/index'
+  wx.getSetting({
+    success(res) {
+      if(res.authSetting['scope.userInfo']) { // 如果用户授权
+        if(wx.getStorageSync('session3rd')){
+          wx.navigateTo({
+            url:'../order/index'
+          })
+        }else{
+          wx.showToast({
+            title: '你需要到个人中心进行授权，才能进行该操作',
+            icon: 'none',
+            duration: 3000
+          })
+        }
+      }else{
+        wx.showToast({
+          title: '你需要到个人中心进行授权，才能进行该操作',
+          icon: 'none',
+          duration: 3000
+        })
+      }
+    }
   })
 }
 

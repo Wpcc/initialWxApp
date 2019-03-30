@@ -1,0 +1,12 @@
+<!--index.wxml-->
+<view class="container">
+  <van-action-sheet
+    show="{{ show }}"
+    actions="{{ actions }}"
+    cancel-text="取消"
+    bind:close="onClose"
+    bind:cancel="onClose"
+    bind:select="onSelect"
+  />
+<van-button type="primary" bind:click="show">按钮</van-button>
+</view>
