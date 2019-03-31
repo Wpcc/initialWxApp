@@ -135,12 +135,24 @@ Page({
     })
   },
   onSelect: function (e) {
+    let that = this
     if(e.detail.name === '微信支付'){
       this.loginThenOrder(this.wxPay) // 登录、支付
     }
     else if(e.detail.name === '余额支付'){
-      this.loginThenOrder(this.balancePay) 
+      wx.showModal({
+        title: '提示',
+        content: '确认使用余额支付',
+        success(res) {
+          if (res.confirm) {
+            that.loginThenOrder(that.balancePay)
+          } else if (res.cancel) {
+            console.log('用户点击取消')
+          }
+        }
+      })
     }
+    this.onClose()  // 关闭弹窗
   },
   // 支付流程
   loginThenOrder: function(wxPay) {
@@ -212,17 +224,7 @@ Page({
         })
         return
       }
-      wx.showModal({
-        title: '提示',
-        content: '你已支付成功，点击确认跳转到订单页，或点击取消停留在此页',
-        success(res) {
-          if (res.confirm) {
-            goOrder()
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
-        }
-      })
+      
     }) 
   }
 })

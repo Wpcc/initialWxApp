@@ -1,5 +1,6 @@
 import MD5 from '../modules/md5'
 import {request} from '../api/request'
+import {goOrder} from '../router/routes'
 
 const app = getApp()
 
@@ -44,6 +45,7 @@ function searchOrder (orderNum) {
   .then((res) => {
     if(res.status === 1) { // 1 支付成功
       console.log('支付成功')
+      goOrder() // 支付完成跳转订单页
     }else{ // 非1支付失败
       console.log('支付失败')
     }
