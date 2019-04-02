@@ -1,6 +1,6 @@
 //index.js
 //获取应用实例
-import {goList, goRecharge, goInstruction, goMine} from '../../router/routes'
+import {goList, goRecharge, goInstruction, goMine, goProduct} from '../../router/routes'
 import {request} from '../../api/request'
 const app = getApp()
 Page({
@@ -12,13 +12,16 @@ Page({
         /* 坐标 */
         longitude: 114.207034,
         latitude: 30.550434,
-        markers: [] //需要做对应处理
+        markers: [] // 需要做对应处理
     },
     // 路由
     goList,
     goRecharge,
     goInstruction,
     goMine,
+    markersGo(e) {
+      goProduct(e)
+    },
     // 生命周期函数
     onShow: function () {
         // 打印url参数
@@ -34,9 +37,21 @@ Page({
             })
         }
     },
+    location: function () {
+      let that = this
+      wx.getLocation({
+        type: 'gcj02',
+        success(res) {
+          that.setData({
+            longitude: res.longitude,
+            latitude: res.latitude
+          })
+        }
+      })
+    },
     // 加载用户位置，将数据放入到全局变量当中
     onLoad: function () {
-        var that = this
+        let that = this
         wx.getLocation({
             type: 'gcj02',
             success(res) {
@@ -58,48 +73,20 @@ Page({
                   res = res.data
                   let i = 0
                   res.forEach(item => {
-                    // let obj = { // 设置markers
-                    //   ['markers[' + i + '].longitude']: parseFloat(item.lng),
-                    //   ['markers[' + i + '].latitude']: parseFloat(item.lat),
-                    //   ['markers[' + i + '].id']: item.id,
-                    //   ['markers[' + i + '].iconPath']: '../../static/images/position_go.png',
-                    //   ['markers[' + i + '].width']: 40,
-                    //   ['markers[' + i + '].height']: 38
-                    // }
-                    // that.setData(obj)
-                    /**
-                     * value内容
-                     */
-                    // 坐标点固定的值
-                    var fixedIconPath = '../../static/images/position_go.png'
-                    var fixedWidth = 40
-                    var fixedHeight = 38
-                    //  坐标点转数字
-                    var longitudeNum = parseFloat(item.lng)
-                    var latitudeNum = parseFloat(item.lat)
-                    /**
-                     * key内容
-                     */
-                    var longitude = 'markers[' + i + '].longitude'
-                    var latitude = 'markers[' + i + '].latitude'
-                    var id = 'markers[' + i + '].id'
-                    var iconPath = 'markers[' + i + '].iconPath'
-                    var width = 'markers[' + i + '].width'
-                    var height = 'markers[' + i + '].height'
-
-                    that.setData({
-                        [longitude]: longitudeNum,
-                        [latitude]: latitudeNum,
-                        [id]: item.id,
-                        [iconPath]: fixedIconPath,
-                        [width]: fixedWidth,
-                        [height]: fixedHeight
-                    })
+                    let obj = { // 设置markers
+                      ['markers[' + i + '].longitude']: parseFloat(item.lng),
+                      ['markers[' + i + '].latitude']: parseFloat(item.lat),
+                      ['markers[' + i + '].id']: item.id,
+                      ['markers[' + i + '].iconPath']: '../../static/images/position_go.png',
+                      ['markers[' + i + '].width']: 40,
+                      ['markers[' + i + '].height']: 38
+                    }
+                    that.setData(obj)
                     i++
                   })
                 })
             },
-            fail(err) {
+            fail() {
                 wx.showToast({
                     title: '请打开位置授权，否则无法正确定位',
                     icon: 'none',
@@ -108,6 +95,4 @@ Page({
             }
         })
     }
-
-
 });

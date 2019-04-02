@@ -9,7 +9,6 @@
     </view>
   </view>
   <view class="list-container">
-    <!-- 进行中页面 -->
     <view class="underway-ul" wx:if="{{leftSelected}}" wx:for="{{piles}}" wx:key="item.orderNum">
       <view class="order-li">
         <view class="title">
@@ -35,7 +34,7 @@
           <view class="pile">
             <view class="pile-left">
               充电桩号：
-              <text class="pile-number">00000001</text>
+              <text class="pile-number">{{item.pileNum}}</text>
             </view>
             <view class="pile-right" wx:if="{{item.isAbnormal === 2 ? false : true}}">
               <text class="pile-abnormal" bindtap="restart" data-orderNum="{{item.orderNum}}" data-i="{{index}}">充电异常，点此重试</text>
@@ -90,5 +89,9 @@
         </view>
       </view>
     </view>
+  </view>
+  <!-- 进行中页面 -->
+  <view wx:if="{{loading}}" class="loading">
+    <van-loading type="spinner"/>
   </view>
 </view>

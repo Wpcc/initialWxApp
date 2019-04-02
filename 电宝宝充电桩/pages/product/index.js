@@ -1,9 +1,6 @@
 // pages/product/index.js
+import {request} from '../../api/request'
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     maskIsShow: false,
     userLongitude:114.207034,
@@ -21,9 +18,7 @@ Page({
     markersContent:{
     }
   },
-  
   popupShow: function () {
-
     var that = this
     wx.showModal({
       title: '请核对充电桩号是否一致',
@@ -35,7 +30,6 @@ Page({
           wx.navigateTo({
             url:'../payment/index?id=' + that.data.markersContent.id
           })
-          
         } else if (res.cancel) {
           console.log('用户点击取消')
         }
@@ -58,9 +52,9 @@ Page({
   onLoad(option) {
     // option可以获取跳转过来的参数
     if(option){
-      var longitude = parseFloat(option.longitude)
-      var latitude = parseFloat(option.latitude)
-      var that = this
+      // 获取用户信息
+      console.log(option.id)
+      let that = this
       wx.getLocation({
         type: 'gcj02',
         success(res) {
@@ -69,7 +63,7 @@ Page({
             userLatitude: res.latitude 
           })
         },
-        fail(err) {
+        fail() {
           wx.showToast({
             title:'请打开位置授权，否则无法正确定位',
             icon:'none',
@@ -77,13 +71,22 @@ Page({
           })
         }
       }),
-      that.setData({
-        'markers[0].longitude':longitude,
-        'markers[0].latitude':latitude,
-        'markersContent.address':option.address,
-        'markersContent.deviceNum':option.deviceNum,
-        'markersContent.port':option.port,
-        'markersContent.id':option.id
+      request('POST', '/api/Chargedetails/details', {
+        data:{
+          id: option.id
+        }
+      })
+      .then(res => {
+        console.log('res:' + JSON.stringify(res))
+        // 后台差remaining数据
+        that.setData({
+          'markers[0].longitude':res.data.lng,
+          'markers[0].latitude':res.data.lat,
+          'markersContent.address':res.data.address,
+          'markersContent.deviceNum':res.data.device_sn,
+          'markersContent.port':6,
+          'markersContent.id':res.data.id
+        })
       })
     }
   }
