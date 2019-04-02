@@ -23,8 +23,8 @@
     }
   },
   "usingComponents": {
-    "van-action-sheet": "../../modules/dist/action-sheet/index",
-    "van-button": "../../modules/dist/button/index",
-    "van-loading": "../../modules/dist/loading/index"
+    "van-action-sheet": "../modules/dist/action-sheet/index",
+    "van-button": "../modules/dist/button/index",
+    "van-loading": "../modules/dist/loading/index"
   }
 }

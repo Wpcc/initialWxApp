@@ -22,21 +22,6 @@ Page({
     markersGo(e) {
       goProduct(e)
     },
-    // 生命周期函数
-    onShow: function () {
-        // 打印url参数
-        if (app.globalData.listInput) {
-            this.setData({
-                inputShowed: true,
-                inputVal: app.globalData.listInput
-            })
-        } else {
-            this.setData({
-                inputShowed: false,
-                inputVal: ""
-            })
-        }
-    },
     location: function () {
       let that = this
       wx.getLocation({
@@ -50,7 +35,19 @@ Page({
       })
     },
     // 加载用户位置，将数据放入到全局变量当中
-    onLoad: function () {
+    onShow: function () {
+        // 打印url参数
+        if (app.globalData.listInput) {
+            this.setData({
+                inputShowed: true,
+                inputVal: app.globalData.listInput
+            })
+        } else {
+            this.setData({
+                inputShowed: false,
+                inputVal: ""
+            })
+        }
         let that = this
         wx.getLocation({
             type: 'gcj02',

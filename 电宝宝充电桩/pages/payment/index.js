@@ -1,6 +1,5 @@
 // pages/payment/index.js
 import { request } from '../../api/request'
-import { goOrder } from '../../router/routes'
 import { pay } from '../../utils/pay'
 import { throttle } from '../../utils/throttle'
 
@@ -162,7 +161,6 @@ Page({
     }else{
       wx.getUserInfo({
         success(res) {
-          console.log('打印一下this:' + this)
           const userInfo = res.userInfo
           throttle(() => { // 节流：减少用户点击支付按钮
             wx.login({ // 获取code的值
@@ -217,14 +215,18 @@ Page({
     })
     .then(res => { // 下单成功进行支付
       if(res.status === 0) { // 余额不足
-        wx.showToast({
-          title: res.msg,
-          icon: 'none',
-          duration: 3000
-        })
+        if(res.msg === "未登录"){
+          wx.removeStorageSync('session3rd')
+          this.loginThenOrder(this.balancePay)
+        }else{
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+            duration: 3000
+          })
+        }
         return
       }
-      
     }) 
   }
 })

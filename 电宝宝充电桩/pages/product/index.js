@@ -80,11 +80,11 @@ Page({
         console.log('res:' + JSON.stringify(res))
         // 后台差remaining数据
         that.setData({
-          'markers[0].longitude':res.data.lng,
-          'markers[0].latitude':res.data.lat,
+          'markers[0].longitude':parseFloat(res.data.lng),
+          'markers[0].latitude':parseFloat(res.data.lat),
           'markersContent.address':res.data.address,
           'markersContent.deviceNum':res.data.device_sn,
-          'markersContent.port':6,
+          'markersContent.port':res.data.remaining,
           'markersContent.id':res.data.id
         })
       })

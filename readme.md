@@ -138,7 +138,7 @@ Page({
 
 **文档目录：**
 
-```
+```shell
 ├─ .idea
 |  ├─ inspectionProfiles
 |  |  └─ Project_Default.xml
@@ -149,12 +149,12 @@ Page({
 │  ├─ workspace.xml
 │  ├─ 小程序.iml
 │  └─ repository-tree.js.map
-├─ pages //视图层
+├─ pages # 视图层
 │  ├─ index
-│  │  ├─ index.js //js页面
-│  │  ├─ index.json //配置页面
-|  |  ├─ index.wxml //html页面
-│  │  └─ index.wxss //css页面
+│  │  ├─ index.js # js页面
+│  │  ├─ index.json # 配置页面
+|  |  ├─ index.wxml # html页面
+│  │  └─ index.wxss # css页面
 │  ├─ logs
 │  │  ├─ logs.js
 │  │  ├─ logs.json
@@ -162,10 +162,10 @@ Page({
 │  │  └─ logs.wxss
 ├─ utils
 │  │  └─ util.js
-├─ app.js //js应用主页面
-├─ app.json //主配置页面
-├─ app.wxss //全局css样式
-└─ project.config.json //工程配置项
+├─ app.js # js应用主页面
+├─ app.json # 主配置页面
+├─ app.wxss # 全局css样式
+└─ project.config.json # 工程配置项
 ```
 
 **入口文件（app.json）：**

@@ -5,7 +5,6 @@ const app = getApp()
 export const request = (method = 'POST', path, args) => {
   const url = app.globalData.url + path
   const {data, header} = args
-  console.log('获取的data：' + JSON.stringify(args))
   return new Promise((resolve, reject) => {
     wx.request({
       method:method,

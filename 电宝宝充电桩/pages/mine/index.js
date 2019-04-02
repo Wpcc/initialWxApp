@@ -46,10 +46,12 @@ Page({
     let that = this
     wx.getSetting({
       success(res){
-        if(res.authSetting['scope.userInfo']){ // 如果授权
-          that.setData({
-            auth: true
-          })
+        if(res.authSetting['scope.userInfo']){ // 授权
+          if(wx.getStorageSync('session3rd')){ // 并且注册
+            that.setData({
+              auth: true
+            })
+          }
         }
       }
     })

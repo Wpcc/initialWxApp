@@ -1,6 +1,7 @@
 // pages/list/index.js
 import { goBack, goProduct } from '../../router/routes'
 import { request } from '../../api/request'
+
 const app = getApp();
 Page({
   data: {
@@ -42,7 +43,7 @@ Page({
           wx.showToast({
             title: '请打开位置授权，否则无法正确定位',
             icon: 'none',
-            duration: 3000
+            duration: 2000
           })
         }else{
           // 从后台获取数据
@@ -62,9 +63,7 @@ Page({
             })
             let i = 0
             res = res.data
-            console.log("res:" +  res)
             if(res.length === 0){
-              console.log('hello')
               wx.showToast({
                 title: '抱歉，你搜索的内容不存在！',
                 icon: 'none',
@@ -86,7 +85,6 @@ Page({
               that.setData({
                 i: i
               })
-              console.log(that.data.i)
             })
           })
         }

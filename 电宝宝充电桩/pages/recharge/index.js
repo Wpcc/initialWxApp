@@ -28,20 +28,16 @@ Page({
   },
   // 支付流程
   loginThenOrder: function() {
-    console.log('login')
-    console.log(wx.getStorageSync('session3rd'))
     const that = this
     if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
       this.placeOrderAndPay() // 下单并支付
     }else{
       wx.getUserInfo({
         success(res) {
-          console.log('getUserInfo')
           const userInfo = res.userInfo
           throttle(() => { // 节流：减少用户点击支付按钮
             wx.login({ // 获取code的值
               success(res) {
-                console.log('hello')
                 request('POST','/api/login/login',{ // 注册
                   data:{
                     nickname: userInfo.nickName, // 用户姓名
@@ -62,7 +58,6 @@ Page({
     }
   },
   placeOrderAndPay: function() {
-    console.log('place')
     request('POST','/api/Build/chargeMoney', { // 下单
       header:{
         'session3rd':wx.getStorageSync('session3rd')
