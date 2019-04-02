@@ -5,7 +5,23 @@ import {throttle} from '../../utils/throttle'
 Page({
   data:{
     id:'', // 用户选择ID
-    start:'' // 节流时间
+    start:'', // 节流时间
+    money:[]
+  },
+  onShow() {
+    request('POST', '/api/Center/personal', {
+      header:{
+        session3rd:wx.getStorageSync('session3rd')
+      }
+    })
+    .then((res) => {
+      if(res.status === 1){
+        this.setData({
+          money: res.data.money
+        })
+        console.log(JSON.stringify(this.data.money))
+      }
+    })
   },
   onCharge(e) {
     this.setData({ // 设置ID

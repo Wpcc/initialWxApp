@@ -539,7 +539,9 @@ paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS
 
 
 
+### 小程序码
 
+[官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/qr-code.html)
 
 
 

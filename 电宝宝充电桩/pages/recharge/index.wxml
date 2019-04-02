@@ -1,9 +1,6 @@
 <!--pages/recharge/index.wxml-->
 <view class='container'>
   <view class="container-box">
-    <van-button primary="primary" id="1" bind:click="onCharge">10元</van-button>
-    <van-button primary="primary" id="2" bind:click="onCharge">20元</van-button>
-    <van-button primary="primary" id="3" bind:click="onCharge">50元</van-button>
-    <van-button primary="primary" id="4" bind:click="onCharge">100元</van-button>
+    <van-button primary="primary" wx:for="{{money}}" wx:key="{{item.id}}" id="{{index + 1}}" bind:click="onCharge">{{item[index + 1]}}元</van-button>
   </view>
 </view>

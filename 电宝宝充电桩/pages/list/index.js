@@ -10,7 +10,9 @@ Page({
     // 后台地址列表
     page:0,
     i:0,
-    listData: []
+    listData: [],
+    loading: false,
+    noData: false
   },
   goBack,
   goProduct,
@@ -40,10 +42,20 @@ Page({
     wx.getSetting({
       success(res){
         if(!res.authSetting['scope.userLocation']){
-          wx.showToast({
-            title: '请打开位置授权，否则无法正确定位',
-            icon: 'none',
-            duration: 2000
+          wx.showModal({
+            title: '提示',
+            content: '请打开位置授权，否则无法正确定位',
+            success(res) {
+              if (res.confirm) {
+                wx.openSetting({
+                  success(res){
+                    console.log(res.authSetting)
+                  }
+                })
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
           })
         }else{
           // 从后台获取数据
@@ -70,6 +82,11 @@ Page({
                 duration: 3000
               })
               return
+            }
+            if(res.length === 10){
+              that.setData({
+                loading: true
+              })
             }
             res.forEach(item => {
               that.setData({
@@ -104,7 +121,8 @@ Page({
     let page = this.data.page
     // 从后台获取数据
     this.setData({
-      page: page + 1
+      page: page + 1,
+      loading: true
     })
     request('POST','/api/Chargelist/lst',{
       data:{
@@ -116,8 +134,10 @@ Page({
     })
     .then(res => {
       res = res.data
-      console.log('res:' + res)
-      if(!res){
+      if(res.length === 0){
+        this.setData({
+          noData: true
+        })
         return
       }else{
         let i = this.data.i
