@@ -28,6 +28,6 @@
       bind:select="onSelect"
     />
     <button class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        <text>支付 ￥0.01</text>
+        <text>支付 ￥1.00</text>
     </button>
 </view>

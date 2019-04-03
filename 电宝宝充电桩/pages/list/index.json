@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "centerLoading":"../components/centerLoading/index",
+    "bottomLoading":"../components/bottomLoading/index"
+  },
   "navigationBarTitleText":"列表页"
 }

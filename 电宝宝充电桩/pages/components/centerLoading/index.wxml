@@ -1,0 +1,6 @@
+<!--pages/components/centerLoading/index.wxml-->
+<view class="center-loading" wx:if="{{loading}}">
+  <view class="loading-box">
+    <van-loading type="spinner" color="#fff"/>
+  </view>
+</view>

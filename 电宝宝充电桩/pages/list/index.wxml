@@ -49,9 +49,8 @@
           </view>
         </view>
       </view>
-      <view class="container-loading" wx:if="{{loading}}">
-        <van-loading type="spinner" wx:if="{{!noData}}"/>
-        <text wx:else>抱歉，没有更多数据了~~</text>
-      </view>
     </view>
+    <!-- loading页面 -->
+    <bottom-loading loading="{{bottomLoading}}" noData="{{noData}}"></bottom-loading>
+    <center-loading loading="{{centerLoading}}"></center-loading>
 </view>

@@ -28,7 +28,7 @@
               <text class="location-name">{{item.address}}</text>
             </view>
             <view class="location-right">
-              <image src="{{item.isAbnormal === 2 ? '../../static/order/icon_charging.png' : '../../static/order/icon_abnormal.png'}}" style="width:64rpx;height:36rpx;"/>
+              <image src="{{item.isAbnormal === 2 ? '../../static/order/icon_charging.png' : '../../static/order/icon_abnormal.png'}}" style="width:50rpx;height:32rpx;"/>
             </view>
           </view>
           <view class="pile">
@@ -90,8 +90,7 @@
       </view>
     </view>
   </view>
-  <!-- 进行中页面 -->
-  <view wx:if="{{loading}}" class="loading">
-    <van-loading type="spinner"/>
-  </view>
+  <!-- loading页面 -->
+  <bottom-loading loading="{{bottomLoading}}" noData="{{noData}}"></bottom-loading>
+  <center-loading loading="{{centerLoading}}"></center-loading>
 </view>

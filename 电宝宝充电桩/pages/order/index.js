@@ -13,7 +13,9 @@ Page({
     piles: [], // 充电桩
     time: '', // 返回充电桩时间戳处理
     start: '', // 节流变量
-    loading: true
+    bottomLoading: false,
+    noData: false,
+    centerLoading: true
   },
   ing_order() {
     this.setData({ // 重置
@@ -22,24 +24,28 @@ Page({
       page: 0,
       i:0,
       type: '1',
-      loading: true
+      centerLoading: true,
+      bottomLoading: false,
+      noData: false
     })
-    this.getOrderList() // 获取进行时订单
+    this.getOrderList(this.clickLoad) // 获取进行时订单
   },
   ed_order() {
     this.setData({ 
       leftSelected: false,
       piles:[],
-      page: 0,
+      page: 1,
       i:0,
       type:'2',
-      loading: true
+      centerLoading: true,
+      bottomLoading: false,
+      noData: false
     })
-    this.getOrderList() // 获取完成是订单
+    this.getOrderList(this.clickLoad) // 获取完成是订单
   },
   restart(e) {
     this.setData({
-      loading: true
+      centerLoading: true
     })
     let i = e.currentTarget.dataset.i
     let orderNum = e.currentTarget.dataset.ordernum
@@ -58,7 +64,7 @@ Page({
       })
       .then(res => {
         this.setData({
-          loading: false
+          centerLoading: false
         })
         if(res.status === 1){
           if(res.data.charge_status === 1) {
@@ -85,7 +91,7 @@ Page({
   },
   // 生命周期
   onShow: function () {
-    this.getOrderList() // 获取进行时订单
+    this.getOrderList(this.clickLoad) // 获取进行时订单
   },
   // 页面事件处理
   onReachBottom() {
@@ -93,10 +99,10 @@ Page({
     this.setData({
       page: page + 1
     })
-    this.getOrderList()
+    this.getOrderList(this.pullDownLoad)
   },
   // 自定义函数
-  getOrderList () {
+  getOrderList (setLoading) {
     request('POST','/api/order/order_list',{
       header:{
         session3rd: wx.getStorageSync('session3rd')
@@ -115,31 +121,55 @@ Page({
       let i = this.data.i
       // 取消loading
       this.setData({
-        loading: false
+        centerLoading: false
       })
       res = res.data // 进行中订单
-      if(!res){
-        return 
-      } else {
-        res.forEach(res => {
-          let time = formatTime(new Date(res.ptime * 1000)) // 字符戳格式化
-          let payPrice = res.pay_price.toString() + '.00' // 支付金额加0
-          let obj = {
-            ['piles[' + i + '].orderNum']: res.order_sn,
-            ['piles[' + i + '].orderTime']: time,
-            ['piles[' + i + '].address']: res.address,
-            ['piles[' + i + '].pileNum']: res.device_sn,
-            ['piles[' + i + '].timeRemaining']: res.stime,
-            ['piles[' + i + '].payPrice']: payPrice,
-            ['piles[' + i + '].isAbnormal']: res.port_status || 2
-          }
-          this.setData(obj)
-          i ++
-          this.setData({
-            i:i
-          })
+      res.forEach(res => {
+        let time = formatTime(new Date(res.ptime * 1000)) // 字符戳格式化
+        let payPrice = res.pay_price.toString() + '.00' // 支付金额加0
+        let obj = {
+          ['piles[' + i + '].orderNum']: res.order_sn,
+          ['piles[' + i + '].orderTime']: time,
+          ['piles[' + i + '].address']: res.address,
+          ['piles[' + i + '].pileNum']: res.device_sn,
+          ['piles[' + i + '].timeRemaining']: res.stime,
+          ['piles[' + i + '].payPrice']: payPrice,
+          ['piles[' + i + '].isAbnormal']: res.port_status || 2
+        }
+        this.setData(obj)
+        i ++
+        this.setData({
+          i:i
         })
-      }
+      })
+      // 设置loading
+      setLoading(res)
     })
+  },
+  clickLoad(res) {
+    if(res.length < 10) { // 没数据
+      this.setData({
+        bottomLoading: false
+      })
+      return
+    } else if (res.length >= 10) {
+      this.setData({
+        bottomLoading: true,
+      })
+    }
+  },
+  pullDownLoad(res) {
+    if(res.length === 0) {
+      this.setData({
+        bottomLoading:true,
+        noData: true
+      })
+    } else if(res.length > 0) {
+      this.setData({
+        bottomLoading: true,
+        noData: false
+      })
+      console.log('pull:' +　this.data.bottomLoading)
+    }
   }
 })
