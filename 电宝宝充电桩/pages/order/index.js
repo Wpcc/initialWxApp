@@ -7,7 +7,7 @@ Page({
   // 页面初始数据
   data: {
     leftSelected: true, // 配合html三元运算符控制左边选中样式
-    page: 0, // 页码
+    page: 1, // 页码
     i: 0, // 数组push变量
     type: '1',
     piles: [], // 充电桩
@@ -21,7 +21,7 @@ Page({
     this.setData({ // 重置
       leftSelected: true,
       piles:[],
-      page: 0,
+      page: 1,
       i:0,
       type: '1',
       centerLoading: true,
@@ -95,6 +95,9 @@ Page({
   },
   // 页面事件处理
   onReachBottom() {
+    if(this.data.noData){ // 如果没数据，返回
+      return
+    }
     let page = this.data.page
     this.setData({
       page: page + 1

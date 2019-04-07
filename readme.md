@@ -543,6 +543,42 @@ paySign = MD5(appId=wxd678efh567hg6787&nonceStr=5K8264ILTKCH16CQ2502SI8ZNMTM67VS
 
 [官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/qr-code.html)
 
+如果使用接口B进行开发，也就是后台通过scene进行传参。假如后台传过来的参数是`sn=10000013`，那么在小程序中通过onLoad生命周期中的option进行接收，接收如下：
+
+```javascript
+Page({
+    onLoad(option){
+        console.log(option.scene) // sn=10000013 等于号这里会转码
+    }
+})
+```
+
+测试方法：
+
+- 调试阶段使用开发工具的条件编译自定义参数 scene = xxxx 进行模拟，开发工具模拟时的 scene 的参数值需要`encodeURIComponent`
+
+```javascript
+// 假设 scene = sn=10000013
+Page({
+    onLoad(option){
+        console.log(option.scene) //由于等于号的关系，这里会直接打印sn
+    }
+})
+```
+
+- 使用微信工具中的通过二维码编译，加载后台生成的小程序二维码。
+
+```javascript
+// 假设 scene = sn=10000013
+Page({
+    onLoad(option){
+        console.log(option.scene) //这里的等号会进行转码
+    }
+})
+```
+
+
+
 
 
 

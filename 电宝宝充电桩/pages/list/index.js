@@ -35,14 +35,14 @@ Page({
     this.setData({
       listData: [],
       i: 0,
-      centerLoading: false,
+      page: 1,
+      centerLoading: true,
       bottomLoading: false,
       noData: false
     })
     app.globalData.listInput = this.data.inputVal
     // 用户输入数据校验
-
-
+    this.getPilesList(this.searchLoad)
   },
   /**
    * 生命周期函数
@@ -54,13 +54,16 @@ Page({
   },
   // 页面事件处理
   onReachBottom() {
+    if(this.data.noData){ // 如果没数据返回
+      return
+    }
     let page = this.data.page
     // 从后台获取数据
     this.setData({
       page: page + 1,
       loading: true
     })
-
+    this.getPilesList(this.pullDownLoad)
   },
   // 自定义事件
   getPilesList(setLoading) {
@@ -94,21 +97,13 @@ Page({
             }
           })
           .then(res => {
-            // 搜索清空数据
+            that.setData({ // loading 初始化
+              centerLoading: false,
+              bottomLoading: false,
+              noData: false
+            })
             res = res.data
-            if(res.length === 0){
-              wx.showToast({
-                title: '抱歉，你搜索的内容不存在！',
-                icon: 'none',
-                duration: 3000
-              })
-              return
-            }
-            if(res.length < 10 && res.length > 0){
-              that.setData({
-                loading: false
-              })
-            }
+            
             let i = that.data.i
             res.forEach(item => {
               that.setData({
@@ -132,18 +127,33 @@ Page({
     })
   },
   searchLoad(res) {
-    if(res.length < 10) { // 没数据
+    if(res.length < 10 && res.length > 0) { // 没数据
       this.setData({
         bottomLoading: false
       })
-      return
     } else if (res.length >= 10) {
       this.setData({
         bottomLoading: true,
       })
+    } else if (res.length == 0) {
+      wx.showToast({
+        title: '抱歉，你搜索的内容不存在！',
+        icon: 'none',
+        duration: 3000
+      })
     }
   },
   pullDownLoad(res) {
-
+    if(res.length < 10) {
+      this.setData({
+        bottomLoading: true,
+        noData: true
+      })
+    } else if(res.length >= 10) {
+      this.setData({
+        bottomLoading: true,
+        noData: false
+      })
+    }
   }
 });

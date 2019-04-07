@@ -21,7 +21,7 @@ Page({
       { id: 8, content: '8', background: '#ffffff', color: '#23C675', disable:false },
       { id: 9, content: '9', background: '#ffffff', color: '#23C675', disable:false }
     ],
-    rechargePile:{
+    rechargePile:{ // 下单后的参数
       id:'',
       port:''
     },
@@ -72,17 +72,27 @@ Page({
   },
   // onLoad生命周期
   onLoad(option) {
-    this.setData({
-      'rechargePile.id': option.id.toString()
-    })
-    request('POST','/api/choiceport/index',{
-    data:{
-        id:option.id
+    console.log(JSON.stringify(option))
+    let param = {}
+    if(option.id){ // 通过小程序中ID进入
+      param = {
+        data:{
+          id: option.id
+        }
       }
-    })
+    }else { // 通过扫码桩号进入
+      param = {
+        data: {
+          sn: option.scene
+        }
+      }
+    }
+    request('POST','/api/choiceport/index', param)
     .then(res => {
-      console.log(res.data)
       res = res.data
+      this.setData({ // 获取充电桩ID，后续支付使用
+        'rechargePile.id': res.id.toString()
+      })
       let port = /^(port)/
       let i = 0
       for(var item in res){
@@ -197,7 +207,7 @@ Page({
     .then(res => { // 下单成功进行支付
       if(res.status === 0) { // 缓存登录态失效处理
         wx.removeStorageSync('session3rd') // 清除缓存
-        this.loginThenOrder()
+        this.loginThenOrder(this.wxPay)
         return
       }
       pay(res.data)

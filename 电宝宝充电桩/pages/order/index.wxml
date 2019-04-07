@@ -69,7 +69,6 @@
         <view class="content">
           <view class="location">
             <image src="../../static/order/icon_location.png" style="width:12px;height:14px;"/>
-            <!-- 地址部分超出省略 -->
             <text class="location-name">{{item.address}}</text>
           </view>
           <view class="pile">

@@ -1,7 +1,7 @@
 {
   "usingComponents": {
-    "centerLoading":"../components/centerLoading/index",
-    "bottomLoading":"../components/bottomLoading/index"
+    "center-loading":"../components/centerLoading/index",
+    "bottom-loading":"../components/bottomLoading/index"
   },
   "navigationBarTitleText":"列表页"
 }
