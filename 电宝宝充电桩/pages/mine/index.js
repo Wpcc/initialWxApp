@@ -6,14 +6,22 @@ Page({
   // 数据
   data: {
     auth: false,
-    balance: '0.00'
+    bindPhone: false,
+    balance: '0'
   },
   // 路由
   goOrder,
   goBack,
   goRecharge,
   // 点击授权
-  getUserInfo: function(e) {
+  getUserInfo: function() {
+    this.setAuth()
+  },
+  getPhoneNumber: function(e) {
+    console.log(e.detail.encryptedData)
+  },
+  // 后台注册
+  login: function (){
     const that = this
     const userInfo = e.detail.userInfo
     wx.login({ // 获取code的值
@@ -47,27 +55,27 @@ Page({
     wx.getSetting({
       success(res){
         if(res.authSetting['scope.userInfo']){ // 授权
-          if(wx.getStorageSync('session3rd')){ // 并且注册
-            that.setData({
-              auth: true
-            })
-          }
+          that.setData({
+            auth: true
+          })
         }
       }
     })
   },
   balance: function () {
-    request('POST','/api/Center/personal',{
-      header:{
-        session3rd: wx.getStorageSync('session3rd')
-      }
-    })
-    .then((res) => {
-      if(res.status === 1){
-        this.setData({
-          balance:res.data.balance.toString()
-        })
-      }
-    })
+    if(this.data.auth) { // 如果授权，查询余额
+      request('POST','/api/Center/personal',{
+        header:{
+          session3rd: wx.getStorageSync('session3rd')
+        }
+      })
+      .then((res) => {
+        if(res.status === 1){
+          this.setData({
+            balance:res.data.balance.toString()
+          })
+        }
+      })
+    }
   }
 })

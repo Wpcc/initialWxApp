@@ -23,32 +23,43 @@
 .avatar-icon{
   width: 50px;
   height: 50px;
-  background: #fff;
   border-radius: 25px;
   overflow: hidden;
 }
 .avatar-nickname{
-  margin-bottom: 5px;
+  margin-bottom: 4px;
 }
 /* 授权样式设置 */
 .auth-box{
-  display: inline;
-  color:#fff;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height:100%;
   background: none;
-  font-size: 14px;
-  padding: 0;
-  line-height: 0;
+  z-index:2;
 }
 .auth-box::after{
   border:none;
 }
+.phone-box{
+  height: 16px;
+  width: 100%;
+}
+.clear-box{
+  display: inline;
+  background: none;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+.clear-box::after{
+  border:none
+}
 /* 未授权样式 */
-.noAuthText {
+.auth-text {
   font-size: 12px;
-  margin-left: 10px;
-  border:1px solid #fff;
-  padding: 0 2px;
-  border-radius: 4px;
 }
 /* 右边账户设置 */
 .account-container{

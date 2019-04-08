@@ -1,22 +1,28 @@
 <!--pages/mine/index.wxml-->
 <view class="user-container">
   <view class="info-container">
-    <view class="avatar-container">
+    <button class="auth-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{ !auth }}"></button> <!-- 授权按钮 -->
+    <view class="avatar-container" >
       <view class="avatar-icon">
-        <open-data type="userAvatarUrl"></open-data>
+        <image src="../../static/mine/avatar_default.png" style="width:50px;height:50px;" wx:if="{{ !auth }}"/>
+        <open-data type="userAvatarUrl" wx:else></open-data>
       </view>
       <view class="avatar-text">
         <view class="avatar-nickname">
-          <open-data type="userNickName" style="font-size:16px;"></open-data>
-          <text class="noAuthText">{{auth ? '已授权' : '未授权'}}</text>
+          <open-data type="userNickName" style="font-size:16px;" wx:if="{{ auth }}"></open-data>
+          <text wx:else>未授权</text>
         </view>
         <view class="setAuth">
-          <button wx:if="{{ !auth }}" class="auth-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+          <view wx:if="{{ !auth }}">
             <text class="auth-text" bindtap="onAuth">点击授权</text>
             <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
-          </button>
-          <view wx:else>
-            <text class="auth-text"> VIP用户</text>
+          </view>
+          <view class="phone-box" wx:else>
+            <button class="clear-box" wx:if="{{ !bindPhone }}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+              <text class="auth-text" bindtap="onAuth">绑定手机号</text>
+              <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
+            </button>
+            <text class="auth-text" wx:else>15172797475</text>
           </view>
         </view>
       </view>
@@ -47,16 +53,3 @@
     </view>
   </view>
 </view>
-<!-- tabbar -->
-  <view class='tabbar-container'>
-    <tabbar>
-      <view class='menu-box' slot="home" bindtap="goBack">
-        <image class='menu-img' src='../../static/images/menu_home_default.png'></image>
-        <text class='menu-text'>首页</text>
-      </view>
-      <view class='menu-box clickedBox' slot="mine">
-        <image class='menu-img' src='../../static/images/menu_mine_clicked.png'></image>
-        <text class='menu-text'>我的</text>
-      </view>
-    </tabbar>
-  </view>
