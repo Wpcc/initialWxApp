@@ -34,19 +34,10 @@
             </cover-view>
         </cover-view>
     </cover-view>
-    <cover-view class="location" bindtap='location'>
-      <cover-image src="../../static/images/position_my.png"></cover-image>
+    <!-- 按钮 -->
+    <cover-view class="position-box">
+      <cover-image src="../../static/images/position_location.png" class="location" bindtap='location'></cover-image>
+      <cover-image src="../../static/images/position_scan.png" class="scan" bindtap='scan'></cover-image>
+      <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="mine clear-box"><cover-image src="../../static/images/position_mine.png"></cover-image></button>
     </cover-view>
-    <view class='tabbar-container'>
-        <tabbar>
-            <view class='menu-box clickedBox' slot="home">
-                <image class='menu-img' src='../../static/images/menu_home_clicked.png'></image>
-                <text class='menu-text'>首页</text>
-            </view>
-            <view class='menu-box' slot="mine" bindtap="goMine">
-                <image class='menu-img' src='../../static/images/menu_mine_default.png'></image>
-                <text class='menu-text'>我的</text>
-            </view>
-        </tabbar>
-    </view>
 </view>

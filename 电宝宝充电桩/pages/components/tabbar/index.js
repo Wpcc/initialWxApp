@@ -5,14 +5,7 @@ Component({
   },
   methods:{
     openScan() {
-      wx.scanCode({
-        success(res) {
-          // 做跳转
-          wx.navigateTo({
-            url: res.path
-          })
-        }
-      })
+      
     }
   }
 })

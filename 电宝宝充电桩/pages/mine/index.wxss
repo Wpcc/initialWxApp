@@ -30,18 +30,6 @@
   margin-bottom: 4px;
 }
 /* 授权样式设置 */
-.auth-box{
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height:100%;
-  background: none;
-  z-index:2;
-}
-.auth-box::after{
-  border:none;
-}
 .phone-box{
   height: 16px;
   width: 100%;

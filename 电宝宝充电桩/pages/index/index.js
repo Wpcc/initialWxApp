@@ -18,11 +18,11 @@ Page({
     goList,
     goRecharge,
     goInstruction,
-    goMine,
     markersGo(e) {
       goProduct(e)
     },
-    location: function () {
+    // 悬浮按钮
+    location() {
       let that = this
       wx.getLocation({
         type: 'gcj02',
@@ -31,6 +31,47 @@ Page({
             longitude: res.longitude,
             latitude: res.latitude
           })
+        }
+      })
+    },
+    scan() {
+      wx.scanCode({
+        success(res) {
+          // 做跳转
+          console.log(res.path)
+
+          wx.navigateTo({
+            url: '/' + res.path
+          })
+        }
+      })
+    },
+    bindGetUserInfo(e) {
+      wx.getSetting({
+        success(res) {
+          if(res.authSetting['scope.userInfo']) { // 用户授权
+            if(wx.getStorageSync('session3rd')) { // 用户注册
+              goMine()
+            }else {
+              const userInfo = e.detail.userInfo
+              wx.login({ // 获取code的值
+                success(res) {
+                  request('POST', '/api/login/login', {
+                    data:{
+                      nickname: userInfo.nickName, // 用户姓名
+                      headimgurl: userInfo.avatarUrl, // 用户头像
+                      sex: userInfo.gender, // 性别
+                      code: res.code  // 后台服务器解析用的code
+                    }
+                  })
+                  .then(res => {
+                    wx.setStorageSync('session3rd',res.data.session3rd) // 保存用户登录凭证
+                    goMine()
+                  })
+                }
+              })
+            }
+          }
         }
       })
     },

@@ -70,7 +70,7 @@
 }
 .mapStyle{
   width:100%;
-  height:calc(100% - 100px);
+  height:calc(100% - 44px);
 }
 
 .page__box{
@@ -82,13 +82,6 @@
   z-index: 2;
   box-sizing: border-box;
   padding: 0 10px;
-}
-.location{
-  width: 80rpx;
-  height: 80rpx;
-  position: absolute;
-  right: 30rpx;
-  bottom: 100px;
 }
 .page__iconbar{
   width: 100%;
@@ -121,27 +114,44 @@
   height: 50px;
 }
 /* tabbar */
-.tabbar-container{
+.position-box{
   width: 100%;
-  height: 55px;
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  height: 145rpx;
 }
-.menu-box{
-  box-sizing: border-box;
-  height: 54px;
-  width: 60px;
-  padding-top: 5px;
+.location{
+  width: 80rpx;
+  height: 80rpx;
+  position: absolute;
+  left: 20rpx;
+  bottom: 0;
 }
-.menu-img{
-  width: 28px;
-  height: 28px;
-  display: block;
-  margin: 0 auto;
+.scan{
+  width: 140rpx;
+  height: 140rpx;
+  position: absolute;
+  left: 50%;
+  bottom: 5rpx;
+  transform: translate(-50%,0)
 }
-.menu-text{
-  font-size: 12px;
-  text-align: center;
-  display: block;
+.mine{
+  width: 80rpx;
+  height: 80rpx;
+  position:absolute;
+  right: 20rpx;
+  bottom: 0
 }
-.clickedBox{
-  color: #23C675;
+/* 清楚button默认样式 */
+.clear-box{
+  display: inline;
+  background: none;
+  color: #fff;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+.clear-box::after{
+  border:none
 }

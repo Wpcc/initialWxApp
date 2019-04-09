@@ -1,28 +1,21 @@
 <!--pages/mine/index.wxml-->
 <view class="user-container">
   <view class="info-container">
-    <button class="auth-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo" wx:if="{{ !auth }}"></button> <!-- 授权按钮 -->
     <view class="avatar-container" >
       <view class="avatar-icon">
-        <image src="../../static/mine/avatar_default.png" style="width:50px;height:50px;" wx:if="{{ !auth }}"/>
-        <open-data type="userAvatarUrl" wx:else></open-data>
+        <open-data type="userAvatarUrl"></open-data>
       </view>
       <view class="avatar-text">
         <view class="avatar-nickname">
-          <open-data type="userNickName" style="font-size:16px;" wx:if="{{ auth }}"></open-data>
-          <text wx:else>未授权</text>
+          <open-data type="userNickName" style="font-size:16px;"></open-data>
         </view>
         <view class="setAuth">
-          <view wx:if="{{ !auth }}">
-            <text class="auth-text" bindtap="onAuth">点击授权</text>
-            <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
-          </view>
-          <view class="phone-box" wx:else>
+          <view class="phone-box">
             <button class="clear-box" wx:if="{{ !bindPhone }}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
               <text class="auth-text" bindtap="onAuth">绑定手机号</text>
               <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
             </button>
-            <text class="auth-text" wx:else>15172797475</text>
+            <text class="auth-text" wx:else>{{phone}}</text>
           </view>
         </view>
       </view>
@@ -47,6 +40,15 @@
     <view class="list-left">
       <image src="../../static/mine/icon_recharge.png" class="record"/>
       <text class="record-text">充值记录</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+  <view class="list-box" bindtap="goService">
+    <view class="list-left">
+      <image src="../../static/mine/icon_service.png" class="record"/>
+      <text class="record-text">客服</text>
     </view>
     <view class="list-right">
       <image src="../../static/mine/icon_next.png" class="icon-next"/>

@@ -9,7 +9,7 @@
     "pages/instruction/index",
     "pages/recharge/index",
     "pages/order/index",
-    "pages/components/tabbar/index",
+    "pages/service/index",
     "pages/components/centerLoading/index",
     "pages/components/bottomLoading/index"
   ],

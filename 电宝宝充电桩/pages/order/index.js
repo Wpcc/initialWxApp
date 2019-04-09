@@ -73,7 +73,7 @@ Page({
               icon: 'none',
               duration: 2000
             })
-            that.setData({
+            this.setData({
               ['piles[' + i + '].isAbnormal']: 2
             })
           }else {
