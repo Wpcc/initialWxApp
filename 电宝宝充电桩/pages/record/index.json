@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "center-loading":"../components/centerLoading/index",
+    "bottom-loading":"../components/bottomLoading/index"
+  }
+}

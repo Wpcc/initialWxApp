@@ -72,7 +72,9 @@ Page({
   },
   // onLoad生命周期
   onLoad(option) {
-    console.log(JSON.stringify(option))
+    console.log(JSON.stringify('option:' + JSON.stringify(option)))
+    console.log('scene:' + option.scene)
+    console.log('option.id:' + option.id)
     let param = {}
     if(option.id){ // 通过小程序中ID进入
       param = {

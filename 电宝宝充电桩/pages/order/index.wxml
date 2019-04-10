@@ -77,7 +77,7 @@
           </view>
           <view class="balance">
             <view class="recharge-left">
-              充电剩余时间：
+              充电时长：
               <text class="recharge-time">{{item.timeRemaining}}分钟</text>
             </view>
             <view class="recharge-right">

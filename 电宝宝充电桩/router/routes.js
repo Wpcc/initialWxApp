@@ -26,6 +26,13 @@ export function goRecharge() {
   })
 }
 
+// 充值记录
+export function goRecord() {
+  wx.navigateTo({
+    url: '../record/index'
+  })
+}
+
 // 跳转说明页
 export function goInstruction() {
   wx.navigateTo({

@@ -1,0 +1,32 @@
+<!--pages/record/index.wxml-->
+<view class="list-container">
+  <view class="underway-ul" wx:for="{{record}}" wx:key="{{item.id}}">
+      <view class="order-li">
+        <view class="title">
+          <view class="title-left">
+            <text class="order-number">{{item.order_sn}}</text>
+            <text class="order-timeLabel">订单时间：</text>
+            <text class="order-number">{{item.ctime}}</text>
+          </view>
+          <view class="title-right">
+            <text class="order-status" style="color:{{item.color}}">{{item.status}}</text>
+          </view>
+        </view>
+        <view class="content">
+          <view class="balance">
+            <view class="recharge-left">
+              充值金额：
+              <text class="recharge-time">￥{{item.pay_price}}元</text>
+            </view>
+            <view class="recharge-right">
+              余额：
+              <text class="recharge-money">￥{{item.surplus_amount}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <!-- loading页面 -->
+    <bottom-loading loading="{{bottomLoading}}" noData="{{noData}}"></bottom-loading>
+    <center-loading loading="{{centerLoading}}"></center-loading>
+</view>

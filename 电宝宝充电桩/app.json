@@ -11,7 +11,8 @@
     "pages/order/index",
     "pages/service/index",
     "pages/components/centerLoading/index",
-    "pages/components/bottomLoading/index"
+    "pages/components/bottomLoading/index",
+    "pages/record/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,6 +1,30 @@
 <!--pages/recharge/index.wxml-->
-<view class='container'>
+<view class='recharge'>
+  <view class="banner">
+    <image mode="aspectFit" src="../../static/recharge/banner.png"></image>
+    <view class="balance-position">
+      <text class="balance-text balance-title">账户充值</text>
+      <text class="balance-text balance-title">让充电更方便</text>
+      <text class="balance-text balance-content">我的余额：￥{{balance}}元</text>
+    </view>
+  </view>
+  <view class="title">请选择充值金额：</view>
   <view class="container-box">
-    <van-button primary="primary" wx:for="{{money}}" wx:key="{{item.id}}" id="{{index + 1}}" bind:click="onCharge">{{item[index + 1]}}元</van-button>
+    <view 
+      class="btn-box" 
+      primary="primary" 
+      wx:for="{{money}}" 
+      wx:key="{{item.id}}" 
+      id="{{item.id}}" 
+      data-i="{{index}}" 
+      bindtap="changeStyle"
+      style="color:{{item.color}};background:{{item.background}}"
+    >
+      <view class="btn-text show-money">{{item.get_money}}元</view>
+      <view class="btn-text real-money">售价：{{item.real_money}}元</view>
+    </view>
+  </view>
+  <view class="confirm-box">
+    <van-button custom-class="btn-confirm" type="primary" bind:click="onCharge">点击支付</van-button>
   </view>
 </view>
