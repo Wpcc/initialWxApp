@@ -8,12 +8,24 @@
                 <cover-view class="popup-title-text">{{markersContent.address}}</cover-view>
             </cover-view>
             <cover-view class="popup-view">
-                <cover-view class="view-left">充电桩情况：剩余{{markersContent.port}}充电口</cover-view>
-                <cover-view class="view-right">充电桩号：{{markersContent.deviceNum}}</cover-view>
+                <cover-view class="view-left">
+                  <cover-image class="circle" src="../../static/images/icon_circle.png"></cover-image>
+                  <cover-view class="inline">空闲：</cover-view>
+                  <cover-view class="residue-port">{{markersContent.port}}</cover-view>
+                  <cover-view class="inline">/10</cover-view>
+                </cover-view>
+                <cover-view class="view-right">
+                  <cover-view class="inline">充电桩号：</cover-view>
+                  <cover-view class="inline orange">{{markersContent.deviceNum}}</cover-view>
+                </cover-view>
             </cover-view>
         </cover-view>
     </cover-view>
     <view class="payment-container">
         <button class="payment-button" bindtap="popupShow">我要充电</button>
     </view>
+    <!-- 悬浮按钮 -->
+    <cover-image src="../../static/detail/btn_position.png" class="btn-position btn" bindtap='location'></cover-image>
+    <cover-image src="../../static/detail/btn_service.png" class="btn-service btn" bindtap='service'></cover-image>
+    <cover-image src="../../static/detail/btn_share.png" class="btn-share btn" bindtap='share'></cover-image>
 </view>

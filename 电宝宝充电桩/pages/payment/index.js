@@ -9,18 +9,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    pileNum:[
-      { id: 0, content: '0', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 1, content: '1', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 2, content: '2', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 3, content: '3', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 4, content: '4', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 5, content: '5', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 6, content: '6', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 7, content: '7', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 8, content: '8', background: '#ffffff', color: '#23C675', disable:false },
-      { id: 9, content: '9', background: '#ffffff', color: '#23C675', disable:false }
-    ],
+    pile:{},
+    pileNum:[],
     rechargePile:{ // 下单后的参数
       id:'',
       port:''
@@ -40,41 +30,40 @@ Page({
   clickedPileNum: function (e) {
     let currentTarget = e.currentTarget 
     let num = currentTarget.dataset.num
-    
+    if(currentTarget.dataset.status != 0){ // 端口异常，返回
+      return
+    }
     // 循环初始化样式
-    for(let i=0; i<this.data.pileNum.length; i++){
-      if(this.data.pileNum[i].disable){
-        // ES6对象字面量赋值
-        let obj = {
-          ['pileNum[' + i + '].background']: 'rgba(35,198,117,0.6)',
-          ['pileNum[' + i + '].color']: 'rgba(255,255,255,0.9)'
-        }
-        this.setData(obj)
+    this.data.pileNum.forEach(item => {
+      if(item.status === 0){
+        this.setData({
+          ['pileNum[' + item.id + '].img']: '../../static/payment/icon_socket_normal.png'
+        })
       }else{
-        let obj = {
-          ['pileNum[' + i + '].background']: '#ffffff',
-          ['pileNum[' + i + '].color']: '#23C675'
-        }
-        this.setData(obj)
+        this.setData({
+          ['pileNum[' + item.id + '].img']: '../../static/payment/icon_socket_used.png'
+        })
       }
-    }
-    let obj = {
+      this.setData({
+        ['pileNum[' + item.id + '].background']: '#fff',
+        ['pileNum[' + item.id + '].color']:'#363636'
+      })
+    })
+    // 设置选中样式
+    this.setData({
+      ['pileNum[' + num + '].img']: '../../static/payment/icon_socket_selected.png',
       ['pileNum[' + num + '].background']: '#23C675',
-      ['pileNum[' + num + '].color']: '#ffffff'
-    }
-    this.setData(obj) // 设置数据
+      ['pileNum[' + num + '].color']:'#fff'
+    })
 
     // 选中端口
-    let port = parseInt(this.data.pileNum[num].content) + 1
+    let port = num + 1
     this.setData({
       'rechargePile.port': port.toString()
     })
   },
   // onLoad生命周期
   onLoad(option) {
-    console.log(JSON.stringify('option:' + JSON.stringify(option)))
-    console.log('scene:' + option.scene)
-    console.log('option.id:' + option.id)
     let param = {}
     if(option.id){ // 通过小程序中ID进入
       param = {
@@ -92,28 +81,32 @@ Page({
     request('POST','/api/choiceport/index', param)
     .then(res => {
       res = res.data
-      this.setData({ // 获取充电桩ID，后续支付使用
-        'rechargePile.id': res.id.toString()
+      this.setData({ 
+        'rechargePile.id': res.id.toString(), // 获取充电桩ID，后续支付使用
+        pile:res // 将数据赋值给pile title数据渲染使用
       })
       let port = /^(port)/
-      let i = 0
-      for(var item in res){
-        if(port.test(item)){ // 正则去除id
-          if(res[item] >= 1){ // 端口号为0，代表未占用。1则为占用
-            let obj = {
-              ['pileNum[' + i + '].disable']: true,
-              ['pileNum[' + i + '].color']: 'rgba(255,255,255,0.9)',
-              ['pileNum[' + i + '].background']: 'rgba(35,198,117,0.6)'
-            }
-            this.setData(obj) 
-          }
-        i++       
+      let temp = []
+      console.log(res)
+      for(let key in res){
+        if(port.test(key)){ // 正则去除id
+          let obj = {}
+          obj.id = parseInt(key.charAt(4))
+          obj.showNum = '0' + key.charAt(4)
+          obj.status = res[key]
+          obj.img = res[key] == 0 ? '../../static/payment/icon_socket_normal.png' : '../../static/payment/icon_socket_used.png'
+          obj.background = '#fff'
+          obj.color = '#363636'
+          temp.push(obj)   
         }
       }
-      i = 0
+      this.setData({
+        pileNum:temp
+      })
+      console.log(this.data.pileNum)
     })
   },
-  getUserInfo: function(e) {
+  getUserInfo: function(e) { // 授权操作
     let that = this
     wx.getSetting({
       success(res) {
@@ -124,7 +117,7 @@ Page({
             })
           }else{ // 用户未选择端口
             wx.showToast({
-              title: '请选择对应端口，绿色按钮代表占用',
+              title: '请选择对应端口，橘色按钮代表占用',
               icon: 'none',
               duration: 3000
             })

@@ -67,7 +67,43 @@ map{
 .view-left{
   float: left;
 }
+.circle{
+  width: 11px;
+  height: 11px;
+  margin:2px 10px 0 12px;
+  float: left;
+}
+.residue-port{
+  display: inline;
+  color: #23C675;
+}
+.inline{
+  display: inline;
+}
+.orange{
+  color: #FF6700;
+}
 .view-right{
   float: right;
+}
+/* 悬浮按钮 */
+.btn{
+  width: 60rpx;
+  height: 60rpx;
+}
+.btn-position{
+  position: absolute;
+  left: 40rpx;
+  bottom: 160rpx;
+}
+.btn-service{
+  position: absolute;
+  right: 40rpx;
+  bottom: 260rpx;
+}
+.btn-share{
+  position: absolute;
+  right: 40rpx;
+  bottom: 160rpx;
 }
 

@@ -1,5 +1,6 @@
 // pages/product/index.js
 import {request} from '../../api/request'
+import {goService} from '../../router/routes'
 Page({
   data: {
     maskIsShow: false,
@@ -18,6 +19,7 @@ Page({
     markersContent:{
     }
   },
+  goService,
   popupShow: function () {
     var that = this
     wx.showModal({
@@ -36,7 +38,7 @@ Page({
       }
     })
   },
-  openLocation: function () {
+  openLocation: function () { // 打开内置导航
     const location = {
       latitude: this.data.markers[0].latitude,
       longitude: this.data.markers[0].longitude,
@@ -46,9 +48,20 @@ Page({
     }
     wx.openLocation(location)
   },
-  /**
-   * 生命周期函数
-   */
+  // 悬浮按钮
+  location() {
+    let that = this
+    wx.getLocation({
+      type: 'gcj02',
+      success(res) {
+        that.setData({
+          longitude: res.longitude,
+          latitude: res.latitude
+        })
+      }
+    })
+  },
+  // 生命周期函数
   onLoad(option) {
     // option可以获取跳转过来的参数
     if(option){

@@ -1,39 +1,133 @@
 /* pages/payment/index.wxss */
-
+.payment-container{
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding-top: 20px;
+}
 .form-title{
-  position: absolute;
-  left: 0;
-  top: 30px;
   width: 100%;
-  text-align: center;
-  margin-bottom: 40px;
+  height: 60px;
+  padding: 0 40rpx;
+  box-sizing: border-box;
 }
-.form-container{
-  width: 100%;
-  height: calc(100% - 50px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.form-content{
-  width: 220px;
-  height: 315px;
-}
-.form-btn{
-  width: 90px;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #ffffff;
-  color: #23C675;
+.form-left{
+  width: 60px;
+  height: 60px;
   float: left;
-  margin:10px;
 }
-.form-btn::after{
-    border:1px solid #23C675;
+.form-right{
+  float: left;
+  height: 60px;
+  margin-left: 20rpx;
+  width: 500rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.text-title{
+  font-size: 16px;
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.text-content{
+  font-size: 14px;
+  color: #666;
+}
+.text-residue{
+  margin-right: 40rpx;
+}
+.residue-color{
+  color: #23C675;
+}
+.port-color{
+  color: #FF6700;
+}
+/* 端口样式 */
+.port-box{
+  padding: 60rpx 40rpx;
+}
+.port-title{
+  width: 100%;
+  height: 19px;
+  font-size: 14px;
+  overflow: hidden;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.port-left{
+  height: 19px;
+  line-height: 19px;
+  float: left;
+}
+.icon-port{
+  width: 14px;
+  height: 14px;
+  vertical-align: middle;
+  margin-right: 10rpx;
+  margin-bottom: 2px;
+}
+.port-right{
+  float: right;
+  height: 19px;
+  line-height: 19px;
+}
+.text-middle{
+  height: 19px;
+  line-height: 19px;
+}
+.margin{
+  margin:0 8rpx 0 20rpx;
+}
+.circle{
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-bottom: 2px;
+}
+.circle-blue{
+  background: #23C675
+}
+.circle-gray{
+  background: #a6a6a6;
+}
+.circle-orange{
+  background: #FF6700;
+}
+/* 端口btn样式 */
+.port-content{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap:wrap;
+}
+.port-btn{
+  width: 30%;
+  height: 120rpx;
+  border: 1px solid #9E9E9E;
+  box-sizing: border-box;
+  border-radius: 6rpx;
+  color: #363636;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.port-btn-box{
+  width:80%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.port-icon{
+  width: 38px;
+  height: 38px;
 }
 
+/* 支付样式 */
 .btn-box{
     position: absolute;
     left: 0;
