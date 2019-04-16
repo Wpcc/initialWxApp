@@ -1,6 +1,7 @@
 // pages/list/index.js
 import { goBack, goProduct } from '../../router/routes'
 import { request } from '../../api/request'
+import { tip } from '../../utils/tip'
 
 const app = getApp();
 Page({
@@ -27,7 +28,6 @@ Page({
     this.setData({
       inputVal: e.detail.value
     })
-    app.globalData.listInput = this.data.inputVal
   },
   // 点击搜索logo或键盘完成===》跳转到首页
   inputCompleted: function () {
@@ -40,7 +40,6 @@ Page({
       bottomLoading: false,
       noData: false
     })
-    app.globalData.listInput = this.data.inputVal
     // 用户输入数据校验
     this.getPilesList(this.searchLoad)
   },
@@ -48,82 +47,45 @@ Page({
    * 生命周期函数
    */
   onShow: function () {
-    this.setData({ // 页面显示时，初始化input的值
-      inputVal: app.globalData.listInput
-    })
-  },
-  // 页面事件处理
-  onReachBottom() {
-    if(this.data.noData){ // 如果没数据返回
-      return
-    }
-    let page = this.data.page
-    // 从后台获取数据
-    this.setData({
-      page: page + 1,
-      loading: true
-    })
-    this.getPilesList(this.pullDownLoad)
+    
   },
   // 自定义事件
   getPilesList(setLoading) {
     // 用户授权未授权两种状态
     let that = this
-    wx.getSetting({
-      success(res){
-        if(!res.authSetting['scope.userLocation']){
-          wx.showModal({
-            title: '提示',
-            content: '请打开位置授权，否则无法正确定位',
-            success(res) {
-              if (res.confirm) {
-                wx.openSetting({
-                  success(res){
-                    console.log(res.authSetting)
-                  }
-                })
-              } else if (res.cancel) {
-                console.log('用户点击取消')
-              }
-            }
-          })
-        }else{
-          request('POST','/api/Chargelist/lst', { // 从后台获取数据
-            data:{
-              search: that.data.inputVal, // 搜索内容
-              lng: app.globalData.longitude,
-              lat: app.globalData.latitude,
-              p: that.data.page
-            }
-          })
-          .then(res => {
-            that.setData({ // loading 初始化
-              centerLoading: false,
-              bottomLoading: false,
-              noData: false
-            })
-            res = res.data
-            
-            let i = that.data.i
-            res.forEach(item => {
-              that.setData({
-                ['listData[' + i + '].id']: item.id,
-                ['listData[' + i + '].longitude']: parseFloat(item.lng),
-                ['listData[' + i + '].latitude']: parseFloat(item.lat),
-                ['listData[' + i + '].address']: item.address,
-                ['listData[' + i + '].deviceNum']: item.device_sn,
-                ['listData[' + i + '].port']: item.remaining,
-                ['listData[' + i + '].distance']: parseInt(item.leng).toString() + 'm'
-              })
-              i++
-              that.setData({
-                i: i
-              })
-            })
-            setLoading(res)
-          })
-        }
+    request('POST','/api/Chargelist/lst', { // 从后台获取数据
+      data:{
+        search: that.data.inputVal, // 搜索内容
+        lng: app.globalData.longitude,
+        lat: app.globalData.latitude,
+        p: that.data.page
       }
+    })
+    .then(res => {
+      that.setData({ // loading 初始化
+        centerLoading: false,
+        bottomLoading: false,
+        noData: false
+      })
+      res = res.data
+      
+      let i = that.data.i
+      res.forEach(item => {
+        that.setData({
+          ['listData[' + i + '].id']: item.id,
+          ['listData[' + i + '].longitude']: parseFloat(item.lng),
+          ['listData[' + i + '].latitude']: parseFloat(item.lat),
+          ['listData[' + i + '].address']: item.address,
+          ['listData[' + i + '].deviceNum']: item.device_sn,
+          ['listData[' + i + '].port']: item.remaining,
+          ['listData[' + i + '].distance']: parseInt(item.leng).toString() + 'm'
+        })
+        i++
+        that.setData({
+          i: i
+        })
+      })
+      setLoading(res)
     })
   },
   searchLoad(res) {
@@ -136,11 +98,7 @@ Page({
         bottomLoading: true,
       })
     } else if (res.length == 0) {
-      wx.showToast({
-        title: '抱歉，你搜索的内容不存在！',
-        icon: 'none',
-        duration: 3000
-      })
+      tip.error('抱歉，你搜索的内容不存在！')
     }
   },
   pullDownLoad(res) {

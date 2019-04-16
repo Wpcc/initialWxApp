@@ -1,7 +1,10 @@
 // pages/payment/index.js
+import { tip } from '../../utils/tip'
 import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
 import { throttle } from '../../utils/throttle'
+import { goPayTip } from '../../router/routes'
+import { login } from '../../utils/login'
 
 const app = getApp()
 Page({
@@ -116,18 +119,10 @@ Page({
               show: true
             })
           }else{ // 用户未选择端口
-            wx.showToast({
-              title: '请选择对应端口，橘色按钮代表占用',
-              icon: 'none',
-              duration: 3000
-            })
+            tip.error('请选择对应端口，橘色按钮代表占用');
           }
         } else { // 未授权，提示用户授权
-          wx.showToast({
-            title: '请打开授权，否则无法支付',
-            icon: 'none',
-            duration: 3000
-          })
+          tip.error('请打开授权，否则无法支付');
         }
       }
     })
@@ -141,53 +136,40 @@ Page({
   onSelect: function (e) {
     let that = this
     if(e.detail.name === '微信支付'){
-      this.loginThenOrder(this.wxPay) // 登录、支付
+      tip.loading('正在支付中...');
+      that.loginThen().then(res => {
+        if(res) {
+          that.wxPay();
+        }else{
+          tip.error('支付失败!');
+        }
+      });
     }
     else if(e.detail.name === '余额支付'){
-      wx.showModal({
-        title: '提示',
-        content: '确认使用余额支付',
-        success(res) {
-          if (res.confirm) {
-            that.loginThenOrder(that.balancePay)
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
+      tip.confirm('确认使用余额支付').then(data => {
+        if (data) {
+          tip.loading('正在支付中...');
+          that.loginThen().then(res => {
+            if(res) {
+              that.balancePay();
+            }else {
+              tip.error('支付失败!');
+            }
+          });
+        } else {
+          console.log('用户点击取消')
         }
-      })
+      });
     }
     this.onClose()  // 关闭弹窗
   },
-  // 支付流程
-  loginThenOrder: function(wxPay) {
-    const that = this
-    if(wx.getStorageSync('session3rd')){ // 是否注册 ==》 注册
-      wxPay() // 下单并支付
-    }else{
-      wx.getUserInfo({
-        success(res) {
-          const userInfo = res.userInfo
-          throttle(() => { // 节流：减少用户点击支付按钮
-            wx.login({ // 获取code的值
-              success(res) {
-                request('POST','/api/login/login',{ // 注册
-                  data:{
-                    nickname: userInfo.nickName, // 用户姓名
-                    headimgurl: userInfo.avatarUrl, // 用户头像
-                    sex: userInfo.gender, // 性别
-                    code: res.code  // 后台服务器解析用的code
-                  }
-                })
-                .then(res => {
-                  wx.setStorageSync('session3rd',res.data.session3rd)
-                  wxPay() // 下单并支付   
-                })
-              }
-            })
-          }, 4000, that)
-        }
-      })
-    }
+  loginThen: function() {
+    tip.loading();
+    return new Promise((resolve, reject) => {
+      login().then(res => {
+          resolve(res);
+      });
+    });
   },
   wxPay: function() { // 微信支付
     request('POST','/api/Build/buildOrder', { // 下单
@@ -200,6 +182,7 @@ Page({
       }
     })
     .then(res => { // 下单成功进行支付
+      tip.loaded();
       if(res.status === 0) { // 缓存登录态失效处理
         wx.removeStorageSync('session3rd') // 清除缓存
         this.loginThenOrder(this.wxPay)
@@ -219,19 +202,13 @@ Page({
       }
     })
     .then(res => { // 下单成功进行支付
+      tip.loaded();
       if(res.status === 0) { // 余额不足
-        if(res.msg === "未登录"){
-          wx.removeStorageSync('session3rd')
-          this.loginThenOrder(this.balancePay)
-        }else{
-          wx.showToast({
-            title: res.msg,
-            icon: 'none',
-            duration: 3000
-          })
-        }
-        return
+        tip.error(res.msg);
+      } else {
+        tip.success(res.msg);
+        goPayTip();
       }
     }) 
-  }
+  },
 })

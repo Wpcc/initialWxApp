@@ -12,7 +12,10 @@
     "pages/service/index",
     "pages/components/centerLoading/index",
     "pages/components/bottomLoading/index",
-    "pages/record/index"
+    "pages/components/noData/index",
+    "pages/record/index",
+    "pages/paysuccess/index",
+    "pages/share/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

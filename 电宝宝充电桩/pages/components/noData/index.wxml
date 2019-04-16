@@ -1,0 +1,7 @@
+<!--pages/components/noData/index.wxml-->
+<view class='noData-box'>
+  <view class='center-box'>
+    <image class='icon-center' src="../../../static/images/icon_no.png"></image>
+    <view class='text-center'>暂无记录</view>
+  </view>
+</view>

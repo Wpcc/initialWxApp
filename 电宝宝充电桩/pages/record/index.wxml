@@ -30,3 +30,9 @@
     <bottom-loading loading="{{bottomLoading}}" noData="{{noData}}"></bottom-loading>
     <center-loading loading="{{centerLoading}}"></center-loading>
 </view>
+<!-- 无记录显示 -->
+<view class="init-position">
+  <no-data wx:if="{{init}}"></no-data>
+</view>
+
+

@@ -15,7 +15,8 @@ Page({
     start: '', // 节流变量
     bottomLoading: false,
     noData: false,
-    centerLoading: true
+    centerLoading: true,
+    init: false // 用户无数据，显示
   },
   ing_order() {
     this.setData({ // 重置
@@ -26,9 +27,12 @@ Page({
       type: '1',
       centerLoading: true,
       bottomLoading: false,
-      noData: false
+      noData: false,
+      init:false
     })
-    this.getOrderList(this.clickLoad) // 获取进行时订单
+    setTimeout(() => {
+      this.getOrderList(this.clickLoad) // 获取进行时订单
+    },500)
   },
   ed_order() {
     this.setData({ 
@@ -39,9 +43,12 @@ Page({
       type:'2',
       centerLoading: true,
       bottomLoading: false,
-      noData: false
+      noData: false,
+      init:false
     })
-    this.getOrderList(this.clickLoad) // 获取完成是订单
+    setTimeout(() => {
+      this.getOrderList(this.clickLoad) // 获取完成是订单
+    },500)
   },
   restart(e) {
     this.setData({
@@ -129,7 +136,7 @@ Page({
       res = res.data // 进行中订单
       res.forEach(res => {
         let time = formatTime(new Date(res.ptime * 1000)) // 字符戳格式化
-        let payPrice = res.pay_price.toString() + '.00' // 支付金额加0
+        let payPrice = res.pay_price.toString() // 支付金额加0
         let obj = {
           ['piles[' + i + '].orderNum']: res.order_sn,
           ['piles[' + i + '].orderTime']: time,
@@ -145,8 +152,8 @@ Page({
           i:i
         })
       })
-      // 设置loading
-      setLoading(res)
+      // 无充电记录数据
+      this.initNoData()
     })
   },
   clickLoad(res) {
@@ -173,6 +180,15 @@ Page({
         noData: false
       })
       console.log('pull:' +　this.data.bottomLoading)
+    }
+  },
+  initNoData() {
+    if(this.data.piles.length === 0){
+      console.log('hello' + this.data.record)
+      this.setData({
+        init: true,
+        centerLoading: false
+      })
     }
   }
 })

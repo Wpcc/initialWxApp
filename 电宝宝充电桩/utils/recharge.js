@@ -1,10 +1,10 @@
 import MD5 from '../modules/md5'
 import {request} from '../api/request'
-import {goOrder} from '../router/routes'
+import {goRecord} from '../router/routes'
 
 const app = getApp()
 
-export const pay = (data) => {
+export const recharge = (data) => {
   let orderNum = data.order_sn // 订单号，查询订单用
   let appId = app.globalData.appId
   let timeStamp = Date.now().toString()
@@ -44,7 +44,7 @@ function searchOrder (orderNum) {
   .then((res) => {
     if(res.status === 1) { // 1 支付成功
       console.log('支付成功')
-      goOrder() // 支付完成跳转订单页
+      goRecord() // 支付完成跳转订单页
     }else{ // 非1支付失败
       console.log('支付失败')
     }

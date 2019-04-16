@@ -2,6 +2,8 @@
 //获取应用实例
 import {goList, goRecharge, goInstruction, goMine, goProduct} from '../../router/routes'
 import {request} from '../../api/request'
+import { login } from '../../utils/login'
+import { tip } from '../../utils/tip'
 const app = getApp()
 Page({
     data: {
@@ -37,9 +39,6 @@ Page({
     scan() {
       wx.scanCode({
         success(res) {
-          // 做跳转
-          console.log(res.path)
-
           wx.navigateTo({
             url: '/' + res.path
           })
@@ -47,90 +46,80 @@ Page({
       })
     },
     bindGetUserInfo(e) {
-      wx.getSetting({
-        success(res) {
-          if(res.authSetting['scope.userInfo']) { // 用户授权
-            if(wx.getStorageSync('session3rd')) { // 用户注册
-              goMine()
-            }else {
-              const userInfo = e.detail.userInfo
-              wx.login({ // 获取code的值
-                success(res) {
-                  request('POST', '/api/login/login', {
-                    data:{
-                      nickname: userInfo.nickName, // 用户姓名
-                      headimgurl: userInfo.avatarUrl, // 用户头像
-                      sex: userInfo.gender, // 性别
-                      code: res.code  // 后台服务器解析用的code
-                    }
-                  })
-                  .then(res => {
-                    wx.setStorageSync('session3rd',res.data.session3rd) // 保存用户登录凭证
-                    goMine()
-                  })
-                }
-              })
-            }
-          }
+      tip.loading();
+      login().then(res => {
+        tip.loaded();
+        if(res) {
+          goMine();
         }
-      })
+      });
     },
     // 加载用户位置，将数据放入到全局变量当中
     onShow: function () {
-        // 打印url参数
-        if (app.globalData.listInput) {
-            this.setData({
-                inputShowed: true,
-                inputVal: app.globalData.listInput
-            })
-        } else {
-            this.setData({
-                inputShowed: false,
-                inputVal: ""
-            })
-        }
-        let that = this
-        wx.getLocation({
-            type: 'gcj02',
-            success(res) {
-                // 存全局data中
-                app.globalData.longitude = res.longitude
-                app.globalData.latitude = res.latitude
+      // 打印url参数
+      if (app.globalData.listInput) {
+          this.setData({
+              inputShowed: true,
+              inputVal: app.globalData.listInput
+          })
+      } else {
+          this.setData({
+              inputShowed: false,
+              inputVal: ""
+          })
+      }
+      let that = this
+      wx.getLocation({
+          type: 'gcj02',
+          success(res) {
+              tip.loaded();
+              // 存全局data中
+              app.globalData.longitude = res.longitude
+              app.globalData.latitude = res.latitude
 
-                that.setData({
-                    longitude: res.longitude,
-                    latitude: res.latitude
-                })
-                request('POST','/api/Homepage/index',{
-                  data:{
-                    lng: res.longitude,
-                    lat: res.latitude
+              that.setData({
+                  longitude: res.longitude,
+                  latitude: res.latitude
+              })
+              request('POST','/api/Homepage/index',{
+                data:{
+                  lng: res.longitude,
+                  lat: res.latitude
+                }
+              })
+              .then(res => {
+                res = res.data
+                let i = 0
+                res.forEach(item => {
+                  let obj = { // 设置markers
+                    ['markers[' + i + '].longitude']: parseFloat(item.lng),
+                    ['markers[' + i + '].latitude']: parseFloat(item.lat),
+                    ['markers[' + i + '].id']: item.id,
+                    ['markers[' + i + '].iconPath']: '../../static/images/position_go.png',
+                    ['markers[' + i + '].width']: 40,
+                    ['markers[' + i + '].height']: 38
                   }
+                  that.setData(obj)
+                  i++
                 })
-                .then(res => {
-                  res = res.data
-                  let i = 0
-                  res.forEach(item => {
-                    let obj = { // 设置markers
-                      ['markers[' + i + '].longitude']: parseFloat(item.lng),
-                      ['markers[' + i + '].latitude']: parseFloat(item.lat),
-                      ['markers[' + i + '].id']: item.id,
-                      ['markers[' + i + '].iconPath']: '../../static/images/position_go.png',
-                      ['markers[' + i + '].width']: 40,
-                      ['markers[' + i + '].height']: 38
-                    }
-                    that.setData(obj)
-                    i++
-                  })
-                })
-            },
-            fail() {
-                wx.showToast({
-                    title: '请打开位置授权，否则无法正确定位',
-                    icon: 'none',
-                    duration: 3000
-                })
-            }
-        })
+              })
+          },
+          fail() {
+              tip.alert('请打开位置授权，否则无法正确定位');
+          }
+      })
+    },
+    onLoad: function (options) {
+      tip.loading()
+      if(options.key){ //通过分析进来，存入key值
+        wx.setStorageSync('key',options.key)
+      }
+      wx.openSetting({
+        success(res) {
+          if(!res.authSetting['scope.userInfo']){
+            wx.removeStorageSync('session3rd')
+          }
+        }
+      })
     }
 });

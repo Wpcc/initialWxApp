@@ -1,6 +1,7 @@
 // pages/mine/index.js
-import {goOrder, goBack, goIndex, goService, goRecord} from '../../router/routes'
+import {goOrder, goBack, goIndex, goService, goRecord, goShare} from '../../router/routes'
 import {request} from '../../api/request'
+import {tip} from '../../utils/tip'
 
 Page({
   // 数据
@@ -8,13 +9,14 @@ Page({
     auth: false,
     bindPhone: false,
     phone:0,
-    balance: '0'
+    balance: 0
   },
   // 路由
   goOrder,
   goBack,
   goService,
   goRecord,
+  goShare,
   // 点击授权
   getUserInfo: function() {
     this.setAuth()
@@ -36,6 +38,7 @@ Page({
           bindPhone: true,
           phone:res.mobile
         })
+        this.setPhoneAndBalance() //绑定后请求后台数据
       }
     })
   },
@@ -69,6 +72,9 @@ Page({
             bindPhone: false
           })
         }
+      } else if (res.msg === '未登录'){
+        wx.removeStorageSync('session3rd')
+        tip.errorSync('网络异常，点击重试', 1500, goBack)
       }
     })
     

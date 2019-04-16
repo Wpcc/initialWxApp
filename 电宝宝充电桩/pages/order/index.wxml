@@ -92,4 +92,7 @@
   <!-- loading页面 -->
   <bottom-loading loading="{{bottomLoading}}" noData="{{noData}}"></bottom-loading>
   <center-loading loading="{{centerLoading}}"></center-loading>
+  <view class="init-position" wx:if="{{init}}">
+    <no-data></no-data>
+  </view>
 </view>

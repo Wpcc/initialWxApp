@@ -1,6 +1,8 @@
 {
   "usingComponents": {
     "center-loading":"../components/centerLoading/index",
-    "bottom-loading":"../components/bottomLoading/index"
-  }
+    "bottom-loading":"../components/bottomLoading/index",
+    "no-data":"../components/noData/index"
+  },
+  "navigationBarTitleText":"充值详情"
 }

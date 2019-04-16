@@ -134,3 +134,10 @@
 .order-status-right{
   color:#23C675;
 }
+/* 无记录显示定位 */
+.init-position{
+  position: absolute;
+  top: 30%;
+  left: 0;
+  width: 100%;
+}

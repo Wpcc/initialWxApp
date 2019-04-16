@@ -45,6 +45,15 @@
       <image src="../../static/mine/icon_next.png" class="icon-next"/>
     </view>
   </view>
+  <view class="list-box" bindtap="goShare">
+    <view class="list-left">
+      <image src="../../static/mine/icon_mine.png" class="record"/>
+      <text class="record-text">邀请好友</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
   <view class="list-box" bindtap="goService">
     <view class="list-left">
       <image src="../../static/mine/icon_service.png" class="record"/>

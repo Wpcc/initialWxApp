@@ -1,0 +1,53 @@
+/* pages/share/index.wxss */
+.share-container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.box{
+  width: 100%;
+  text-align: center;
+  position: absolute;
+  left: 0;
+  top: 16%;
+}
+.icon{
+  width: 100px;
+  height: 100px;
+}
+.mainText{
+  margin-top: 20px;
+  margin-top: 10px;
+}
+.contentText, .timeText{
+  color: #888;
+  font-size: 14px;
+  margin-top: 10px;
+}
+.btn-box{
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  text-align: center;
+  width: 100%;
+}
+.btn-one{
+  width: 80%;
+  height: 45px;
+  margin-bottom: 10px;
+  color: #fff;
+  background: #09BB07;
+  font-size: 16px;
+  line-height: 45px;
+}
+.btn-two{
+  width: 80%;
+  height: 45px;
+  color: #fff;
+  background: #09BB07;
+  font-size: 16px;
+  line-height: 45px;
+  margin-bottom: 40rpx;
+}
+
+

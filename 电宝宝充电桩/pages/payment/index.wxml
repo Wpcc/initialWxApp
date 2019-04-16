@@ -52,7 +52,9 @@
       bind:cancel="onClose"
       bind:select="onSelect"
     />
-    <button class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+    <view class="btn-position">
+      <van-button type="primary" size="large" custom-class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
         <text>支付 ￥1.00</text>
-    </button>
+    </van-button>
+    </view>
 </view>

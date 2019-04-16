@@ -1,0 +1,21 @@
+/* pages/components/noData/index.wxss */
+.noData-box{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.center-box{
+  width: 50%;
+  text-align: center;
+}
+.icon-center{
+  width: 160rpx;
+  height: 160rpx;
+}
+.text-center{
+  color: #ccc;
+  font-size: 14px;
+  margin-top: 20px;
+}

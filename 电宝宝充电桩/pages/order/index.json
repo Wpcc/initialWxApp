@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "center-loading":"../components/centerLoading/index",
-    "bottom-loading":"../components/bottomLoading/index"
+    "bottom-loading":"../components/bottomLoading/index",
+    "no-data":"../components/noData/index"
   },
-  "navigationBarTitleText":"账单详情"
+  "navigationBarTitleText":"充电详情"
 }

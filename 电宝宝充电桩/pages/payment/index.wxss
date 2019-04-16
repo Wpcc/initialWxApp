@@ -128,18 +128,20 @@
 }
 
 /* 支付样式 */
+.btn-position{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
 .btn-box{
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 50px;
-    background: #23C675;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ffffff;
-    border-radius: 0;
+  width: 100%;
+  background: #23C675;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  border-radius: 0;
 }
 .btn-box::after{
   border:none

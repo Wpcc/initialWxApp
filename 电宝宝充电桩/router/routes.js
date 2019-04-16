@@ -12,6 +12,13 @@ export function goIndex() {
   })
 }
 
+// 跳转到分享
+export function goShare() {
+  wx.redirectTo({
+    url:'../share/index'
+  })
+}
+
 // 跳转客服
 export function goService() {
   wx.navigateTo({
@@ -59,6 +66,13 @@ export function goOrder() {
   wx.navigateTo({
     url:'../order/index'
   })
+}
+
+// 支付成功页
+export function goPayTip() {
+  wx.navigateTo({
+    url: '../paysuccess/index'
+  });
 }
 
 // 点击列表页，跳转到产品详情页

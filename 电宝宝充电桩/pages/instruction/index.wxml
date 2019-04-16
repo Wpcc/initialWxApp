@@ -1,4 +1,6 @@
 <!--pages/instruction/index.wxml-->
 <view class='container'>
-  <text>开发中,请等待</text>
+  <cover-view class="instructions_for_use">
+      <cover-image class="iconbar_image" src="../../static/images/instructions_for_use.png" />
+  </cover-view>
 </view>

@@ -8,7 +8,8 @@ Page({
     record:[],
     bottomLoading: false,
     centerLoading: true,
-    noData: false
+    noData: false,
+    init: false // 如果用户没记录显示
   },
   // 页面事件处理
   onReachBottom() {
@@ -23,6 +24,7 @@ Page({
   },
   onShow(){
     checkAuthAndLogin()
+    this.initArray() //初始化列表
     this.getRecordList(this.clickLoad)
   },
   // 自定义函数
@@ -67,6 +69,8 @@ Page({
       console.log('record:' + JSON.stringify(this.data.record))
       // 设置loading
       setLoading(res)
+      // 如果没有记录
+      this.initNoData()
     })
   },
   pullDownLoad(res) {
@@ -92,5 +96,18 @@ Page({
         bottomLoading: true
       })
     }
+  },
+  initNoData() {
+    if(this.data.record.length === 0){
+      this.setData({
+        init: true,
+        centerLoading: false
+      })
+    }
+  },
+  initArray() {
+    this.setData({
+      record:[]
+    })
   }
 })

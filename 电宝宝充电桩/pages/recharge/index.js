@@ -1,5 +1,5 @@
 // pages/recharge/index.js
-import {pay} from '../../utils/pay'
+import {recharge} from '../../utils/recharge'
 import {request} from '../../api/request'
 import {checkAuthAndLogin} from '../../utils/util'
 Page({
@@ -73,7 +73,7 @@ Page({
         wx.removeStorageSync('session3rd') // 清除缓存
         return
       }
-      pay(res.data)
+      recharge(res.data)
     }) 
   }
 })
