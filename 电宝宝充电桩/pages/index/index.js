@@ -111,7 +111,7 @@ Page({
     },
     onLoad: function (options) {
       tip.loading()
-      if(options.key){ //通过分析进来，存入key值
+      if(options.key){ //通过分享进来，存入key值
         wx.setStorageSync('key',options.key)
       }
       wx.openSetting({

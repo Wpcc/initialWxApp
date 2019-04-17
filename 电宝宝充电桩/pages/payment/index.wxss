@@ -47,7 +47,10 @@
 }
 /* 端口样式 */
 .port-box{
-  padding: 60rpx 40rpx;
+  padding: 30rpx 40rpx;
+}
+.time-box{
+  padding: 0 40rpx;
 }
 .port-title{
   width: 100%;
@@ -104,6 +107,11 @@
   justify-content: space-between;
   flex-wrap:wrap;
 }
+.port-time{
+  width: 100%;
+  font-size: 12px;
+  overflow: hidden;
+}
 .port-btn{
   width: 30%;
   height: 120rpx;
@@ -115,6 +123,23 @@
   justify-content: space-around;
   align-items: center;
   margin-bottom: 20rpx;
+}
+.time-btn{
+  width: 30%;
+  height: 120rpx;
+  border: 1px solid #9E9E9E;
+  box-sizing: border-box;
+  border-radius: 6rpx;
+  color: #363636;
+  float: left;
+  margin-right: 40rpx;
+  text-align: center;
+}
+.time-icon{
+  width: 44rpx;
+  height: 50rpx;
+  display: block;
+  margin: 16rpx auto 4rpx auto;
 }
 .port-btn-box{
   width:80%;

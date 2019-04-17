@@ -43,6 +43,27 @@
           </view>
         </view>
     </view>
+    <!-- time -->
+    <view class="time-box">
+      <view class="port-title">
+        <view class="port-left">
+          <image class="icon-port" src="../../static/payment/icon_time.png" />
+          <text>请选择端口</text>
+        </view>
+      </view>
+      <view class="port-time">
+        <view class="time-btn"
+          wx:for="{{pileTime}}"
+          wx:key="{{item.id}}" 
+          data-num="{{item.id}}"
+          bindtap='clickedPileTime'
+          style="background:{{item.background}};color:{{item.color}}"
+        >
+          <image class="time-icon" src="{{item.img}}"/>
+          <text class="port-num">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
     <!-- 弹窗 -->
     <van-action-sheet
       show="{{ show }}"
@@ -54,7 +75,7 @@
     />
     <view class="btn-position">
       <van-button type="primary" size="large" custom-class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-        <text>支付 ￥1.00</text>
+        <text>点击支付</text>
     </van-button>
     </view>
 </view>

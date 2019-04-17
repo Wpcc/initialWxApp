@@ -2,7 +2,6 @@
 import { tip } from '../../utils/tip'
 import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
-import { throttle } from '../../utils/throttle'
 import { goPayTip } from '../../router/routes'
 import { login } from '../../utils/login'
 
@@ -14,9 +13,14 @@ Page({
   data: {
     pile:{},
     pileNum:[],
+    pileTime:[
+      {id:0,background:'#fff',color:'#363636',content:'4小时/1.00元',img:'../../static/payment/icon_noCharge.png'},
+      {id:1,background:'#fff',color:'#363636',content:'8小时/2.00元',img:'../../static/payment/icon_noCharge.png'},
+    ],
     rechargePile:{ // 下单后的参数
       id:'',
-      port:''
+      port:'',
+      time:''
     },
     start: 0, // 节流时间变量
     // 第三方组件弹窗
@@ -63,6 +67,28 @@ Page({
     let port = num + 1
     this.setData({
       'rechargePile.port': port.toString()
+    })
+  },
+  clickedPileTime: function(e) {
+    let currentTarget = e.currentTarget 
+    let num = currentTarget.dataset.num
+    this.data.pileTime.forEach(item => { // 初始化样式
+      this.setData({
+        ['pileTime[' + item.id + '].background']: '#fff',
+        ['pileTime[' + item.id + '].color']:'#363636',
+        ['pileTime[' + item.id + '].img']: '../../static/payment/icon_noCharge.png'
+      })
+    })
+    // 设置选中样式
+    this.setData({
+      ['pileTime[' + num + '].img']: '../../static/payment/icon_charged.png',
+      ['pileTime[' + num + '].background']: '#23C675',
+      ['pileTime[' + num + '].color']:'#fff'
+    })
+    // 选中端口
+    let time = num +1
+    this.setData({
+      'rechargePile.time': time.toString()
     })
   },
   // onLoad生命周期
@@ -114,12 +140,12 @@ Page({
     wx.getSetting({
       success(res) {
         if (res.authSetting['scope.userInfo']) { // 是否授权 ==> 授权
-          if(that.data.rechargePile.port){ // 是否选择端口 ==》 选择端口
+          if(that.data.rechargePile.port && that.data.rechargePile.time){ // 是否选择端口 ==》 选择端口
             that.setData({  // 做弹出层
               show: true
             })
           }else{ // 用户未选择端口
-            tip.error('请选择对应端口，橘色按钮代表占用');
+            tip.error('请选择端口及充电时间，橘色按钮代表占用');
           }
         } else { // 未授权，提示用户授权
           tip.error('请打开授权，否则无法支付');
@@ -165,7 +191,7 @@ Page({
   },
   loginThen: function() {
     tip.loading();
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       login().then(res => {
           resolve(res);
       });
@@ -178,7 +204,8 @@ Page({
       },
       data:{
         id: this.data.rechargePile.id,
-        port: this.data.rechargePile.port
+        port: this.data.rechargePile.port,
+        type: this.data.rechargePile.time
       }
     })
     .then(res => { // 下单成功进行支付
@@ -198,7 +225,8 @@ Page({
       },
       data:{
         id: this.data.rechargePile.id,
-        port: this.data.rechargePile.port
+        port: this.data.rechargePile.port,
+        type: this.data.rechargePile.time
       }
     })
     .then(res => { // 下单成功进行支付
