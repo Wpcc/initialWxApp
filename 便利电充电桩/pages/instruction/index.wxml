@@ -1,0 +1,6 @@
+<!--pages/instruction/index.wxml-->
+<view class='container'>
+  <view class="instructions_for_use">
+      <image class="iconbar_image" mode="aspectFit" src="https://backend.quanjieshop.com/static/plugs/other/yindao.png" />
+  </view>
+</view>

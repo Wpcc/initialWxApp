@@ -1,0 +1,66 @@
+<!--pages/mine/index.wxml-->
+<view class="user-container">
+  <view class="info-container">
+    <view class="avatar-container" >
+      <view class="avatar-icon">
+        <open-data type="userAvatarUrl"></open-data>
+      </view>
+      <view class="avatar-text">
+        <view class="avatar-nickname">
+          <open-data type="userNickName" style="font-size:16px;"></open-data>
+        </view>
+        <view class="setAuth">
+          <view class="phone-box">
+            <button class="clear-box" wx:if="{{ !bindPhone }}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+              <text class="auth-text" bindtap="onAuth">绑定手机号</text>
+              <image  src="../../static/mine/icon_auth.png" style="width:10px;height:10px;"/>
+            </button>
+            <text class="auth-text" wx:else>{{phone}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="account-container">
+    <view class="accountTitle">账户余额</view>
+    <view class="accountBalance">￥{{balance}}</view>
+  </view>
+</view>
+<view class="list-container">
+  <view class="list-box" bindtap="goOrder">
+    <view class="list-left">
+      <image src="../../static/mine/icon_record.png" class="record"/>
+      <text class="record-text">充电记录</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+  <view class="list-box" bindtap="goRecord">
+    <view class="list-left">
+      <image src="../../static/mine/icon_recharge.png" class="record"/>
+      <text class="record-text">充值记录</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+  <view class="list-box" bindtap="goShare">
+    <view class="list-left">
+      <image src="../../static/mine/icon_mine.png" class="record"/>
+      <text class="record-text">邀请好友</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+  <view class="list-box" bindtap="service">
+    <view class="list-left">
+      <image src="../../static/mine/icon_service.png" class="record"/>
+      <text class="record-text">客服</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view>
+</view>

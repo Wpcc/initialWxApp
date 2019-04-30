@@ -1,0 +1,19 @@
+/* pages/instruction/index.wxss */
+.container{
+  padding-top: 20px;
+  width: 100%;
+  height: 150%;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.instructions_for_use{
+  color: #fff;
+  width: 100%;
+  height: 100%;
+}
+.iconbar_image{
+  width: 100%;
+  height: 100%;
+}

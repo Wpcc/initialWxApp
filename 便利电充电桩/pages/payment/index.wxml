@@ -1,0 +1,81 @@
+<!--pages/payment/index.wxml-->
+<view class="payment-container">
+    <view class="form-title">
+        <view class="form-left">
+          <image src="../../static/payment/img_address.png" style="width:100%;height:100%;" />
+        </view>
+        <view class="form-right">
+          <view class="text-title">{{pile.address}}</view>
+          <view class="text-content">
+            <text class="text-residue">空闲：<text class="residue-color">{{pile.remaining}}</text>/10</text>
+            <text class="text-port">充电桩号：<text class="port-color">{{pile.device_sn}}</text></text>
+          </view>
+        </view>
+    </view>
+    <view class="port-box">
+        <view class="port-title">
+          <view class="port-left">
+            <image class="icon-port" src="../../static/payment/icon_port.png" />
+            <text>请选择端口</text>
+          </view>
+          <view class="port-right">
+            <view class="circle circle-blue margin"></view>
+            <text class="text-middle">空闲</text>
+            <view class="circle circle-orange margin"></view>
+            <text class="text-middle">使用中</text>
+            <view class="circle circle-gray margin"></view>
+            <text class="text-middle">故障</text>
+          </view>
+        </view>
+        <view class="port-content">
+          <view class="port-btn" 
+            wx:for="{{pileNum}}"
+            wx:key="{{item.id}}" 
+            data-num="{{item.id}}" 
+            data-status="{{item.status}}" 
+            bindtap='clickedPileNum'
+            style="background:{{item.background}};color:{{item.color}}"
+          >
+            <view class="port-btn-box">
+              <image class="port-icon" src="{{item.img}}"/>
+              <text class="port-num">{{item.showNum}}</text>
+            </view>
+          </view>
+        </view>
+    </view>
+    <!-- time -->
+    <view class="time-box">
+      <view class="port-title">
+        <view class="port-left">
+          <image class="icon-port" src="../../static/payment/icon_time.png" />
+          <text>请选择充电时长</text>
+        </view>
+      </view>
+      <view class="port-time">
+        <view class="time-btn"
+          wx:for="{{pileTime}}"
+          wx:key="{{item.id}}" 
+          data-num="{{item.id}}"
+          bindtap='clickedPileTime'
+          style="background:{{item.background}};color:{{item.color}}"
+        >
+          <image class="time-icon" src="{{item.img}}"/>
+          <text class="port-num">{{item.content}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 弹窗 -->
+    <van-action-sheet
+      show="{{ show }}"
+      actions="{{ actions }}"
+      cancel-text="取消"
+      bind:close="onClose"
+      bind:cancel="onClose"
+      bind:select="onSelect"
+    />
+    <view class="btn-position">
+      <van-button type="primary" size="large" custom-class="btn-box" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+        <text>点击支付</text>
+    </van-button>
+    </view>
+</view>

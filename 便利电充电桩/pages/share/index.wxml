@@ -1,0 +1,33 @@
+<!--pages/share/index.wxml-->
+<view class="share-container">
+  <image class="banner" src="../../static/images/share_background.png" />
+  <!-- 按钮 -->
+  <view class="content">
+    <view class="text-content">
+      <text class="text-title">邀请好友分享</text>
+      <view class="text-line">
+        <view class="text-radius">1</view>
+        <view class="text-color">点击下方“立即邀请”</view>
+      </view>
+      <view class="text-line">
+        <view class="text-radius">2</view>
+        <view class="text-color">分享到朋友圈或分享给好友，好友通过分享进入小程序后，绑定手机号，分享者和好友可各获得免费充电一次。</view>
+      </view>
+      <view class="text-line">
+        <view class="text-radius">3</view>
+        <view class="text-color">免费充电机会会以账户余额的形式展示</view>
+      </view>
+      <view class="text-line">
+        <view class="text-radius">4</view>
+        <view class="text-color">通过使用余额支付可免费充电4小时</view>
+      </view>
+    </view>
+    <view class="btn-box">
+      <button class="btn-one btn-active" open-type="share">
+        <image class="share-btn" src="../../static/images/share_btn.png" />
+      </button>
+    </view>
+    <image class="side-position" src="../../static/images/share_side.png" />
+    <image class="side-position-two" src="../../static/images/share_side.png" />
+  </view>
+</view>
