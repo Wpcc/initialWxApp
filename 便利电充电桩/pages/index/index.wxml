@@ -40,5 +40,6 @@
       <cover-image src="../../static/images/position_scan.png" class="scan" bindtap='scan'></cover-image>
       <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" class="mine clear-box"><cover-image src="../../static/images/position_mine.png"></cover-image></button>
     </cover-view>
-    <van-popup show="{{ show }}" position="top" overlay="{{true}}" bind:close="onClose">内容</van-popup>
 </view>
+
+

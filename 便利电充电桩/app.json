@@ -14,7 +14,9 @@
     "pages/components/noData/index",
     "pages/record/index",
     "pages/paysuccess/index",
-    "pages/share/index"
+    "pages/share/index",
+    "pages/components/popup/index",
+    "pages/index-new/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,6 +33,7 @@
     "van-action-sheet": "../modules/dist/action-sheet/index",
     "van-button": "../modules/dist/button/index",
     "van-loading": "../modules/dist/loading/index",
-    "van-popup":"../modules/dist/popup/index"
-  }
+    "van-popup": "../modules/dist/popup/index"
+  },
+  "sitemapLocation": "sitemap.json"
 }

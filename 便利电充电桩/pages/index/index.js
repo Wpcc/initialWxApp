@@ -14,8 +14,7 @@ Page({
         /* 坐标 */
         longitude: 114.207034,
         latitude: 30.550434,
-        markers: [], // 需要做对应处理
-        show: true
+        markers: [] // 需要做对应处理
     },
     // 路由
     goList,
@@ -24,12 +23,7 @@ Page({
     markersGo(e) {
       goProduct(e)
     },
-    // onClose
-    onClose() {
-      this.setData({show: false})
-    },
-    // 悬浮按钮
-    location() {
+    location() { // 悬浮按钮
       let that = this
       wx.getLocation({
         type: 'gcj02',
@@ -41,7 +35,7 @@ Page({
         }
       })
     },
-    scan() {
+    scan() { // 扫描
       wx.scanCode({
         success(res) {
           wx.navigateTo({
@@ -50,7 +44,7 @@ Page({
         }
       })
     },
-    bindGetUserInfo(e) {
+    bindGetUserInfo(e) { // 跳转主页按钮
       tip.loading();
       login().then(res => {
         tip.loaded();
@@ -59,8 +53,7 @@ Page({
         }
       });
     },
-    // 加载用户位置，将数据放入到全局变量当中
-    onShow: function () {
+    onShow: function () {// 加载用户位置，并存入到全局变量
       // 打印url参数
       if (app.globalData.listInput) {
           this.setData({
@@ -115,7 +108,7 @@ Page({
       })
     },
     onLoad: function (options) {
-      tip.loading()
+      // tip.loading()
       if(options.key){ //通过分享进来，存入key值
         wx.setStorageSync('key',options.key)
       }

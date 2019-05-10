@@ -4,6 +4,7 @@ import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
 import { goPayTip } from '../../router/routes'
 import { login } from '../../utils/login'
+import {recharge} from '../../utils/util'
 
 const app = getApp()
 Page({
@@ -214,12 +215,12 @@ Page({
       }
     })
     .then(res => { // 下单成功进行支付
-      tip.loaded();
       if(res.status === 0) { // 缓存登录态失效处理
         wx.removeStorageSync('session3rd') // 清除缓存
         this.loginThenOrder(this.wxPay)
         return
       }
+      // 支付成功，重新发起充电：主要为了解决充电桩信号问题
       pay(res.data)
     }) 
   },
@@ -235,10 +236,14 @@ Page({
       }
     })
     .then(res => { // 下单成功进行支付
-      tip.loaded();
       if(res.status === 0) { // 余额不足
         tip.error(res.msg);
       } else {
+        // 重新发起充电
+        setTimeout(()=>{
+          recharge(res.data.order_sn)
+          tip.loaded()
+        },1500)
         tip.success(res.msg);
         goPayTip();
       }
@@ -268,6 +273,6 @@ Page({
           name: '余额支付'
         }
       ]
-      })
+    })
   }
 })
