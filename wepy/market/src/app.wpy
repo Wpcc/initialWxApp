@@ -14,11 +14,11 @@ import wepy from 'wepy'
 import 'wepy-async-function'
 
 export default class extends wepy.app {
-  config = {
+  config = { // 小程序配置项
     pages: [ // 页面路径
       'pages/index'
     ],
-    window: { // 页面导航栏基本配置
+    window: { // 导航栏样式
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
@@ -26,43 +26,17 @@ export default class extends wepy.app {
     }
   }
 
-  globalData = { // 全局变量
+  globalData = { // 全局数据
     userInfo: null
   }
 
   constructor () {
     super()
-    this.use('requestfix')
+    this.use('requestfix') // 修复原生request并发请求
   }
 
-  onLaunch() { // 生命周期函数
-    this.testAsync()
-  }
+  onLaunch() {
 
-  sleep (s) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve('promise resolved')
-      }, s * 1000)
-    })
-  }
-
-  async testAsync () {
-    const data = await this.sleep(3)
-    console.log(data)
-  }
-
-  getUserInfo(cb) {
-    const that = this
-    if (this.globalData.userInfo) {
-      return this.globalData.userInfo
-    }
-    wepy.getUserInfo({
-      success (res) {
-        that.globalData.userInfo = res.userInfo
-        cb && cb(res.userInfo)
-      }
-    })
   }
 }
 </script>

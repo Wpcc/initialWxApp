@@ -37,6 +37,24 @@ export function goShare() {
   })
 }
 
+// 跳转商城
+export function goStore(){
+  wx.showToast({
+    title: '开发中，请等待',
+    icon: 'none',
+    duration: 2000
+  })
+}
+
+// 跳转红包
+export function goRedPacket(){
+  wx.showToast({
+    title: '开发中，请等待',
+    icon: 'none',
+    duration: 2000
+  })
+}
+
 // 充值
 export function goRecharge() {
   wx.getSetting({

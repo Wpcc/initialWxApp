@@ -1,7 +1,7 @@
 {
   "name": "market",
   "version": "0.0.2",
-  "description": "a miniapp",
+  "description": "a market miniapp",
   "main": "dist/app.js",
   "scripts": {
     "dev": "wepy build --watch",
@@ -14,7 +14,7 @@
     "module-a": false,
     "./src/components/list": "./src/components/wepy-list.wpy"
   },
-  "author": "wpcc <310624463@qq.com>",
+  "author": "wpcc<310624463@qq.com>",
   "license": "MIT",
   "dependencies": {
     "wepy": "^1.6.0",

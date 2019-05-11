@@ -15,8 +15,7 @@
     "pages/record/index",
     "pages/paysuccess/index",
     "pages/share/index",
-    "pages/components/popup/index",
-    "pages/index-new/index"
+    "pages/components/popup/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
