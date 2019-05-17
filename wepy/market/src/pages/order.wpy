@@ -1,0 +1,190 @@
+<style lang="less">
+  @bgColor:#e6e6e6;
+  page{
+    width: 100%;
+    height: 100%;
+  }
+  .order-container{
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 10px 10px;
+    background: @bgColor;
+  }
+  .order-box{
+    width: 100%;
+    background: #fff;
+    border-radius: 5px;
+    padding-top: 10px;
+    .amount{
+      font-size: 12px;
+      color: #666;
+      padding: 10px 15px;
+    }
+    .right{
+      float: right;
+    }
+    .line{
+      padding: 5px 0;
+    }
+    .card{
+      background: #fff;
+    }
+  }
+  .info-box{
+    padding: 10px 15px;
+    background: #fff;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    .info{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .address-icon{
+        width: 10%;
+        display: flex;
+        align-items: center;
+        image{
+          width: 50rpx;
+          height: 50rpx;
+        }
+      }
+      .address-text{
+        line-height: 20px;
+        width: 75%;
+        font-size: 12px;
+        .line-one{
+          .name{
+            font-size: 16px;
+            margin-right: 10px;
+          }
+        } 
+        .line-two{
+          color: #333;
+        }
+      }
+      .address-text2{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .address-arrow{
+        width: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+      }
+    }
+  }
+</style>
+
+<template>
+  <view class="order-container">
+    <!-- 物流概述:两种状态 -->
+    <view class="info-box">
+      <view wx:if="{{isInfo}}" class="info" @tap="goAddressAdd">
+        <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+        </view>
+        <view class="address-text address-text2">
+          新增收货地址
+        </view>
+        <view class="address-arrow">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+      <view wx:else class="info" @tap="goAddressSelect">
+        <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+        </view>
+        <view class="address-text">
+          <view class="line-one"><text class="name">{{addressSelected.name}}</text>{{addressSelected.phone}}</view>
+          <view class="line-two">{{addressSelected.address}}</view>
+        </view>
+        <view class="address-arrow">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+    </view>
+    <!-- 订单概述 -->
+    <view class="order-box">
+      <van-card
+        num="1"
+        price="5966.00"
+        title="{{title}}"
+        thumb="{{ imageURL }}"
+        custom-class="card"
+      >
+        <view
+          slot="tags"
+          class="card__tags"
+        >
+        </view>
+      </van-card>
+      <view class="amount">
+        <view class="line"><text class="left">商品金额：</text><text class="right">5699.00</text></view>
+        <view class="line"><text class="left">运费：</text><text class="right">10.00</text></view>
+        <view class="line"><text class="left">订单金额：</text><text class="right">5709.00</text></view>
+        <view class="line"><text class="left">抵扣余额：</text><text class="right">-5699.00</text></view>
+      </view>
+    </view>
+    <!-- 提交订单栏 -->
+    <van-submit-bar
+      price="{{ 3050 }}"
+      button-text="提交订单"
+      bind:submit="onSubmit"
+    >
+    </van-submit-bar>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import Address from '../util/address'
+import {goAddressAdd, goAddressSelect, goOrderList} from '../router/routes.js'
+export default class Order extends wepy.page {
+  config = {
+    navigationBarTitleText: '订单确认',
+
+    usingComponents: {
+      'van-card': '../components/van/card/index',
+      'van-icon': '../components/van/icon/index',
+      'van-submit-bar': '../components/van/submit-bar/index'
+    }
+  }
+
+  data = {
+    imageURL: '/static/images/img_thumbnail.png',
+    title: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑',
+
+    addressSelected: {} // 该地址为选中地址
+  }
+
+  computed = {
+    isInfo () {
+      if (this.addressSelected.select) {
+        console.log('1')
+        return false
+      } else {
+        console.log('2')
+        return true
+      }
+    }
+  }
+
+  methods = {
+    // 路由
+    goAddressAdd,
+    goAddressSelect,
+    onSubmit() {
+      goOrderList()
+    }
+  }
+
+  onShow() {
+    // 显示选中地址
+    this.addressSelected = Address.getFromLocalStorage('userAddressSelected')
+    console.log(this.addressSelected === true)
+  }
+}
+</script>

@@ -4,7 +4,10 @@
 		"urlCheck": true,
 		"es6": false,
 		"postcss": false,
-		"minified": false
+		"minified": false,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
 	"appid": "wxb5d8d5874dcb2f3e",
@@ -12,5 +15,89 @@
 	"miniprogramRoot": "dist/",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 8,
+			"list": [
+				{
+					"id": -1,
+					"name": "product",
+					"pathName": "pages/product",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "order",
+					"pathName": "pages/order",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "addressAdd",
+					"pathName": "pages/address-add",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "addressCompile",
+					"pathName": "pages/address-compile",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "addressSelect",
+					"pathName": "pages/address-select",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "input",
+					"pathName": "pages/input",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 6,
+					"name": "orderList",
+					"pathName": "pages/orderList",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "mine",
+					"pathName": "pages/mine",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "payment-detail",
+					"pathName": "pages/payment-detail",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }

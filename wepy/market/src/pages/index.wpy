@@ -1,65 +1,122 @@
 <style lang="less">
-  
+  .home{
+    width: 80rpx;
+    height: 80rpx;
+    position: fixed;
+    right: 40rpx;
+    bottom: 80rpx;
+    z-index: 2;
+  }
+  /* 清楚btn样式 */
+  .clear-btn{
+    display: block;
+    background: none;
+    padding: 0;
+    margin: 0;
+    line-height: normal;
+  }
+  .clear-btn::after{
+    border:none
+  }
 </style>
 
 <template>
-  <van-card
-    num="2"
-    tag="标签"
-    price="5966.00"
-    desc="{{desc}}"
-    title="{{title}}"
-    thumb="{{ imageURL }}"
-  >
-    <view
-      slot="tags"
-      class="card__tags"
-    >
-      <van-tag
-        plain
-        type="danger"
+  <view>
+    <repeat for="{{productList}}" key="index" item="item">
+      <van-card
+        price="{{item.selling_price}}"
+        tag="促销"
+        title="{{item.goods_title}}"
+        desc="{{item.desc}}"
+        thumb="{{ item.goods_logo }}"
+        custom-class="card"
+        @tap = "goProduct('{{item.id}}')"
       >
-        邮费：10.00
-      </van-tag>
-      <van-tag
-        plain
-        type="danger"
-      >
-        累计兑换：960
-      </van-tag>
-    </view>
-    <view slot="footer">
-      <van-button size="mini">按钮</van-button>
-      <van-button size="mini">按钮</van-button>
-    </view>
-  </van-card>
+        <view
+          slot="tags"
+          class="card__tags"
+        >
+          <view>邮费：{{item.freight_price}}</view>
+          <view>累积兑换：{{item.goods_sale}}</view>
+        </view>
+        <view slot="footer">
+          <van-button plain size="small" type="primary">我要兑换</van-button>
+        </view>
+      </van-card>      
+    </repeat>
+    <button class="home clear-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+      <image src="{{ home }}" class="home"></image>
+    </button>
+  </view>
 </template>
 
 <script>
   import wepy from 'wepy'
+  import tip from '../util/tip'
+  import {request} from '../util/request'
+  import { goProduct, goMine } from '../router/routes'
+  import { login } from '../util/login'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: 'test',
+      navigationBarTitleText: '余额商城',
+      navigationBarBackgroundColor: '#23C675',
+      navigationBarTextStyle: 'white',
+      enablePullDownRefresh: true,
+      backgroundColor: '#23C675',
+  
       usingComponents: { // 第三方组件：最好通过git clone下载，不然会偶尔报路径错误
-        'van-card': '../components/van/card/index'
+        'van-card': '../components/van/card/index',
+        'van-button': '../components/van/button/index'
       }
     }
+  
     components = { // 个人组件
   
     }
 
     data = {
-      imageURL: '/static/temp/apple.jpg',
-      desc: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑'
+      home: '../static/images/home.png',
+      productList: []
     }
 
     methods = {
-  
+      goProduct,
+      bindGetUserInfo(e) { // 跳转主页：有登录逻辑
+        tip.loading()
+        login().then(res => {
+          tip.loaded()
+          if (res) {
+            goMine()
+          }
+        })
+      }
     }
 
-    onLoad() {
+    onShow() {
+      request('GET', '/api/store/index')
+      .then(res => {
+        console.log(res)
+        this.productList = res.data
+        this.$apply()
+      })
+    }
 
+    onPullDownRefresh() {  // 下拉刷新
+      tip.loading()
+      setTimeout(() => {
+        tip.loaded()
+        wx.stopPullDownRefresh()
+        console.log('hello')
+      }, 1000)
+    }
+  
+    onReachBottom() { // 上拉加载
+      tip.loading()
+      setTimeout(() => {
+        tip.loaded()
+        console.log('hello')
+      }, 1000)
     }
   }
 </script>

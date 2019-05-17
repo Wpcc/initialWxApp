@@ -1,0 +1,290 @@
+<style lang="less">
+  /* pages/mine/index.wxss */
+  .user-container{
+    padding-top: 20px;
+    width: 100%;
+    height: 70px;
+    background: #23C675
+  }
+  .info-container{
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+  /* 用户信息设置 */
+  .avatar-container{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .avatar-text{
+    font-size: 14px;
+    margin-left: 7px;
+    color: #fff;
+  }
+  .avatar-icon{
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+  .avatar-nickname{
+    margin-bottom: 4px;
+  }
+  /* 授权样式设置 */
+  .phone-box{
+    height: 16px;
+    width: 100%;
+  }
+  .clear-box{
+    display: inline;
+    background: none;
+    color: #fff;
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+  }
+  .clear-box::after{
+    border:none
+  }
+  /* 未授权样式 */
+  .auth-text {
+    font-size: 12px;
+  }
+  /* 右边账户设置 */
+  .account-container{
+    height: 50px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 14px;
+    color: #fff;
+    text-align: right;
+  }
+  .accountTitle{
+    font-size: 16px;
+  }
+  .accountTitle{
+    margin-bottom: 5px;
+  }
+  /* list样式 */
+  .list-container{
+    width: 100%;
+    height: calc(100% - 90px);
+    box-sizing: border-box;
+    padding: 0 10px;
+  }
+  .list-box{
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid #999;
+    font-size: 14px;
+  }
+  .list-left{
+    float: left;
+    margin-left: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .list-right{
+    float: right;
+    margin-right: 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .record{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+  .icon-next{
+    width: 13px;
+    height: 13px;
+  }
+  /* tabbar */
+  /* tabbar */
+  .tabbar-container{
+    width: 100%;
+    height: 55px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+  }
+  .menu-box{
+    height: 54px;
+    width: 60px;
+    padding-top: 5px;
+  }
+  .menu-img{
+    width: 28px;
+    height: 28px;
+    display: block;
+    margin: 0 auto;
+  }
+  .menu-text{
+    font-size: 12px;
+    text-align: center;
+    display: block;
+  }
+  .clickedBox{
+    color: #23C675;
+  }
+  .arrow-box{
+    position: relative;
+    top: 2px;
+  }
+</style>
+
+<template>
+  <view class="mine-container">
+    <view class="user-container">
+      <view class="info-container">
+        <view class="avatar-container" >
+          <view class="avatar-icon">
+            <open-data type="userAvatarUrl"></open-data>
+          </view>
+          <view class="avatar-text">
+            <view class="avatar-nickname">
+              <open-data type="userNickName" style="font-size:16px;"></open-data>
+            </view>
+            <view class="setAuth">
+              <view class="phone-box">
+                <button class="clear-box" wx:if="{{ !bindPhone }}" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">
+                  <text class="auth-text" bindtap="onAuth">绑定手机号</text>
+                  <van-icon name="arrow" color="#fff" size="14px" custom-class="arrow-box" />
+                </button>
+                <text class="auth-text" wx:else>{{phone}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="account-container">
+        <view class="accountTitle">账户余额</view>
+        <view class="accountBalance">￥{{balance}}</view>
+      </view>
+    </view>
+    <view class="list-container">
+      <view class="list-box" bindtap="goOrder">
+        <view class="list-left">
+          <image src="../static/images/mine_address.png" class="record"/>
+          <text class="record-text">订单列表</text>
+        </view>
+        <view class="list-right">
+          <van-icon name="arrow" color="#666" />
+        </view>
+      </view>
+      <view class="list-box" bindtap="goRecord">
+        <view class="list-left">
+          <image src="../static/images/mine_order.png" class="record"/>
+          <text class="record-text">地址管理</text>
+        </view>
+        <view class="list-right">
+          <van-icon name="arrow" color="#666" />
+        </view>
+      </view>
+      <view class="list-box" bindtap="service">
+        <view class="list-left">
+          <image src="../static/images/mine_service.png" class="record"/>
+          <text class="record-text">客服</text>
+        </view>
+        <view class="list-right">
+          <van-icon name="arrow" color="#666" />
+        </view>
+      </view>
+    </view>    
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+  import {request} from '../util/request'
+  export default class Mine extends wepy.page {
+    config = {
+      navigationBarTitleText: '个人中心',
+
+      usingComponents: {
+        'van-icon': '../components/van/icon/index'
+      }
+    }
+
+    data = {
+      auth: false,
+      bindPhone: false,
+      phone: 0,
+      balance: 0
+    }
+
+    methods = {
+      // 点击授权
+      getUserInfo: function() {
+        this.setAuth()
+      },
+      getPhoneNumber: function(e) {
+        request('POST', '/api/User/bindMobile', {
+          header: {
+            session3rd: wx.getStorageSync('session3rd')
+          },
+          data: {
+            encryptedData: e.detail.encryptedData,
+            iv: e.detail.iv
+          }
+        })
+        .then((res) => {
+          if (res.status === 1) {
+            res = res.data
+            this.setData({
+              bindPhone: true,
+              phone: res.mobile
+            })
+            this.setPhoneAndBalance() // 绑定后请求后台数据
+          }
+        })
+      }
+    }
+
+    onShow() {
+  
+    }
+
+    // 自定义函数
+    setPhoneAndBalance () {
+      request('POST', '/api/Center/personal', {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        }
+      })
+      .then((res) => {
+        if (res.status === 1) {
+          res = res.data
+          this.setData({ // 设置金额
+            balance: res.balance.toString()
+          })
+          if (res.isMobile === 1) {
+            this.setData({
+              bindPhone: true,
+              phone: res.mobile
+            })
+          } else {
+            this.setData({
+              bindPhone: false
+            })
+          }
+        } else if (res.msg === '未登录') {
+          wx.removeStorageSync('session3rd')
+          tip.errorSync('网络异常，点击重试', 1500, goBack)
+        }
+      })
+    }
+    isAuthAndLogin() {
+      wx.getSetting({
+        success(res) {
+          if (!res.authSetting['scope.userInfo'] || !wx.getStorageSync('session3rd')) { // 用户未授权
+            goIndex()
+          }
+        }
+      })
+    }
+}
+</script>

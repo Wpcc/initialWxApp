@@ -1,0 +1,142 @@
+<style lang="less">
+  .info-box{
+    padding: 10px 15px;
+    background: #fff;
+    border-bottom:1px solid #ccc;
+    .info{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      .address-icon{
+        width: 10%;
+        display: flex;
+        align-items: center;
+        image{
+          width: 50rpx;
+          height: 50rpx;
+        }
+      }
+      .address-text{
+        line-height: 20px;
+        width: 75%;
+        font-size: 12px;
+        .line-one{
+          .name{
+            font-size: 16px;
+            margin-right: 10px;
+          }
+        } 
+        .line-two{
+          color: #333;
+        }
+      }
+      .address-text2{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .address-arrow{
+        width: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        image{
+          width: 32rpx;
+          height: 32rpx;
+        }
+      }
+    }
+  }
+  .bottom-btn{
+    box-sizing: border-box;
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    border-top: 1px solid #ccc;
+    position: fixed;
+    left:0;
+    bottom:0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    .left{
+      display: flex;
+      align-items: center;
+      .left-icon{
+        margin-right: 15px;
+      }
+    }
+  }
+</style>
+
+<template>
+  <view class="addressSelect-container">
+    <!-- 地址列表 -->
+    <view class="address-list" wx:for="{{addressList}}" wx:key="{{index}}">
+        <view class="info-box">
+          <view class="info">
+            <view class="address-icon" @tap="changeAddress('{{index}}')">
+              <van-icon name="success" color="#f44" wx:if="{{item.select}}"/>
+            </view>
+            <view class="address-text" @tap="changeAddress('{{index}}')">
+              <view class="line-one"><text class="name">{{item.name}}</text>{{item.phone}}</view>
+              <view class="line-two">{{item.address}}</view>
+            </view>
+            <view class="address-arrow" @tap="goAddressCompile('{{index}}')">
+              <image src="../static/images/icon_edit.png" />
+            </view>
+          </view>
+        </view>
+    </view>
+    <!-- 添加地址 -->
+    <view class="bottom-btn" @tap="goAddressAdd">
+      <view class="left">
+        <van-icon name="add-o" color="#f44" size="20px" class="left-icon"></van-icon>
+        <text>新增收货地址</text>
+      </view>
+      <view class="right">
+        <van-icon name="arrow" />
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import { goAddressAdd, goAddressCompile } from '../router/routes'
+import Address from '../util/address'
+export default class addressSelect extends wepy.page {
+  config = {
+    navigationBarTitleText: '选择收货地址',
+
+    usingComponents: {
+      'van-icon': '../components/van/icon/index',
+      'van-cell': '../components/van/cell/index'
+    }
+  }
+
+  data = {
+    addressList: []
+  }
+
+  methods = {
+    goAddressAdd,
+    goAddressCompile,
+    changeAddress(index) {
+      console.log(index)
+      // 改变界面
+      this.addressList.forEach((item) => {
+        item.select = false
+      })
+      this.addressList[index].select = true
+      // 改变数据
+      Address.selectedToLocalStorage(index)
+    }
+  }
+
+  onShow() {
+    this.addressList = Address.getFromLocalStorage('userAddressList')
+  }
+}
+</script>

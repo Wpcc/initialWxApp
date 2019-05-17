@@ -2,21 +2,19 @@
 import {goList, goRecharge, goInstruction, goMine, goStore, goRedPacket} from '../../router/routes'
 import {login} from '../../utils/login'
 import {tip} from '../../utils/tip'
+import { request } from '../../api/request';
 
 const app = getApp()
 
 Page({
   data: {
     // 轮播图数据
-    imgUrls: [
-      '../../static/index/img_banner.png',
-      '../../static/index/img_banner.png',
-      '../../static/index/img_banner.png'
-    ],
+    imgUrls: [],
     indicatorDots: true,
     autoplay: true,
     interval: 3000,
-    duration: 1000
+    duration: 1000,
+    indexData:[]
   },
 
   // 路由
@@ -57,6 +55,21 @@ Page({
       fail(){
         tip.alert('请打开位置授权，否则无法正确定位')
       }
+    })
+    // 获取首页信息
+    request('GET', '/api/Index/index')
+    .then(res => {
+      console.log(res)
+      this.setData({
+        indexData: res.data.icon_info,
+      })
+      let that = this
+      res.data.banner_info.forEach((item, index) => {
+        that.setData({
+          ['imgUrls['+ index + ']']:item.img
+        })        
+      })
+      console.log(this.data.imgUrls)
     })
   },
   onLoad(options) {

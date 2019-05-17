@@ -25,8 +25,6 @@
       <image class="navigate-image" src="../../static/index/icon_instructions.png" />
       <text >使用指南</text>
     </view>
-  </view>
-  <view class="navigate">
     <view class="navigate-item" bindtap="goStore">
       <image class="navigate-image" src="../../static/index/icon_mall.png" />
       <text >余额商城</text>

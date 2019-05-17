@@ -2,7 +2,7 @@
  * method默认值为POST，path为路径，arg是一个对象，里面是传递过来的数据
  */
 const app = getApp()
-export const request = (method = 'POST', path, args) => {
+export const request = (method = 'POST', path, args = {}) => {
   const url = app.globalData.url + path
   const {data, header} = args
   return new Promise((resolve, reject) => {

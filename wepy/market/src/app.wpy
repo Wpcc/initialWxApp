@@ -16,13 +16,20 @@ import 'wepy-async-function'
 export default class extends wepy.app {
   config = { // 小程序配置项
     pages: [ // 页面路径
-      'pages/index'
+      'pages/index',
+      'pages/product',
+      'pages/order',
+      'pages/address-add',
+      'pages/address-select',
+      'pages/address-compile',
+      'pages/orderList',
+      'pages/mine',
+      'pages/payment-detail'
     ],
     window: { // 导航栏样式
-      backgroundTextStyle: 'light',
-      navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'WeChat',
-      navigationBarTextStyle: 'black'
+      navigationBarTitleText: '余额商城',
+      navigationBarBackgroundColor: '#23C675',
+      navigationBarTextStyle: 'white'
     }
   }
 
@@ -33,6 +40,7 @@ export default class extends wepy.app {
   constructor () {
     super()
     this.use('requestfix') // 修复原生request并发请求
+    this.use('promisify') // 开启Promise
   }
 
   onLaunch() {

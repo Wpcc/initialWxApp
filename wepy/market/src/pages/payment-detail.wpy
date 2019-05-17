@@ -1,0 +1,213 @@
+<style lang="less">
+  @cyan:#23C675;
+  @bgColor:#e6e6e6;
+  page{
+    width: 100%;
+    height: 100%;
+  }
+  .paymentDetail-container{
+    width: 100%;
+    height: 100%;
+    background: #F2F2F2;
+    .title{
+      width: 100%;
+      height: 70px;
+      background: @cyan;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      box-sizing: border-box;
+      padding: 0 20px;
+      .title-image-box{
+        .title-image{
+          width: 67px;
+          height: 46px;
+          margin-right: 15px;
+        }
+      }
+      .title-text{
+        color: #fff;
+        height: 50px;
+        .one-line{
+          font-size: 17px;
+          margin-bottom: 5px;
+        }
+        .two-line{
+          font-size: 13px;
+        }
+      }
+    }
+    .order-container{
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 10px 10px;
+      background: @bgColor;
+    }
+    .order-box{
+      width: 100%;
+      background: #fff;
+      padding-top: 10px;
+      margin-bottom: 5px;
+      .card{
+        background: #fff;
+      }
+    }
+    .amount{
+      font-size: 12px;
+      color: #666;
+      padding: 10px 15px;
+      background: #fff;
+      .right{
+        float: right;
+      }
+      .line{
+        padding: 5px 0;
+      }
+    }
+    .info-box{
+      padding: 10px 15px;
+      background: #fff;
+      margin-bottom: 5px;
+      .info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .address-icon{
+          width: 10%;
+          display: flex;
+          align-items: center;
+          image{
+            width: 50rpx;
+            height: 50rpx;
+          }
+        }
+        .address-text{
+          line-height: 20px;
+          width: 75%;
+          font-size: 12px;
+          .line-one{
+            .name{
+              font-size: 16px;
+              margin-right: 10px;
+            }
+          } 
+          .line-two{
+            color: #333;
+          }
+        }
+        .address-text2{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
+        .address-arrow{
+          width: 10%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        }
+      }
+    }  
+    .onSubmit{
+      width: 100%;
+      position: absolute;
+      left: 0;
+      bottom: 30px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      .btn{
+        width: 100%;
+      }
+    }
+  }
+</style>
+
+<template>
+  <view class="paymentDetail-container">
+    <view class="title">
+      <view class="title-image-box">
+        <image class="title-image" src="../static/images/icon_payment.png"></image>
+      </view>
+      <view class="title-text">
+        <view class="one-line">待付款</view>
+        <view class="two-line">剩余 14:59 自动关闭</view>
+      </view>
+    </view>
+    <!-- 物流概述:两种状态 -->
+    <view class="info-box">
+      <view wx:if="{{isInfo}}" class="info" @tap="goAddressAdd">
+        <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+        </view>
+        <view class="address-text address-text2">
+          新增收货地址
+        </view>
+        <view class="address-arrow">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+      <view wx:else class="info" @tap="goAddressSelect">
+        <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+        </view>
+        <view class="address-text">
+          <view class="line-one"><text class="name">{{addressSelected.name}}</text>{{addressSelected.phone}}</view>
+          <view class="line-two">{{addressSelected.address}}</view>
+        </view>
+        <view class="address-arrow">
+          <van-icon name="arrow" />
+        </view>
+      </view>
+    </view>
+    <!-- 订单概述 -->
+    <view class="order-box">
+      <van-card
+        num="1"
+        price="5966.00"
+        title="{{title}}"
+        thumb="{{ imageURL }}"
+        custom-class="card"
+        class="card-box"
+      >
+        <view
+          slot="tags"
+          class="card__tags"
+        >
+        </view>
+      </van-card>
+    </view>
+    <view class="amount">
+      <view class="line"><text class="left">订单编号：</text><text class="right">78228973657</text></view>
+      <view class="line"><text class="left">商品金额：</text><text class="right">￥10.00</text></view>
+      <view class="line"><text class="left">金额抵扣：</text><text class="right">-￥57.00</text></view>
+      <view class="line"><text class="left">运费：</text><text class="right">￥10.00</text></view>
+      <view class="line"><text class="left">订单金额：</text><text class="right">￥69.00</text></view>
+      <view class="line"><text class="left">实付金额：</text><text class="right">￥10.00</text></view>
+    </view>
+    <view class="onSubmit">
+      <van-button type="primary" custom-class="btn">立即支付</van-button>
+    </view>
+  </view>
+  
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class PaymentDetail extends wepy.page {
+  config = {
+    navigationBarTitleText: '个人中心',
+
+    usingComponents: {
+      'van-card': '../components/van/card/index',
+      'van-icon': '../components/van/icon/index',
+      'van-button': '../components/van/button/index'
+    }
+  }
+
+  data = {
+    imageURL: '/static/images/img_thumbnail.png',
+    title: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑'
+  }
+}
+</script>
