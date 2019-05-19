@@ -52,7 +52,6 @@
 
 <script>
   import wepy from 'wepy'
-  import tip from '../util/tip'
   import {request} from '../util/request'
   import { goProduct, goMine } from '../router/routes'
   import { login } from '../util/login'
@@ -63,29 +62,20 @@
       navigationBarBackgroundColor: '#23C675',
       navigationBarTextStyle: 'white',
       enablePullDownRefresh: true,
-      backgroundColor: '#23C675',
-  
-      usingComponents: { // 第三方组件：最好通过git clone下载，不然会偶尔报路径错误
-        'van-card': '../components/van/card/index',
-        'van-button': '../components/van/button/index'
-      }
-    }
-  
-    components = { // 个人组件
-  
+      backgroundColor: '#23C675'
     }
 
     data = {
       home: '../static/images/home.png',
-      productList: []
+      productList: [], // 产品列表
+      p: 1 // 翻页
     }
 
     methods = {
       goProduct,
       bindGetUserInfo(e) { // 跳转主页：有登录逻辑
-        tip.loading()
         login().then(res => {
-          tip.loaded()
+          // console.log(res)
           if (res) {
             goMine()
           }
@@ -103,20 +93,18 @@
     }
 
     onPullDownRefresh() {  // 下拉刷新
-      tip.loading()
-      setTimeout(() => {
-        tip.loaded()
+      request('GET', '/api/store/index')
+      .then(res => {
         wx.stopPullDownRefresh()
-        console.log('hello')
-      }, 1000)
+      })
     }
   
     onReachBottom() { // 上拉加载
-      tip.loading()
-      setTimeout(() => {
-        tip.loaded()
+      this.p++
+      request('GET', '/api/store/index?p=' + this.p)
+      .then(res => {
         console.log('hello')
-      }, 1000)
+      })
     }
   }
 </script>

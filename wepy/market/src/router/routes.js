@@ -1,12 +1,19 @@
+export function goIndex() { // 跳转商品详情
+  wx.navigateTo({
+    url: './index'
+  })
+}
+
 export function goProduct(id) { // 跳转商品详情
   wx.navigateTo({
     url: './product?id=' + id
   })
 }
 
-export function goOrder() { // 跳转订单
+export function goOrder(id) { // 跳转订单
+  console.log('id:' + JSON.stringify(id))
   wx.navigateTo({
-    url: './order'
+    url: './order?id=' + id
   })
 }
 
@@ -15,7 +22,8 @@ export function goAddressAdd() { // 添加地址
     url: './address-add'
   })
 }
-export function goAddressCompile(index) { // 编辑地址
+export function goAddressCompile(index = 0) { // 编辑地址
+  console.log(123)
   wx.navigateTo({
     url: './address-compile?num=' + index
   })
@@ -41,5 +49,15 @@ export function goOrderList() { // 订单列表
 export function goMine() { // 跳转个人中心
   wx.navigateTo({
     url: './mine'
+  })
+}
+
+export function onService() { // 客服处理
+  wx.showModal({
+    title: '客服',
+    content: '人工热线：开通中',
+    success(res) {
+      console.log(res)
+    }
   })
 }

@@ -166,7 +166,7 @@
       </view>
     </view>
     <view class="list-container">
-      <view class="list-box" bindtap="goOrder">
+      <view class="list-box" bindtap="goOrderList">
         <view class="list-left">
           <image src="../static/images/mine_address.png" class="record"/>
           <text class="record-text">订单列表</text>
@@ -175,7 +175,7 @@
           <van-icon name="arrow" color="#666" />
         </view>
       </view>
-      <view class="list-box" bindtap="goRecord">
+      <view class="list-box" bindtap="goAddressSelect">
         <view class="list-left">
           <image src="../static/images/mine_order.png" class="record"/>
           <text class="record-text">地址管理</text>
@@ -184,7 +184,7 @@
           <van-icon name="arrow" color="#666" />
         </view>
       </view>
-      <view class="list-box" bindtap="service">
+      <view class="list-box" bindtap="onService">
         <view class="list-left">
           <image src="../static/images/mine_service.png" class="record"/>
           <text class="record-text">客服</text>
@@ -199,14 +199,12 @@
 
 <script>
   import wepy from 'wepy'
+  import {tip} from '../util/tip'
   import {request} from '../util/request'
+  import {goAddressSelect, goOrderList, goBack, goIndex, onService} from '../router/routes'
   export default class Mine extends wepy.page {
     config = {
-      navigationBarTitleText: '个人中心',
-
-      usingComponents: {
-        'van-icon': '../components/van/icon/index'
-      }
+      navigationBarTitleText: '个人中心'
     }
 
     data = {
@@ -217,6 +215,9 @@
     }
 
     methods = {
+      goAddressSelect,
+      goOrderList,
+      onService,
       // 点击授权
       getUserInfo: function() {
         this.setAuth()

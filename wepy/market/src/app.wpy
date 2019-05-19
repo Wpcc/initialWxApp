@@ -30,6 +30,23 @@ export default class extends wepy.app {
       navigationBarTitleText: '余额商城',
       navigationBarBackgroundColor: '#23C675',
       navigationBarTextStyle: 'white'
+    },
+    usingComponents: { // 第三方组件：最好通过git clone下载，不然会偶尔报路径错误
+      'van-area': '../components/van/area/index',
+      'van-button': '../components/van/button/index',
+      'van-card': '../components/van/card/index',
+      'van-cell': '../components/van/cell/index',
+      'van-field': '../components/van/field/index',
+      'van-goods-action': '../components/van/goods-action/index',
+      'van-goods-action-icon': '../components/van/goods-action-icon/index',
+      'van-goods-action-button': '../components/van/goods-action-button/index',
+      'van-icon': '../components/van/icon/index',
+      'van-popup': '../components/van/popup/index',
+      'van-submit-bar': '../components/van/submit-bar/index',
+      'van-tab': '../components/van/tab/index',
+      'van-tabs': '../components/van/tabs/index',
+      'van-tag': '../components/van/tag/index',
+      'van-switch': '../components/van/switch/index'
     }
   }
 

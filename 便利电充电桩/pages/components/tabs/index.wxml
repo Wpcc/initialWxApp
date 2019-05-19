@@ -1,0 +1,13 @@
+<!--pages/components/tabs/index.wxml-->
+<view class="navigate">
+  <block wx:for="{{tabsData}}" wx:key="index">
+    <view class="navigate-item" bindtap="goSkip" data-item="{{item}}" wx:if="{{item.jump_type !== 4}}">
+      <image class="navigate-image" src="{{item.img}}" />
+      <text >{{item.name}}</text>
+    </view>
+    <button wx:else class="navigate-item clear-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+      <image class="navigate-image" src="{{item.img}}" />
+      <text >{{item.name}}</text>
+    </button>
+  </block>
+</view>

@@ -111,8 +111,8 @@
       <van-card
         num="1"
         price="5966.00"
-        title="{{title}}"
-        thumb="{{ imageURL }}"
+        title="{{product.goods_title}}"
+        thumb="{{ imgUrls[0] }}"
         custom-class="card"
       >
         <view
@@ -122,9 +122,9 @@
         </view>
       </van-card>
       <view class="amount">
-        <view class="line"><text class="left">商品金额：</text><text class="right">5699.00</text></view>
-        <view class="line"><text class="left">运费：</text><text class="right">10.00</text></view>
-        <view class="line"><text class="left">订单金额：</text><text class="right">5709.00</text></view>
+        <view class="line"><text class="left">商品金额：</text><text class="right">{{product.goods_sale}}</text></view>
+        <view class="line"><text class="left">运费：</text><text class="right">{{product.freight_price}}</text></view>
+        <view class="line"><text class="left">订单金额：</text><text class="right">{{product.selling_price}}</text></view>
         <view class="line"><text class="left">抵扣余额：</text><text class="right">-5699.00</text></view>
       </view>
     </view>
@@ -141,19 +141,16 @@
 <script>
 import wepy from 'wepy'
 import Address from '../util/address'
+import { request } from '../util/request'
 import {goAddressAdd, goAddressSelect, goOrderList} from '../router/routes.js'
 export default class Order extends wepy.page {
   config = {
-    navigationBarTitleText: '订单确认',
-
-    usingComponents: {
-      'van-card': '../components/van/card/index',
-      'van-icon': '../components/van/icon/index',
-      'van-submit-bar': '../components/van/submit-bar/index'
-    }
+    navigationBarTitleText: '订单确认'
   }
 
   data = {
+    imgUrls: [],
+    product: {},
     imageURL: '/static/images/img_thumbnail.png',
     title: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑',
 
@@ -163,10 +160,8 @@ export default class Order extends wepy.page {
   computed = {
     isInfo () {
       if (this.addressSelected.select) {
-        console.log('1')
         return false
       } else {
-        console.log('2')
         return true
       }
     }
@@ -185,6 +180,16 @@ export default class Order extends wepy.page {
     // 显示选中地址
     this.addressSelected = Address.getFromLocalStorage('userAddressSelected')
     console.log(this.addressSelected === true)
+  }
+  onLoad(option) {
+    request('GET', '/api/store/goodsinfo?id=' + option.id)
+    .then(res => {
+      this.product = res.data
+      // 轮播图转数组
+      let arr = res.data.goods_image.split('|')
+      this.imgUrls = arr
+      this.$apply()
+    })
   }
 }
 </script>

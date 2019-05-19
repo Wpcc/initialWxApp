@@ -130,14 +130,7 @@
 import wepy from 'wepy'
 export default class orderList extends wepy.page {
   config = {
-    navigationBarTitleText: '订单列表',
-
-    usingComponents: {
-      'van-tab': '../components/van/tab/index',
-      'van-tabs': '../components/van/tabs/index',
-      'van-button': '../components/van/button/index',
-      'van-card': '../components/van/card/index'
-    }
+    navigationBarTitleText: '订单列表'
   }
 
   data = {

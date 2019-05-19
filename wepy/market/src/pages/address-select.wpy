@@ -108,12 +108,7 @@ import { goAddressAdd, goAddressCompile } from '../router/routes'
 import Address from '../util/address'
 export default class addressSelect extends wepy.page {
   config = {
-    navigationBarTitleText: '选择收货地址',
-
-    usingComponents: {
-      'van-icon': '../components/van/icon/index',
-      'van-cell': '../components/van/cell/index'
-    }
+    navigationBarTitleText: '选择收货地址'
   }
 
   data = {

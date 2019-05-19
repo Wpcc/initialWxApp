@@ -1,0 +1,32 @@
+/* pages/components/tabs/index.wxss */
+.navigate{
+  width: 100%;
+  padding-top: 20px;
+  overflow: hidden;
+}
+.navigate-item{
+  width: 33.3333%;
+  text-align: center;
+  font-size: 11px;
+  color: #333;
+  float: left;
+  padding-bottom: 20px;
+}
+.navigate-image{
+  width:90rpx;
+  height:90rpx;
+  display:block;
+  margin: 0 auto;
+  margin-bottom: 3px;
+}
+/* 清楚btn样式 */
+.clear-btn{
+  display: block;
+  background: none;
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+}
+.clear-btn{
+  border:none
+}

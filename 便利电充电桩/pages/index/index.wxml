@@ -12,32 +12,13 @@
       </swiper-item>
     </block>
   </swiper>
-  <view class="navigate">
+  <!-- <view class="navigate">
     <view class="navigate-item" bindtap="goList">
       <image class="navigate-image" src="../../static/index/icon_charge.png" />
       <text >我要充电</text>
     </view>
-    <view class="navigate-item" bindtap="goRecharge">
-      <image class="navigate-image" src="../../static/index/icon_recharge.png" />
-      <text >我要充值</text>
-    </view>
-    <view class="navigate-item" bindtap="goInstruction">
-      <image class="navigate-image" src="../../static/index/icon_instructions.png" />
-      <text >使用指南</text>
-    </view>
-    <view class="navigate-item" bindtap="goStore">
-      <image class="navigate-image" src="../../static/index/icon_mall.png" />
-      <text >余额商城</text>
-    </view>
-    <view class="navigate-item" bindtap="goRedPacket">
-      <image class="navigate-image" src="../../static/index/icon_red_envelope.png" />
-      <text >红包有礼</text>
-    </view>
-    <button class="navigate-item clear-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
-      <image class="navigate-image" src="../../static/index/icon_menu.png" />
-      <text >个人中心</text>
-    </button>
-  </view>
+  </view> -->
+  <tabs tabsData="{{indexData}}"></tabs>
   <view class="scan" bindtap="scan">
     <image class="scan-image" src="../../static/index/btn_scan.png" />
   </view>

@@ -34,15 +34,6 @@ Page({
       }
     })
   },
-  bindGetUserInfo(e) { // 跳转主页：有登录逻辑
-    tip.loading()
-    login().then(res => {
-      tip.loaded()
-      if(res) {
-        goMine()
-      }
-    })
-  },
   // 生命周期函数
   onShow() {
     wx.getLocation({
@@ -61,7 +52,7 @@ Page({
     .then(res => {
       console.log(res)
       this.setData({
-        indexData: res.data.icon_info,
+        indexData: res.data.icon_info.reverse(),
       })
       let that = this
       res.data.banner_info.forEach((item, index) => {
@@ -69,7 +60,7 @@ Page({
           ['imgUrls['+ index + ']']:item.img
         })        
       })
-      console.log(this.data.imgUrls)
+      console.log(this.data.indexData)
     })
   },
   onLoad(options) {

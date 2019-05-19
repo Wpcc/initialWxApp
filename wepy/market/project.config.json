@@ -2,11 +2,13 @@
 	"description": "a market miniapp",
 	"setting": {
 		"urlCheck": true,
-		"es6": false,
-		"postcss": false,
-		"minified": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
 		"newFeature": true,
+		"nodeModules": true,
 		"autoAudits": false,
+		"uglifyFileName": true,
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
@@ -32,20 +34,20 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 8,
+			"current": 1,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "product",
 					"pathName": "pages/product",
-					"query": "",
+					"query": "id=2",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 1,
 					"name": "order",
 					"pathName": "pages/order",
-					"query": "",
+					"query": "id=2",
 					"scene": null
 				},
 				{

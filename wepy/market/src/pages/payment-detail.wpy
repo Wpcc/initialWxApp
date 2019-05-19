@@ -196,13 +196,7 @@
 import wepy from 'wepy'
 export default class PaymentDetail extends wepy.page {
   config = {
-    navigationBarTitleText: '个人中心',
-
-    usingComponents: {
-      'van-card': '../components/van/card/index',
-      'van-icon': '../components/van/icon/index',
-      'van-button': '../components/van/button/index'
-    }
+    navigationBarTitleText: '个人中心'
   }
 
   data = {
