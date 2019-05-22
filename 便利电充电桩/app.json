@@ -16,7 +16,8 @@
     "pages/paysuccess/index",
     "pages/share/index",
     "pages/components/popup/index",
-    "pages/components/tabs/index"
+    "pages/components/tabs/index",
+    "pages/bind/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -36,5 +37,7 @@
     "van-popup": "../modules/dist/popup/index"
   },
   "sitemapLocation": "sitemap.json",
-  "navigateToMiniProgramAppIdList": ["wxb5d8d5874dcb2f3e"]
+  "navigateToMiniProgramAppIdList": [
+    "wxb5d8d5874dcb2f3e"
+  ]
 }

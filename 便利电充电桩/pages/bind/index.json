@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "van-field":"../../modules/dist/field/index",
+    "van-button":"../../modules/dist/button/index"
+  },
+  "navigationBarTitleText": "储值卡"
+}

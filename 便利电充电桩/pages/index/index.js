@@ -1,6 +1,5 @@
 // pages/index-new/index.js
 import {goList, goRecharge, goInstruction, goMine, goStore, goRedPacket} from '../../router/routes'
-import {login} from '../../utils/login'
 import {tip} from '../../utils/tip'
 import { request } from '../../api/request';
 

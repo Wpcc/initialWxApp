@@ -24,7 +24,9 @@ export default class extends wepy.app {
       'pages/address-compile',
       'pages/orderList',
       'pages/mine',
-      'pages/payment-detail'
+      'pages/payment',
+      'pages/detail',
+      'pages/freight'
     ],
     window: { // 导航栏样式
       navigationBarTitleText: '余额商城',
@@ -46,7 +48,8 @@ export default class extends wepy.app {
       'van-tab': '../components/van/tab/index',
       'van-tabs': '../components/van/tabs/index',
       'van-tag': '../components/van/tag/index',
-      'van-switch': '../components/van/switch/index'
+      'van-switch': '../components/van/switch/index',
+      'van-notice-bar': '../components/van/notice-bar/index'
     }
   }
 
@@ -60,8 +63,9 @@ export default class extends wepy.app {
     this.use('promisify') // 开启Promise
   }
 
-  onLaunch() {
-
-  }
+  // onHide() {
+  //   console.log('hide')
+  //   wx.removeStorageSync('session3rd')
+  // }
 }
 </script>

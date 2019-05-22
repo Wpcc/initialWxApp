@@ -62,8 +62,8 @@
         </van-cell-group>
       </view>
       <view class="btn-box">
-        <van-button type="danger" custom-class="btn" @tap="saveToLocalStorage">保存</van-button>
-        <van-button type="default" custom-class="btn" @tap="delToLocalStorage">删除该地址</van-button>
+        <van-button type="danger" custom-class="btn" @tap="addToServer">保存</van-button>
+        <van-button type="default" custom-class="btn" @tap="delToServer">删除该地址</van-button>
       </view>
     </view>
     <!-- 弹出层：用于区域选择 -->
@@ -91,20 +91,13 @@ export default class addressCompile extends wepy.page {
   data = {
     areaShow: false, // 区域选择弹出层
     areaList: areaData,
-    num: '', // 修改地址位置
-    userAddress: {
-      select: true,
-      name: '',
-      phone: '',
-      area: '',
-      address: ''
-    }
+    userAddress: {},
+    id: ''
   }
 
   methods = {
-    saveToLocalStorage() { // 将地址存入到localStorage中
+    addToServer() { // 将地址存入到localStorage中
       console.log(JSON.stringify(this.userAddress))
-      console.log(this.num)
       if (!this.userAddress.name || !this.userAddress.phone || !this.userAddress.area || !this.userAddress.address) {
         wx.showToast({
           title: '需填完所有信息',
@@ -119,12 +112,14 @@ export default class addressCompile extends wepy.page {
           icon: 'none',
           duration: 2000
         })
+        return
       }
-      // 修改地址到localStorage
-      Address.modifyToLocalStorage(parseInt(this.num), this.userAddress)
+      // 添加地址到localStorage
+      console.log('123')
+      Address.addToServer(this.userAddress)
     },
-    delToLocalStorage() { // 删除地址
-      Address.delToLocalStorage(parseInt(this.num))
+    delToServer() { // 删除地址
+      Address.delToServer(this.id)
     },
     popAreaShow() { // 点击：显示弹出层
       this.areaShow = true
@@ -134,6 +129,9 @@ export default class addressCompile extends wepy.page {
     },
     confirm(data) {
       this.areaShow = false
+      this.userAddress.provinceName = data.detail.values[0].name
+      this.userAddress.cityName = data.detail.values[1].name
+      this.userAddress.countryName = data.detail.values[2].name
       this.userAddress.area = `${data.detail.values[0].name}${data.detail.values[1].name}${data.detail.values[2].name}`
     },
     // 微信小程序没做数据双向绑定：顾需手动绑定数据
@@ -149,9 +147,24 @@ export default class addressCompile extends wepy.page {
   }
 
   onLoad(option) {
-    this.num = option.num
-    this.userAddress = Address.getFromLocalStorage(parseInt(option.num))
-    console.log(this.userAddress)
+    this.id = option.num
+    Address.getAddressFromServer()
+    .then(res => {
+      let temp = res.find(item => {
+        return item.id === parseInt(this.id)
+      })
+      this.userAddress = {
+        name: temp.username,
+        phone: temp.phone,
+        provinceName: temp.province,
+        cityName: temp.city,
+        countryName: temp.area,
+        address: temp.address,
+        area: temp.province + temp.city + temp.area,
+        id: this.id || ''
+      }
+      this.$apply()
+    })
   }
 }
 </script>

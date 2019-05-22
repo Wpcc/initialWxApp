@@ -30,6 +30,13 @@ export function goIndex() {
   })
 }
 
+// 跳转主页
+export function goBind() {
+  wx.redirectTo({
+    url: '../bind/index'
+  })
+}
+
 // 跳转到分享
 export function goShare() {
   wx.redirectTo({

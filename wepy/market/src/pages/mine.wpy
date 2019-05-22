@@ -225,20 +225,19 @@
       getPhoneNumber: function(e) {
         request('POST', '/api/User/bindMobile', {
           header: {
-            session3rd: wx.getStorageSync('session3rd')
+            session3rd: wx.getStorageSync('session3rd') || ''
           },
           data: {
             encryptedData: e.detail.encryptedData,
-            iv: e.detail.iv
+            iv: e.detail.iv,
+            type: 2
           }
         })
         .then((res) => {
           if (res.status === 1) {
             res = res.data
-            this.setData({
-              bindPhone: true,
-              phone: res.mobile
-            })
+            this.bindPhone = true
+            this.phone = res.mobile
             this.setPhoneAndBalance() // 绑定后请求后台数据
           }
         })
@@ -246,32 +245,27 @@
     }
 
     onShow() {
-  
+      this.setPhoneAndBalance()
     }
 
     // 自定义函数
     setPhoneAndBalance () {
       request('POST', '/api/Center/personal', {
         header: {
-          session3rd: wx.getStorageSync('session3rd')
+          session3rd: wx.getStorageSync('session3rd') || ''
         }
       })
       .then((res) => {
         if (res.status === 1) {
           res = res.data
-          this.setData({ // 设置金额
-            balance: res.balance.toString()
-          })
+          this.balance = res.balance
           if (res.isMobile === 1) {
-            this.setData({
-              bindPhone: true,
-              phone: res.mobile
-            })
+            this.bindPhone = true
+            this.phone = res.mobile
           } else {
-            this.setData({
-              bindPhone: false
-            })
+            this.bindPhone = false
           }
+          this.$apply()
         } else if (res.msg === '未登录') {
           wx.removeStorageSync('session3rd')
           tip.errorSync('网络异常，点击重试', 1500, goBack)

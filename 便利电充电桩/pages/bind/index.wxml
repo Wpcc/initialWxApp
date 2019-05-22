@@ -1,0 +1,13 @@
+<!--pages/bind/index.wxml-->
+<view class='btn-box'>
+  <van-cell-group>
+    <van-field
+      value="{{ value }}"
+      placeholder="请输入卡号"
+      border="{{ false }}"
+      bind:change="onChange"
+    />
+  </van-cell-group>
+  <van-button type="info" custom-class='btn' bindtap="onBindCard">绑定</van-button>
+  <van-button type="danger" custom-class='btn' bindtap="onUnBindCard">解绑</van-button>
+</view>

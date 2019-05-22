@@ -76,14 +76,14 @@
     <view class="address-list" wx:for="{{addressList}}" wx:key="{{index}}">
         <view class="info-box">
           <view class="info">
-            <view class="address-icon" @tap="changeAddress('{{index}}')">
-              <van-icon name="success" color="#f44" wx:if="{{item.select}}"/>
+            <view class="address-icon" @tap="changeAddress('{{item.id}}','{{index}}')">
+              <van-icon name="success" color="#f44" wx:if="{{item.is_default === 1 ? true : false}}"/>
             </view>
-            <view class="address-text" @tap="changeAddress('{{index}}')">
-              <view class="line-one"><text class="name">{{item.name}}</text>{{item.phone}}</view>
+            <view class="address-text" @tap="changeAddress('{{item.id}}','{{index}}')">
+              <view class="line-one"><text class="name">{{item.username}}</text>{{item.phone}}</view>
               <view class="line-two">{{item.address}}</view>
             </view>
-            <view class="address-arrow" @tap="goAddressCompile('{{index}}')">
+            <view class="address-arrow" @tap="goAddressCompile('{{item.id}}')">
               <image src="../static/images/icon_edit.png" />
             </view>
           </view>
@@ -104,6 +104,7 @@
 
 <script>
 import wepy from 'wepy'
+import {request} from '../util/request'
 import { goAddressAdd, goAddressCompile } from '../router/routes'
 import Address from '../util/address'
 export default class addressSelect extends wepy.page {
@@ -118,20 +119,45 @@ export default class addressSelect extends wepy.page {
   methods = {
     goAddressAdd,
     goAddressCompile,
-    changeAddress(index) {
+    changeAddress(id, index) {
       console.log(index)
-      // 改变界面
-      this.addressList.forEach((item) => {
-        item.select = false
+      request('POST', '/api/Address/set', {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        },
+        data: {
+          id: id
+        }
       })
-      this.addressList[index].select = true
-      // 改变数据
-      Address.selectedToLocalStorage(index)
+      .then(res => {
+        if (res.status === 1) {
+          wx.showToast({
+            title: '更改默认地址成功',
+            icon: 'none',
+            duration: 2000
+          })
+          // 改变界面
+          this.addressList.forEach(item => {
+            item.is_default = 2
+          })
+          this.addressList[index].is_default = 1
+          this.$apply()
+        } else {
+          wx.showToast({
+            title: res.msg,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      })
     }
   }
-
   onShow() {
-    this.addressList = Address.getFromLocalStorage('userAddressList')
+    Address.getAddressFromServer()
+    .then(res => {
+      this.addressList = res
+      this.$apply()
+    })
   }
 }
 </script>

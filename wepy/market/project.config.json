@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 1,
+			"current": 11,
 			"list": [
 				{
 					"id": 0,
@@ -95,8 +95,29 @@
 				{
 					"id": 8,
 					"name": "payment-detail",
-					"pathName": "pages/payment-detail",
+					"pathName": "pages/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "detail-receiving",
+					"pathName": "pages/detail-receiving",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "addressAdd",
+					"pathName": "pages/payment",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "freight",
+					"pathName": "pages/freight",
+					"query": "orderNum=201905221752239173",
 					"scene": null
 				}
 			]

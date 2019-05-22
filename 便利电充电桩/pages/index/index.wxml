@@ -18,7 +18,10 @@
       <text >我要充电</text>
     </view>
   </view> -->
-  <tabs tabsData="{{indexData}}"></tabs>
+  <view class="content">
+    <image mode="aspectFill" src="../../static/index/bg-img.png" class="bg-img"></image>
+    <tabs tabsData="{{indexData}}"></tabs>
+  </view>
   <view class="scan" bindtap="scan">
     <image class="scan-image" src="../../static/index/btn_scan.png" />
   </view>

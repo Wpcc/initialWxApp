@@ -54,6 +54,15 @@
       <image src="../../static/mine/icon_next.png" class="icon-next"/>
     </view>
   </view>
+  <!-- <view class="list-box" bindtap="goBind">
+    <view class="list-left">
+      <image src="../../static/mine/icon_bind.png" class="record"/>
+      <text class="record-text">绑定储值卡</text>
+    </view>
+    <view class="list-right">
+      <image src="../../static/mine/icon_next.png" class="icon-next"/>
+    </view>
+  </view> -->
   <view class="list-box" bindtap="service">
     <view class="list-left">
       <image src="../../static/mine/icon_service.png" class="record"/>

@@ -62,7 +62,7 @@
         </van-cell-group>
       </view>
       <view class="btn-box">
-        <van-button type="danger" custom-class="btn" @tap="saveToLocalStorage">保存</van-button>
+        <van-button type="danger" custom-class="btn" @tap="addToServer">保存</van-button>
         <van-button type="primary" custom-class="btn" @tap="getwxAddress">读取微信地址</van-button>
       </view>
     </view>
@@ -92,31 +92,37 @@ export default class addressAdd extends wepy.page {
     areaShow: false, // 区域选择弹出层
     areaList: areaData,
     userAddress: {
-      select: true,
       name: '',
       phone: '',
-      area: '',
-      address: ''
+      provinceName: '',
+      cityName: '',
+      countryName: '',
+      address: '',
+      area: ''
     }
   }
 
   methods = {
     getwxAddress() { // 获取微信地址
+      let that = this
       wx.chooseAddress({
         success(res) {
-          console.log(JSON.stringify(res))
           let wxUserAddress = {
-            select: true,
             name: res.userName,
             phone: res.telNumber,
-            area: res.provinceName + res.cityName + res.countyName,
-            address: res.detailInfo
+            provinceName: res.provinceName || '',
+            cityName: res.cityName || '',
+            countryName: res.countryName || '',
+            address: res.detailInfo,
+            area: (res.provinceName || '') + (res.cityName || '') + (res.countryName || '')
           }
-          Address.addToLocalStorage(wxUserAddress)
+          that.userAddress = wxUserAddress
+          console.log(that.userAddress)
+          that.$apply()
         }
       })
     },
-    saveToLocalStorage() { // 将地址存入到localStorage中
+    addToServer() { // 将地址存入到localStorage中
       console.log(JSON.stringify(this.userAddress))
       if (!this.userAddress.name || !this.userAddress.phone || !this.userAddress.area || !this.userAddress.address) {
         wx.showToast({
@@ -135,7 +141,7 @@ export default class addressAdd extends wepy.page {
         return
       }
       // 添加地址到localStorage
-      Address.addToLocalStorage(this.userAddress)
+      Address.addToServer(this.userAddress)
     },
     popAreaShow() { // 点击：显示弹出层
       this.areaShow = true
@@ -145,6 +151,9 @@ export default class addressAdd extends wepy.page {
     },
     confirm(data) {
       this.areaShow = false
+      this.userAddress.provinceName = data.detail.values[0].name
+      this.userAddress.cityName = data.detail.values[1].name
+      this.userAddress.countryName = data.detail.values[2].name
       this.userAddress.area = `${data.detail.values[0].name}${data.detail.values[1].name}${data.detail.values[2].name}`
     },
     // 微信小程序没做数据双向绑定：顾需手动绑定数据

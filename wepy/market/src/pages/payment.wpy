@@ -1,0 +1,80 @@
+<style lang="less">
+  .text-box{
+    width: 100%;
+    box-sizing: border-box;
+    padding:10px;
+    font-size: 16px;
+    overflow: hidden;
+    background: #F4F4F4;
+    .text-left{
+      float: left;
+    }
+    .text-right{
+      float: right;
+      color: #EA2020;
+    }
+  }
+  .btn-box{
+    position: absolute;
+    left: 0;
+    bottom: 40px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 20px;
+    .btn{
+      width: 100%!important;
+    }
+  }
+</style>
+
+<template>
+  <view>
+    <van-notice-bar
+      speed='20'
+      text="请在15分钟内完成支付"
+    />
+    <view class="text-box">
+      <view class="text-left">应付金额：</view>
+      <view class="text-right">￥{{outOfPrice}}</view>
+    </view>
+    <view class="btn-box">
+      <van-button type="primary" custom-class="btn" @tap="onPay">微信支付</van-button>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {request} from '../util/request'
+import {pay} from '../util/pay'
+import {returnFloat} from '../util/handle'
+export default class Payment extends wepy.page {
+  config = {
+    navigationBarTitleText: '支付中心'
+  }
+  data = {
+    orderNum: '',
+    outOfPrice: ''
+  }
+  onLoad(options) {
+    this.orderNum = options.orderNum
+    this.outOfPrice = returnFloat(options.outOfPrice)
+    this.$apply()
+  }
+  methods = {
+    onPay() {
+      request('POST', '/api/Pay/index', {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        },
+        data: {
+          order_no: this.orderNum
+        }
+      }).then(res => {
+        console.log(res)
+        pay(res)
+      })
+    }
+  }
+}
+</script>

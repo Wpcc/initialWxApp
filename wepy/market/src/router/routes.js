@@ -17,6 +17,13 @@ export function goOrder(id) { // 跳转订单
   })
 }
 
+export function goPayment(orderNum, outOfPrice) {
+  let temp = parseFloat(outOfPrice)
+  wx.navigateTo({
+    url: `./payment?orderNum=${orderNum}&outOfPrice=${temp}`
+  })
+}
+
 export function goAddressAdd() { // 添加地址
   wx.navigateTo({
     url: './address-add'
@@ -59,5 +66,17 @@ export function onService() { // 客服处理
     success(res) {
       console.log(res)
     }
+  })
+}
+
+export function goDetail(orderNum) {
+  wx.navigateTo({
+    url: './detail?orderNum=' + orderNum
+  })
+}
+
+export function goFreight(orderNum) {
+  wx.navigateTo({
+    url: './freight?orderNum=' + orderNum
   })
 }

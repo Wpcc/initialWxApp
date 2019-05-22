@@ -15,11 +15,8 @@ Component({
       if(type === 2){ // 小程序跳转
         wx.navigateToMiniProgram({
           appId: 'wxb5d8d5874dcb2f3e',
-          path: 'page/index/index?id=123',
-          extraData: {
-            foo: 'bar'
-          },
-          envVersion: 'develop',
+          path: 'page/index/index?session3rd=' + wx.getStorageSync('sesssion3rd'),
+          envVersion: 'trial',
           success(res) {
             // 打开成功
             console.log(res)

@@ -1,5 +1,5 @@
 // pages/mine/index.js
-import {goOrder, goBack, goIndex, goRecord, goShare} from '../../router/routes'
+import {goOrder, goBack, goIndex, goRecord, goShare, goBind} from '../../router/routes'
 import {request} from '../../api/request'
 import {tip} from '../../utils/tip'
 import {service} from '../../utils/service'
@@ -17,6 +17,7 @@ Page({
   goBack,
   goRecord,
   goShare,
+  goBind,
   // 点击授权
   getUserInfo: function() {
     this.setAuth()

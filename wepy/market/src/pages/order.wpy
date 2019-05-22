@@ -24,6 +24,10 @@
     .right{
       float: right;
     }
+    .red{
+      color:#FF3333;
+      font-weight: 700;
+    }
     .line{
       padding: 5px 0;
     }
@@ -93,16 +97,29 @@
           <van-icon name="arrow" />
         </view>
       </view>
-      <view wx:else class="info" @tap="goAddressSelect">
-        <view class="address-icon">
+      <view wx:else @tap="goAddressSelect">
+        <view wx:if="{{!hasDefault}}" class="info">
+          <view class="address-icon">
           <image src="../static/images/order_address.png"></image>
+          </view>
+          <view class="address-text address-text2">
+            选择默认地址
+          </view>
+          <view class="address-arrow">
+            <van-icon name="arrow" />
+          </view>
         </view>
-        <view class="address-text">
-          <view class="line-one"><text class="name">{{addressSelected.name}}</text>{{addressSelected.phone}}</view>
-          <view class="line-two">{{addressSelected.address}}</view>
-        </view>
-        <view class="address-arrow">
-          <van-icon name="arrow" />
+        <view wx:else class="info">
+          <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+          </view>
+          <view class="address-text">
+            <view class="line-one"><text class="name">{{addressSelected.username}}</text>{{addressSelected.phone}}</view>
+            <view class="line-two">{{addressSelected.address}}</view>
+          </view>
+          <view class="address-arrow">
+            <van-icon name="arrow" />
+          </view>
         </view>
       </view>
     </view>
@@ -111,8 +128,8 @@
       <van-card
         num="1"
         price="5966.00"
-        title="{{product.goods_title}}"
-        thumb="{{ imgUrls[0] }}"
+        title="{{ product.goods_title }}"
+        thumb="{{ product.goods_logo }}"
         custom-class="card"
       >
         <view
@@ -122,15 +139,17 @@
         </view>
       </van-card>
       <view class="amount">
-        <view class="line"><text class="left">商品金额：</text><text class="right">{{product.goods_sale}}</text></view>
+        <view class="line"><text class="left">商品金额：</text><text class="right">{{product.selling_price}}</text></view>
         <view class="line"><text class="left">运费：</text><text class="right">{{product.freight_price}}</text></view>
-        <view class="line"><text class="left">订单金额：</text><text class="right">{{product.selling_price}}</text></view>
-        <view class="line"><text class="left">抵扣余额：</text><text class="right">-5699.00</text></view>
+        <view class="line"><text class="left">实际金额：</text><text class="right">{{totalPrice}}</text></view>
+        <view class="line"><text class="left">抵扣余额：</text><text class="right">{{balance > product.selling_price ? product.selling_price : balance}}</text></view>
+        <view class="line"><text class="left red">注：余额无法抵扣运费</text></view>
       </view>
     </view>
     <!-- 提交订单栏 -->
     <van-submit-bar
-      price="{{ 3050 }}"
+      price="{{ outOfPrice }}"
+      label="实付金额："
       button-text="提交订单"
       bind:submit="onSubmit"
     >
@@ -142,28 +161,50 @@
 import wepy from 'wepy'
 import Address from '../util/address'
 import { request } from '../util/request'
-import {goAddressAdd, goAddressSelect, goOrderList} from '../router/routes.js'
+import {returnFloat} from '../util/handle'
+import {goAddressAdd, goAddressSelect, goPayment} from '../router/routes.js'
 export default class Order extends wepy.page {
   config = {
     navigationBarTitleText: '订单确认'
   }
 
   data = {
-    imgUrls: [],
     product: {},
-    imageURL: '/static/images/img_thumbnail.png',
-    title: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑',
-
-    addressSelected: {} // 该地址为选中地址
+    addressList: [],
+    addressSelected: {}, // 该地址为选中默认地址
+    goods_id: '',
+    address_id: '',
+    balance: ''
   }
 
   computed = {
     isInfo () {
-      if (this.addressSelected.select) {
+      if (JSON.stringify(this.addressSelected) !== '{}') {
         return false
       } else {
         return true
       }
+    },
+    hasDefault() { // 是否有默认地址
+      let temp = this.addressList.find(item => {
+        return item.is_default === 1
+      })
+      if (temp) {
+        return true
+      } else {
+        return false
+      }
+    },
+    totalPrice() { // 总金额
+      let num = parseFloat(this.product.selling_price || 0) + parseFloat(this.product.freight_price || 0)
+      num = returnFloat(num)
+      return num
+    },
+    outOfPrice() { // 实付金额
+      let temp1 = parseFloat(this.product.selling_price) - parseFloat(this.balance)
+      let temp2 = temp1 > 0 ? temp1 : 0
+      let temp3 = temp2 + parseFloat(this.product.freight_price)
+      return temp3 * 100
     }
   }
 
@@ -172,16 +213,56 @@ export default class Order extends wepy.page {
     goAddressAdd,
     goAddressSelect,
     onSubmit() {
-      goOrderList()
+      if (!this.address_id) {
+        wx.showToast({
+          title: '请选择填写收货地址',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
+      // 提交订单：商品ID、用户session3rd、用户选择地址
+      request('POST', '/api/store/addOrder', {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        },
+        data: {
+          goods_id: this.goods_id,
+          address_id: this.address_id
+        }
+      }).then(res => {
+        goPayment(res.data.order_no, this.outOfPrice / 100)
+      })
     }
   }
 
   onShow() {
     // 显示选中地址
-    this.addressSelected = Address.getFromLocalStorage('userAddressSelected')
-    console.log(this.addressSelected === true)
+    Address.getAddressFromServer()
+    .then(res => {
+      if (res.length === 0) { return }
+      let index = res.findIndex(item => {
+        return item.is_default === 1
+      })
+      this.addressList = res
+      this.addressSelected = res[index]
+      this.address_id = this.addressSelected.id
+      this.$apply()
+    })
+    // 请求个人中心接口，获取余额
+    request('POST', '/api/Center/personal', {
+      header: {
+        session3rd: wx.getStorageSync('session3rd')
+      }
+    })
+    .then((res) => {
+      res = res.data
+      this.balance = returnFloat(res.balance)
+      this.$apply()
+    })
   }
   onLoad(option) {
+    this.goods_id = option.id
     request('GET', '/api/store/goodsinfo?id=' + option.id)
     .then(res => {
       this.product = res.data

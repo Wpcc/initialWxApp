@@ -120,7 +120,8 @@
       />
       <van-goods-action-button
         text="立即兑换"
-        bind:click="goOrder('{{num}}')"
+        bind:getuserinfo="onClickButton"
+        open-type="getUserInfo"
       />
     </van-goods-action>
   </view>
@@ -128,9 +129,11 @@
 
 <script>
 import wepy from 'wepy'
-import { tip } from '../util/tip'
+import tip from '../util/tip'
 import { goOrder, goIndex, onService } from '../router/routes'
 import { request } from '../util/request'
+import { login } from '../util/login'
+import {throttle} from '../util/handle'
 let WxParse = require('../components/wxParse/wxParse.js')
 
 export default class Product extends wepy.page {
@@ -154,9 +157,17 @@ export default class Product extends wepy.page {
     goIndex,
     onService,
     goOrder,
-    onClickButton() {
-      goOrder()
+    onClickButton() { // 节流处理
+      var that = this
+      throttle(this.fn(that), 2000)()
     }
+  }
+
+  fn(that) { // 需要节流的函数
+    tip.loading()
+    login().then(() => {
+      goOrder(that.num)
+    })
   }
 
   onShareAppMessage(res) {

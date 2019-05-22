@@ -1,7 +1,7 @@
 <style lang="less">
   .home{
-    width: 80rpx;
-    height: 80rpx;
+    width: 90rpx;
+    height: 90rpx;
     position: fixed;
     right: 40rpx;
     bottom: 80rpx;
@@ -55,6 +55,8 @@
   import {request} from '../util/request'
   import { goProduct, goMine } from '../router/routes'
   import { login } from '../util/login'
+  import tip from '../util/tip'
+  import {throttle} from '../util/handle'
 
   export default class Index extends wepy.page {
     config = {
@@ -68,28 +70,40 @@
     data = {
       home: '../static/images/home.png',
       productList: [], // 产品列表
-      p: 1 // 翻页
+      p: 1, // 翻页
+      isBottom: false
     }
 
     methods = {
       goProduct,
-      bindGetUserInfo(e) { // 跳转主页：有登录逻辑
-        login().then(res => {
-          // console.log(res)
-          if (res) {
-            goMine()
-          }
-        })
+      bindGetUserInfo(e) { // 跳转主页：有登录逻辑，有节流处理
+        throttle(this.fn, 2000)()
       }
     }
 
+    fn() { // 需要节流的执行函数
+      tip.loading()
+      login().then(res => {
+        if (res) {
+          goMine()
+        }
+      })
+    }
+
     onShow() {
+      wx.removeStorageSync('session3rd')
       request('GET', '/api/store/index')
       .then(res => {
-        console.log(res)
         this.productList = res.data
         this.$apply()
       })
+    }
+
+    onLoad(options) {
+      if (options.session3rd) {
+        let session3rd = options.session3rd
+        wx.setStorageSync('session3rd', session3rd)
+      }
     }
 
     onPullDownRefresh() {  // 下拉刷新
@@ -100,10 +114,22 @@
     }
   
     onReachBottom() { // 上拉加载
+      if (this.isBottom) {
+        return
+      }
       this.p++
       request('GET', '/api/store/index?p=' + this.p)
       .then(res => {
-        console.log('hello')
+        if (res.data.length === 0) {
+          this.isBottom = true
+          wx.showToast({
+            title: '没有更多数据',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+        this.productList = this.productList.concat(res.data)
+        this.$apply()
       })
     }
   }

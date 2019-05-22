@@ -1,0 +1,160 @@
+<style lang="less">
+  @cyan:#23C675;
+  @bgColor:#e6e6e6;
+  page{
+    width: 100%;
+    height: 100%;
+  }
+  .paymentDetail-container{
+    width: 100%;
+    height: 100%;
+    background: #F2F2F2;
+    .order-container{
+      width: 100%;
+      height: 100%;
+      box-sizing: border-box;
+      padding: 10px 10px;
+      background: @bgColor;
+    }
+    .order-box{
+      width: 100%;
+      background: #fff;
+      padding-top: 10px;
+      margin-bottom: 5px;
+      .card{
+        background: #fff;
+      }
+    }
+    .amount{
+      font-size: 12px;
+      color: #666;
+      padding: 10px 15px;
+      background: #fff;
+      .right{
+        float: right;
+      }
+      .line{
+        padding: 5px 0;
+      }
+    }
+    .info-box{
+      padding: 10px 15px;
+      background: #fff;
+      margin-bottom: 5px;
+      .info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        .address-icon{
+          width: 10%;
+          display: flex;
+          align-items: center;
+          image{
+            width: 50rpx;
+            height: 50rpx;
+          }
+        }
+        .address-text{
+          line-height: 20px;
+          width: 75%;
+          font-size: 12px;
+          .line-one{
+            .name{
+              font-size: 16px;
+              margin-right: 10px;
+            }
+          } 
+          .line-two{
+            color: #333;
+          }
+        }
+        .address-text2{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+        }
+        .address-arrow{
+          width: 10%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+        }
+      }
+    }  
+  }
+</style>
+
+<template>
+  <view class="paymentDetail-container">
+    <!-- 订单概述 -->
+    <view class="order-box">
+      <van-card
+        num="1"
+        price="{{orderDetail.order.goods_price}}"
+        title="{{orderDetail.goods.goods_title}}"
+        thumb="{{ orderDetail.goods.goods_logo }}"
+        custom-class="card"
+        class="card-box"
+      >
+        <view
+          slot="tags"
+          class="card__tags"
+        >
+        </view>
+      </van-card>
+      <view class="amount">
+        <view class="line"><text class="left">品骏快递：80305919184</text></view>
+      </view>
+    </view>
+    <!-- 物流概述:两种状态 -->
+    <view class="info-box">
+      <view class="info" @tap="goAddressSelect">
+        <view class="address-icon">
+          <image src="../static/images/order_address.png"></image>
+        </view>
+        <view class="address-text">
+          <view class="line-one"><text class="name">{{orderDetail.express.username}}</text>{{orderDetail.express.phone}}</view>
+          <view class="line-two">{{orderDetail.express.address}}</view>
+        </view>
+        <view class="address-arrow">
+          <!-- <van-icon name="arrow" /> -->
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+import {request} from '../util/request'
+
+export default class Freight extends wepy.page {
+  config = {
+    navigationBarTitleText: '物流查询'
+  }
+  data = {
+    orderNum: '',
+    orderDetail: {},
+    toTime: ''
+  }
+  onLoad(options) {
+    this.orderNum = options.orderNum
+    this.$apply()
+  }
+  onShow() {
+    // 请求订单
+    request('POST', '/api/Shopoder/details', {
+      header: {
+        session3rd: wx.getStorageSync('session3rd')
+      },
+      data: {
+        order_no: this.orderNum
+      }
+    })
+    .then(res => {
+      this.orderDetail = res.data
+      this.$apply()
+    })
+  }
+}
+</script>

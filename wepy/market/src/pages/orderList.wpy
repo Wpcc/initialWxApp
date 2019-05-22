@@ -3,11 +3,55 @@
     width: 100%;
     height: 100%;
   }
+  .tabbar-container{
+    box-sizing: border-box;
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    font-size: 16px;
+    padding: 0 10px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    background: #fff;
+    z-index:99;
+  }
+  .tabbar-underway{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .tabbar-completed{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  /* 订单列表 */
+  /* 订单 title */
+  .list-container{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 10px;
+    margin: 45px 0 0;
+  }
+  .underway-ul{
+    width: 100%;
+  }
   .orderList-container{
     width: 100%;
-    height: 100%;
+    height: auto;
+    min-height: 100%;
     background: #F2F2F2;
+    position: absolute;
+    left: 0;
+    top: 0;
   }
+
   .noData-box{
     width: 100%;
     height: 100%;
@@ -23,7 +67,7 @@
   .box{
     box-sizing: border-box;
     width: 100%;
-    padding: 15px 10px;
+    padding: 5px 0;
     background: #F2F2F2;
     min-height: 100%;
     .panel{
@@ -75,73 +119,212 @@
 </style>
 <template>
   <view class="orderList-container">
-    <van-tabs active="{{ active }}" bind:change="onChange" custom-class="tabs-content">
-      <van-tab title="待付款" custom-class="tab-content" class="van-tab">
-        <view class="noData-box" wx:if="{{!hasOrderData}}">
-          <image src="../static/images/no_data.png" class="noData-image"></image>
-        </view>
-        <view wx:else>
-          <repeat for="{{orderList}}" key="index" item="item">
-            <view class="box">
-              <view class="panel">
-                <view class="title">
-                  <text class="title-left">201804027569897</text>
-                  <text class="title-right">待付款</text>
-                </view>
-                <view class="body">
-                  <!-- 订单概述 -->
-                  <view class="order-box">
-                    <van-card
-                      num="1"
-                      price="5966.00"
-                      title="{{item.title}}"
-                      thumb="{{ item.imageURL }}"
-                      custom-class="card"
+    <view class="tabbar-container">
+      <view id="tabbar-underway" class="tabbar-underway" style="{{leftSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="ingOrder">
+        <text class="underway-text">进行中</text>
+      </view>
+      <view id="tabbar-completed" class="tabbar-completed" style="{{leftSelected==false ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="edOrder">
+        <text class="completed-text">已完成</text>
+      </view>
+    </view>
+    <view class="list-container">
+      <view class="noData-box" wx:if="{{!hasOrderData}}">
+        <image src="../static/images/no_data.png" class="noData-image"></image>
+      </view>
+      <view wx:else>
+        <repeat for="{{orderList}}" key="index" item="item">
+          <view class="box" @tap="goDetail('{{item.order_no}}')">
+            <view class="panel">
+              <view class="title">
+                <text class="title-left">{{item.order_no}}</text>
+                <text class="title-right">{{item.statusTxt}}</text>
+              </view>
+              <view class="body">
+                <!-- 订单概述 -->
+                <view class="order-box">
+                  <van-card
+                    num="1"
+                    price="{{item.goods_price}}"
+                    title="{{item.goods_title}}"
+                    thumb="{{ item.goods_logo }}"
+                    custom-class="card"
+                  >
+                    <view
+                      slot="tags"
+                      class="card__tags"
                     >
-                      <view
-                        slot="tags"
-                        class="card__tags"
-                      >
-                      </view>
-                    </van-card>
-                    <view class="amount">
-                      <view class="line"><text class="left">商品金额：</text><text class="right">5699.00</text></view>
-                      <view class="line"><text class="left">运费：</text><text class="right">10.00</text></view>
-                      <view class="line"><text class="left">订单金额：</text><text class="right">5709.00</text></view>
-                      <view class="line"><text class="left">抵扣余额：</text><text class="right">-5699.00</text></view>
-                      <view class="line"><van-button custom-class="btn right" round plain type="danger">立即付款</van-button></view>
+                    </view>
+                  </van-card>
+                  <view class="amount">
+                    <view class="line"><text class="left">共计金额：</text><text class="right">{{item.real_price}}</text></view>
+                    <view class="line"><text class="left">余额抵扣：</text><text class="right">{{item.deduction}}</text></view>
+                    <view class="line"><text class="left">实付金额：</text><text class="right">{{item.goods_price}}</text></view>
+                    <view class="line" wx:if="{{item.status === 1 ? true : false}}">
+                      <van-button 
+                        custom-class="btn right" 
+                        round 
+                        plain 
+                        type="danger"
+                      >立即付款</van-button>
                     </view>
                   </view>
                 </view>
               </view>
             </view>
-          </repeat>
-        </view>
-      </van-tab>
-      <van-tab title="待发货">内容 2</van-tab>
-      <van-tab title="待收货">内容 3</van-tab>
-      <van-tab title="已完成">内容 4</van-tab>
-    </van-tabs>
+          </view>
+        </repeat>
+      </view>
+    </view>
 
   </view>
   
 </template>
 <script>
 import wepy from 'wepy'
+import {request} from '../util/request'
+import {goPayment, goDetail} from '../router/routes'
 export default class orderList extends wepy.page {
   config = {
-    navigationBarTitleText: '订单列表'
+    navigationBarTitleText: '订单列表',
+    enablePullDownRefresh: true
   }
 
   data = {
-    active: 0, // tab切换
+    leftSelected: true, // tab切换
     hasOrderData: false, // 是否有订单数据
-    orderList: [
-      {
-        imageURL: '/static/images/img_thumbnail.png',
-        title: '联系(LENOVO)拯救者Y7000英特尔酷睿i5 15.6英寸游戏笔记本电脑'
+    orderList: [],
+    p: 1, // 翻页
+    isBottom: false
+  }
+
+  computed = {
+    hasOrderData () { // 是否有订单数据
+      // eslint-disable-next-line no-unneeded-ternary
+      let temp = this.orderList.length > 0 ? true : false
+      return temp
+    }
+  }
+
+  methods = {
+    goPayment,
+    goDetail
+  }
+
+  // 自定义函数
+  ingOrder() {
+    this.leftSelected = true
+    this.p = 1
+    this.requestData(1)
+  }
+
+  edOrder() {
+    this.leftSelected = false
+    this.p = 1
+    this.requestData(2)
+  }
+
+  requestData(type) {
+    request('POST', '/api/Shopoder/lst', {
+      header: {
+        session3rd: wx.getStorageSync('session3rd')
+      },
+      data: {
+        type: type,
+        p: this.p
       }
-    ]
+    })
+    .then(res => {
+      let temp = this.handleData(res)
+      this.orderList = temp
+      this.$apply()
+    })
+  }
+
+  handleData(res) { // 处理获取到的数据
+    let temp = []
+    res.data.forEach(item => {
+      switch (item.status) {
+        case 0:
+          item.statusTxt = '无效'
+          break
+        case 1:
+          item.statusTxt = '待付款'
+          break
+        case 2:
+          item.statusTxt = '待发货'
+          break
+        case 3:
+          item.statusTxt = '已发货'
+          break
+        case 4:
+          item.statusTxt = '已收货'
+          break
+        case 5:
+          item.statusTxt = '已完成'
+          break
+        case 6:
+          item.statusTxt = '已退货/退款'
+          break
+      }
+      temp.push(item)
+    })
+    return temp
+  }
+
+  handlePull(res) { // 处理上拉加载公用函数
+    if (res.data.length === 0) {
+      this.isBottom = true
+      wx.showToast({
+        title: '没有更多数据',
+        icon: 'none',
+        duration: 2000
+      })
+    }
+    let temp = this.handleData(res)
+    this.orderList = this.orderList.concat(temp)
+    this.$apply()
+  }
+
+  onShow() {
+    this.ingOrder()
+  }
+
+  onPullDownRefresh() {  // 下拉刷新
+    wx.stopPullDownRefresh()
+  }
+
+  onReachBottom() { // 上拉加载
+    if (this.isBottom) {
+      return
+    }
+    this.p++
+    if (this.leftSelected) {
+      request('POST', '/api/Shopoder/lst?p=' + this.p, {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        },
+        data: {
+          type: 1,
+          p: this.p
+        }
+      })
+      .then(res => {
+        this.handlePull(res)
+      })
+    } else {
+      request('POST', '/api/Shopoder/lst?p=' + this.p, {
+        header: {
+          session3rd: wx.getStorageSync('session3rd')
+        },
+        data: {
+          type: 2,
+          p: this.p
+        }
+      })
+      .then(res => {
+        this.handlePull(res)
+      })
+    }
   }
 }
 </script>
