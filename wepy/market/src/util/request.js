@@ -1,10 +1,8 @@
-import tip from './tip'
-let host = 'https://backend.quanjieshop.com'
+let host = 'https://admin.quanjieshop.com'
 
 export const request = (method = 'POST', path, args = {}) => {
   const url = host + path
   const {data, header} = args
-  // tip.loading()
   return new Promise((resolve, reject) => {
     wx.request({
       method: method,
@@ -17,7 +15,6 @@ export const request = (method = 'POST', path, args = {}) => {
       },
       fail(err) {
         reject(err)
-        // tip.loaded()
       }
     })
   })

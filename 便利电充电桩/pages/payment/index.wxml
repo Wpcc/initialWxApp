@@ -1,5 +1,11 @@
 <!--pages/payment/index.wxml-->
 <view class="payment-container">
+    <view class="title">
+      <view class="left-icon">
+        <van-icon name="arrow-left" color="#fff" custom-class="left-icon-one" bindtap="goBack"/>
+        <van-icon name="home-o" color="#fff" bindtap="goIndex"/>
+      </view>
+    </view>
     <view class="form-title">
         <view class="form-left">
           <image src="../../static/payment/img_address.png" style="width:100%;height:100%;" />

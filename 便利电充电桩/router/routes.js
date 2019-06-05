@@ -25,7 +25,7 @@ export function goList() {
 
 // 跳转主页
 export function goIndex() {
-  wx.redirectTo({
+  wx.reLaunch({
     url: '../index/index'
   })
 }
@@ -65,17 +65,17 @@ export function goRedPacket(){
 // 充值
 export function goRecharge() {
   wx.getSetting({
-    success(res) {
-      if(!res.authSetting['scope.userInfo'] || !wx.getStorageSync('session3rd') ) { // 如果用户授权
-        wx.showToast({
-          title:'点击个人中心进行授权，才能进行该操作',
-          icon:'none',
-          dutation:2000
-        })
-      }
-      else{
+    success(res){
+      if(res.authSetting['scope.userInfo']){
+        console.log('sure')
         wx.navigateTo({
-          url: '../recharge/index'
+          url: '../recharege/index'
+        })
+      }else{
+        wx.showToast({
+          title: '点击个人中心进行授权，才能进行该操作',
+          icon: 'success',
+          duration: 2000
         })
       }
     }

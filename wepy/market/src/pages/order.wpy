@@ -127,7 +127,7 @@
     <view class="order-box">
       <van-card
         num="1"
-        price="5966.00"
+        price="{{ product.selling_price }}"
         title="{{ product.goods_title }}"
         thumb="{{ product.goods_logo }}"
         custom-class="card"
@@ -142,7 +142,7 @@
         <view class="line"><text class="left">商品金额：</text><text class="right">{{product.selling_price}}</text></view>
         <view class="line"><text class="left">运费：</text><text class="right">{{product.freight_price}}</text></view>
         <view class="line"><text class="left">实际金额：</text><text class="right">{{totalPrice}}</text></view>
-        <view class="line"><text class="left">抵扣余额：</text><text class="right">{{balance > product.selling_price ? product.selling_price : balance}}</text></view>
+        <view class="line"><text class="left">抵扣余额：</text><text class="right">{{balanceNum > sellingPrice ? product.selling_price : balance }}</text></view>
         <view class="line"><text class="left red">注：余额无法抵扣运费</text></view>
       </view>
     </view>
@@ -205,6 +205,12 @@ export default class Order extends wepy.page {
       let temp2 = temp1 > 0 ? temp1 : 0
       let temp3 = temp2 + parseFloat(this.product.freight_price)
       return temp3 * 100
+    },
+    balanceNum() {
+      return parseFloat(this.balance)
+    },
+    sellingPrice() {
+      return parseFloat(this.product.selling_price)
     }
   }
 

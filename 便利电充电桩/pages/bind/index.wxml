@@ -2,7 +2,7 @@
 <view class='btn-box'>
   <van-cell-group>
     <van-field
-      value="{{ value }}"
+      value="{{ cardNum }}"
       placeholder="请输入卡号"
       border="{{ false }}"
       bind:change="onChange"

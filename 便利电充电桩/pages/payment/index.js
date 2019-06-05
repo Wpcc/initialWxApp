@@ -2,7 +2,7 @@
 import { tip } from '../../utils/tip'
 import { request } from '../../api/request'
 import { pay } from '../../utils/pay'
-import { goPayTip } from '../../router/routes'
+import { goPayTip,goBack,goIndex } from '../../router/routes'
 import { login } from '../../utils/login'
 import {recharge} from '../../utils/util'
 
@@ -93,6 +93,8 @@ Page({
       'rechargePile.time': time.toString()
     })
   },
+  goBack,
+  goIndex,
   // onLoad生命周期
   onLoad(option) {
     if(option.id){ // 通过小程序中ID进入

@@ -35,6 +35,7 @@ Page({
   },
   // 生命周期函数
   onShow() {
+    // wx.removeStorageSync('session3rd')
     wx.getLocation({
       type:'gcj02',
       success(res){

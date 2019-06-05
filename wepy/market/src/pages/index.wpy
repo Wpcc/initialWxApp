@@ -1,4 +1,8 @@
 <style lang="less">
+  page{
+    min-height: 100%;
+    background: #fafafa;
+  }
   .home{
     width: 90rpx;
     height: 90rpx;

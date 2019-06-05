@@ -1,7 +1,8 @@
 // pages/recharge/index.js
 import {recharge} from '../../utils/recharge'
 import {request} from '../../api/request'
-import {checkAuthAndLogin} from '../../utils/util'
+import { login } from '../../utils/login';
+
 Page({
   data:{
     id:'', // 用户选择ID
@@ -10,27 +11,7 @@ Page({
     money:[]
   },
   onShow() {
-    checkAuthAndLogin() // 检查是否登录注册
-    request('POST', '/api/Center/personal', {
-      header:{
-        session3rd:wx.getStorageSync('session3rd')
-      }
-    })
-    .then((res) => {
-      if(res.status === 1){
-        res = res.data
-        let temp = []
-        res.money.forEach(item => {
-          item['color'] = '#23c675'
-          item['background'] = '#fff'
-          temp.push(item)
-        })
-        this.setData({
-          money: temp,
-          balance:res.balance
-        })
-      }
-    })
+    this.again()
   },
   changeStyle(e){
     for(let i = 0; i<this.data.money.length; i++){ // 初始化样式
@@ -58,6 +39,33 @@ Page({
     this.placeOrderAndPay()
   },
   // 自定义函数
+  again: function(){
+    request('POST', '/api/Center/personal', {
+      header:{
+        session3rd:wx.getStorageSync('session3rd')
+      }
+    })
+    .then((res) => {
+      console.log('res:' + res)
+      if(res.status === 1){
+        res = res.data
+        let temp = []
+        res.money.forEach(item => {
+          item['color'] = '#23c675'
+          item['background'] = '#fff'
+          temp.push(item)
+        })
+        this.setData({
+          money: temp,
+          balance:res.balance
+        })
+      }else if(res.status === 2){
+        login().then(res => {
+          this.again()
+        })
+      }
+    })
+  },
   placeOrderAndPay: function() {
     request('POST','/api/Build/chargeMoney', { // 下单
       header:{

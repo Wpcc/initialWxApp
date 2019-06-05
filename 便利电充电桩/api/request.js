@@ -1,6 +1,7 @@
 /**
  * method默认值为POST，path为路径，arg是一个对象，里面是传递过来的数据
  */
+import {login} from '../utils/login'
 const app = getApp()
 export const request = (method = 'POST', path, args = {}) => {
   const url = app.globalData.url + path

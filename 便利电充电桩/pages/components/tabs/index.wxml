@@ -5,7 +5,7 @@
       <image class="navigate-image" src="{{item.img}}" />
       <text >{{item.name}}</text>
     </view>
-    <button wx:else class="navigate-item clear-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+    <button wx:else class="navigate-item clear-btn" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" data-index="{{index}}">
       <image class="navigate-image" src="{{item.img}}" />
       <text >{{item.name}}</text>
     </button>

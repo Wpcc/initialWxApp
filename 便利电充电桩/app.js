@@ -4,7 +4,7 @@ App({
     
   },
   globalData: {
-    url:'https://backend.quanjieshop.com',
+    url:'https://admin.quanjieshop.com',
     appId:'wx663da65452ee2d87',
     // 搜索需要的数据
     longitude: 114.207034,
