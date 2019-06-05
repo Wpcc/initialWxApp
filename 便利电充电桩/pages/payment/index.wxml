@@ -2,8 +2,8 @@
 <view class="payment-container">
     <view class="title">
       <view class="left-icon">
-        <van-icon name="arrow-left" color="#fff" custom-class="left-icon-one" bindtap="goBack"/>
-        <van-icon name="home-o" color="#fff" bindtap="goIndex"/>
+        <van-icon name="arrow-left" color="#fff" size="22px" custom-class="left-icon-num" bindtap="goBack"/>
+        <van-icon name="home-o" color="#fff" size="22px" custom-class="left-icon-num" bindtap="goIndex"/>
       </view>
     </view>
     <view class="form-title">
