@@ -2,7 +2,9 @@
   "usingComponents": {
     "center-loading":"../components/centerLoading/index",
     "bottom-loading":"../components/bottomLoading/index",
-    "no-data":"../components/noData/index"
+    "no-data":"../components/noData/index",
+    "navigation":"../components/navigation/index"
   },
+  "navigationStyle":"custom",
   "navigationBarTitleText":"充电详情"
 }

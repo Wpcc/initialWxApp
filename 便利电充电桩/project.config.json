@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -69,6 +69,26 @@
 					"name": "123",
 					"pathName": "pages/payment/index",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "456",
+					"pathName": "pages/paysuccess/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "recharge",
+					"pathName": "pages/recharge/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "bind",
+					"pathName": "pages/bind/index",
 					"scene": null
 				}
 			]

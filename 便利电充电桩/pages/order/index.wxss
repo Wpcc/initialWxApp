@@ -9,7 +9,7 @@
   padding: 0 10px;
   position: fixed;
   left: 0;
-  right: 0;
+  top: 70px;
   background: #fff;
 }
 .tabbar-underway{
@@ -32,7 +32,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 10px;
-  margin: 45px 0 0;
+  margin: 115px 0 0;
 }
 .underway-ul{
   width: 100%;
@@ -150,11 +150,4 @@
   top: 30%;
   left: 0;
   width: 100%;
-}
-.home{
-  width: 80rpx;
-  height: 80rpx;
-  position: fixed;
-  right: 130rpx;
-  bottom: 180rpx;
 }

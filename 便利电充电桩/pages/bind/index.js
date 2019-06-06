@@ -20,7 +20,7 @@ Page({
     .then(res => {
       if(res.status === 1){
         this.setData({
-          cardNum: res.card_no
+          cardNum: res.data.card_no
         })
         tip.alert('绑卡成功')
       }else{

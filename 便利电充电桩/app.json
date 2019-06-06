@@ -17,7 +17,8 @@
     "pages/share/index",
     "pages/components/popup/index",
     "pages/components/tabs/index",
-    "pages/bind/index"
+    "pages/bind/index",
+    "pages/components/navigation/index"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -35,7 +36,7 @@
     "van-button": "../modules/dist/button/index",
     "van-loading": "../modules/dist/loading/index",
     "van-popup": "../modules/dist/popup/index",
-    "van-icon":"../modules/dist/icon/index"
+    "van-icon": "../modules/dist/icon/index"
   },
   "sitemapLocation": "sitemap.json",
   "navigateToMiniProgramAppIdList": [

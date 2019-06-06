@@ -1,5 +1,6 @@
 <!--pages/share/index.wxml-->
 <view class="share-container">
+  <navigation></navigation>
   <view class="img box">
     <van-icon name="checked" class="icon" color="#09BB07" size="100px"></van-icon>
     <view class="mainText">支付成功</view>
@@ -7,7 +8,6 @@
   </view>
   <!-- 按钮 -->
   <view class="btn-box">
-    <button class="btn-two btn-active" bindtap="goIndex">返回首页</button>
     <button class="btn-two btn-active" bindtap="goOrder">完成</button>
   </view>
 </view>

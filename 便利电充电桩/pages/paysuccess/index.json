@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "van-icon":"../../modules/dist/icon/index",
-    "van-button":"../../modules/dist/button/index"
+    "van-button":"../../modules/dist/button/index",
+    "navigation":"../components/navigation/index"
   },
+  "navigationStyle":"custom",
   "navigationBarTitleText":"订单支付"
 }

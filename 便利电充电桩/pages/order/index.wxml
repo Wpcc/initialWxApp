@@ -1,4 +1,5 @@
 <!--pages/order/index.wxml-->
+<navigation></navigation>
 <view class="container">
   <view class="tabbar-container">
     <view id="tabbar-underway" class="tabbar-underway" style="{{leftSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="ing_order">
@@ -96,7 +97,4 @@
   <view class="init-position" wx:if="{{init}}">
     <no-data></no-data>
   </view>
-  <cover-view class="home" bindtap="goIndex">
-    <cover-image src="../../static/order/home.png" ></cover-image>
-  </cover-view>
 </view>

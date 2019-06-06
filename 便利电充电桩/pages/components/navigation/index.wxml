@@ -1,0 +1,7 @@
+<!--pages/components/navigation/index.wxml-->
+<view class="title">
+  <view class="left-icon">
+    <van-icon name="arrow-left" color="#fff" size="22px" custom-class="left-icon-num" custom-style="display:block" bindtap="goBack"/>
+    <van-icon name="home-o" color="#fff" size="22px" custom-class="left-icon-num" custom-style="display:block" bindtap="goIndex"/>
+  </view>
+</view>

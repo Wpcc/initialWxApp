@@ -47,7 +47,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onShow: function () {
-    this.isAuthAndLogin()
     this.setPhoneAndBalance()
   },
   // 客服
@@ -81,15 +80,5 @@ Page({
       }
     })
     
-  },
-  isAuthAndLogin() {
-    wx.getSetting({
-      success(res) {
-        if(!res.authSetting['scope.userInfo'] || !wx.getStorageSync('session3rd')) { // 用户未授权
-          goIndex()
-          return
-        }
-      }
-    })
   }
 })
