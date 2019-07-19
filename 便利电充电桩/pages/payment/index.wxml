@@ -1,6 +1,6 @@
 <!--pages/payment/index.wxml-->
 <navigation></navigation>
-<view class="payment-container">
+<view class="payment-container" style="margin-top:{{navH}}px">
     <view class="form-title">
         <view class="form-left">
           <image src="../../static/payment/img_address.png" style="width:100%;height:100%;" />

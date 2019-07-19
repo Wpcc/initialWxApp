@@ -1,0 +1,8 @@
+<!--index.wxml-->
+<view class="container-box">
+  <view class="box-btn">
+    <view class="title">允许微信授权后，可体验更多功能</view>
+    <van-button type="primary" custom-class="btn" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">手机登录</van-button>
+    <van-button type="default" custom-class="btn" bindtap="goBack">回到首页</van-button>
+  </view>
+</view>

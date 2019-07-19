@@ -4,6 +4,7 @@ import {login} from '../../utils/login'
 import {formatTime} from '../../utils/util'
 import { goIndex } from '../../router/routes'
 
+const App = getApp()
 Page({
   // 页面初始数据
   data: {
@@ -17,7 +18,8 @@ Page({
     bottomLoading: false,
     noData: false,
     centerLoading: true,
-    init: false // 用户无数据，显示
+    init: false, // 用户无数据，显示
+    navH: App.globalData.navHeight
   },
   goIndex,
   ing_order() {

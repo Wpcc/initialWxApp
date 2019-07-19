@@ -158,6 +158,14 @@ export default class Product extends wepy.page {
     onService,
     goOrder,
     onClickButton() { // 节流处理
+      if (this.product.goods_stock === 0) {
+        wx.showToast({
+          title: '没有更多库存，无法进行兑换',
+          icon: 'none',
+          duration: 2000
+        })
+        return
+      }
       var that = this
       throttle(this.fn(that), 2000)()
     }
@@ -175,7 +183,7 @@ export default class Product extends wepy.page {
       console.log(res.target)
     }
     let openid = wx.getStorageSync('openid')
-    return tip.share('分享特价商城', '/pages/index/index?key' + openid)
+    return tip.share('分享特价商城', '/pages/index?key=' + openid)
   }
 
   onLoad(option) {

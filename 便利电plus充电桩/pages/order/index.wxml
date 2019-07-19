@@ -1,0 +1,60 @@
+<!--pages/order/index.wxml-->
+<!-- <navigation></navigation> -->
+<view class="container-box" style="padding-top:{{navH}}px">
+  <view class="bg-top"></view>
+  <view class="content-box" style="margin-top:{{navH}}px">
+    <view class="box1-panel">
+      <view class="top">
+        <view class="circle-out">
+          <view class="circle-inner">
+            <view class="main-text">{{pile.charging_time}}</view>
+            <view class="side-text">分钟(min)</view>
+          </view>
+        </view>
+        <view class="text-time">
+          <view class="time-start">开始时间:{{pile.charging_start_at}}</view>
+          <view class="time-end">预计结束:{{pile.charging_finish_at}}</view>
+        </view>
+      </view>
+      <view class="bottom">
+        <view class="order-number">订单编号：{{pile.order_sn}}</view>
+        <view class="recharge-container">
+          <view class="recharge-box1">
+            <view class="align-image">
+              <image src="../../static/images/socket02.png" style="width:40rpx;height:40rpx;"/>
+              <text class="recharge-big">{{pile.port}}号</text>
+            </view>
+            <view class="recharge-small">
+              充电插座(号)
+            </view>
+          </view>
+          <view class="recharge-box2">
+            <view class="align-image">
+              <image src="../../static/images/socket01.png" style="width:40rpx;height:40rpx;"/>
+              <text class="recharge-big">{{pile.order_amount}}</text>
+            </view>
+            <view class="recharge-small">
+              充电费用(元)
+            </view>
+          </view>
+          <view class="recharge-box3">
+            <view class="align-image">
+              <text class="recharge-big">1元/{{pile.rates}}小时</text>
+            </view>
+            <view class="recharge-small">
+              充电计划
+            </view>
+          </view>
+        </view>
+      </view>
+      <view class="position-bottom-box">
+        <view class="position-bottom">{{pile.device}}{{pile.device_no}}</view>
+      </view>
+      <view class="position-left"></view>
+      <view class="position-right"></view>
+    </view>
+  </view>
+  <view class="box-btn">
+    <van-button type="primary" custom-class="btn" bindtap="goSocket">继续充电</van-button>
+  </view>
+</view>

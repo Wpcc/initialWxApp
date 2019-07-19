@@ -2,7 +2,6 @@
 .payment-container{
   width: 100%;
   height: 100%;
-  padding-top: 70px;
   box-sizing: border-box;
 }
 .form-title{
@@ -155,7 +154,7 @@
 
 /* 支付样式 */
 .btn-position{
-  position: absolute;
+  position: fixed;
   left: 0;
   bottom: 0;
   width: 100%;

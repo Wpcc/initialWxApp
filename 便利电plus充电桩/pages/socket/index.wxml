@@ -1,0 +1,53 @@
+<!--pages/socket/index.wxml-->
+<!-- <navigation></navigation> -->
+<view class="container-box" style="padding-top:{{navH}}px">
+  <view class="bg-top"></view>
+  <view class="content-box" style="margin-top:{{navH}}px">
+    <view class="box1-panel">
+      <view class="line01">{{socket.name}}{{socket.device_no}}</view>
+      <view class="line02">
+        <view class="line02-one">
+          <view class="circle"></view>
+          <view>空闲桩{{socket.no_c}}个</view>
+        </view>
+        <view class="line02-two">
+          <view class="circle"></view>
+          <view>使用中{{socket.yes_c}}个</view>
+        </view>
+        <view class="line02-three">
+          <view class="circle"></view>
+          <view>故障桩{{socket.fail_c}}个</view>
+        </view>
+      </view>
+      <view class="line03">地址：{{socket.address}}</view>
+    </view>
+    <view class="box2">
+      <view class="title">充电端口</view>
+      <view class="box2-panel">
+        <view class="li" wx:for="{{socket.port}}" wx:key="{{item}}">
+          <view wx:if="{{item === 0}}" bindtap="getPhone" data-index="{{index}}"><!-- login 获取手机号-->
+              <view class="number">{{index + 1}}号</view>
+              <view>
+                <image class="look" src="../../static/images/btn_port_default.png"/>
+              </view> 
+              <view class="state state-0">空闲中</view>
+          </view>
+          <view wx:if="{{item === 1}}" bindtap="showToast">
+            <view class="number">{{index + 1}}号</view>
+            <view>
+              <image class="look" src="../../static/images/icon_used.png"/>
+            </view> 
+            <view  class="state state-1">使用中</view>
+          </view>
+          <view wx:if="{{item === 2}}" bindtap="showErr">
+            <view class="number">{{index + 1}}号</view>
+            <view>
+              <image class="look" src="../../static/images/icon_fault.png"/>
+            </view> 
+            <view class="state state-2">故障中</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

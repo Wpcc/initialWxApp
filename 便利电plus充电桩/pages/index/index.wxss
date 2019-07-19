@@ -1,0 +1,52 @@
+/**index.wxss**/
+page{
+  width: 100%;
+  height: 100%;
+}
+.container-box{
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  box-sizing: border-box;
+}
+.title-box{
+  box-sizing: border-box;
+  width: 100%;
+  height: calc(150px + 190rpx);
+  background: #fff;
+}
+.slide-image{
+  width: 90%;
+  margin-left: 5%;
+  height: 300rpx;
+}
+.navigate-box{
+  padding-top: 30rpx;
+  box-sizing: border-box;
+  margin-left: 5%;
+  width: 90%;
+  height: 150rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.navigate-item{
+  text-align: center;
+  font-size: 14px;
+  color: #333;
+}
+.navigate-item .navigate-img{
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.scan{
+  position: absolute;
+  bottom: 50rpx;
+  left: 50%;
+  margin-left: -90rpx
+}
+.scan-image{
+  width: 180rpx;
+  height: 180rpx;
+}

@@ -1,0 +1,59 @@
+<!--pages/payment/index.wxml-->
+<!-- <navigation></navigation> -->
+<view class="container-box" style="padding-top:{{navH}}px">
+  <view class="bg-top"></view>
+  <view class="content-box" style="margin-top:{{navH}}px">
+    <view class="box1-panel">
+      <view class="content-explain">设备名称：{{pile.name}}{{pile.device_no}}</view>
+      <view class="content-import">{{pile.i}}号插座</view>
+    </view>
+    <view class="box2">
+      <view class="title">请选择商品</view>
+      <view class="box2-panel">
+        <view 
+          class="btn-box" 
+          primary="primary" 
+          wx:for="{{money}}" 
+          wx:key="{{item.id}}" 
+          id="{{item.id}}" 
+          data-i="{{index}}" 
+          bindtap="changeStyle"
+          style="color:{{item.color}};background:{{item.background}};border:1px solid {{item.color}}"
+        >
+          <view class="btn-text time">{{item.time}}小时</view>
+          <view class="btn-text money" style="color:{{item.color}};background:{{item.background}}">￥{{item.money}}元</view>
+        </view>
+      </view>
+    </view>
+    <view class="box3">
+      <view class="title">请选择支付方式</view>
+      <view class="box3-panel">
+        <van-radio-group value="{{ radio }}" bind:change="onChange">
+          <van-cell-group>
+            <van-cell
+              title="微信支付"
+              value-class="value-class"
+              clickable
+              data-name="0"
+              bind:click="onClick"
+            >
+              <van-radio checked-color="#32cd32" name="0" />
+            </van-cell>
+            <!-- <van-cell
+              title="钱包余额支付"
+              value-class="value-class"
+              clickable
+              data-name="1"
+              bind:click="onClick"
+            >
+              <van-radio checked-color="#32cd32" name="1" />
+            </van-cell> -->
+          </van-cell-group>
+        </van-radio-group>
+      </view>
+    </view>
+  </view>
+  <view class="box-btn">
+    <van-button type="primary" custom-class="btn" bindtap="onPayment">开始充电</van-button>
+  </view>
+</view>

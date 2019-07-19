@@ -1,0 +1,65 @@
+/* pages/mine/index.wxss */
+/* 背景色：#32cd32 */
+page{
+  width: 100%;
+  height: 100%;
+}
+.container-box{
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  position: relative;
+}
+.bg-top{
+  width: 100%;
+  height: 20%;
+  background: #fff;
+  display: flex;
+  box-sizing: border-box;
+  padding: 0 40rpx;
+  padding-bottom: 5%;
+  justify-content: space-between;
+  align-items: center;
+}
+.mine-box{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.img{
+  margin-right: 20rpx;
+}
+.group-container{
+  position: absolute;
+  left: 0;
+  top: 16%;
+  width: 100%;
+}
+.box1-panel{
+  box-sizing: border-box;
+  width: 80%;
+  margin-left: 10%;
+  height: 180rpx;
+  color: #fff;
+  border-radius: 6px;
+  margin-bottom: 3%;
+  background: #32cd32;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.left-box{
+  text-align: center;
+}
+.right-box{
+  color: #333;
+  background: #fff;
+  padding: 6rpx 40rpx;
+  border-radius: 40rpx;
+}
+.img{
+  width: 100rpx;
+  height: 100rpx;
+  background: #ccc;
+  border-radius: 50%;
+}

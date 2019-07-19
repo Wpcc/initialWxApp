@@ -246,7 +246,13 @@ export default class Order extends wepy.page {
     // 显示选中地址
     Address.getAddressFromServer()
     .then(res => {
-      if (res.length === 0) { return }
+      if (res.length === 0) {
+        this.addressList = []
+        this.addressSelected = {}
+        this.address_id = ''
+        this.$apply()
+        return
+      }
       let index = res.findIndex(item => {
         return item.is_default === 1
       })

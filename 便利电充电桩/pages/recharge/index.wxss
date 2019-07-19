@@ -47,7 +47,6 @@ image{
   color: #23C675;
   background:#fff;
   width:29%;
-  height:110rpx;
   border-radius: 10rpx;
   border: 1px solid #23c675;
   float: left;

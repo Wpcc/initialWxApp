@@ -1,0 +1,55 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/payment/index",
+    "pages/order/index",
+    "pages/socket/index",
+    "pages/mine/index",
+    "pages/record/index",
+    "pages/login/index",
+    "pages/components/navigation/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "./static/images/tabbar_home_default.png",
+        "selectedIconPath": "./static/images/tabbar_home_default.png",
+        "color": "#333",
+        "selectedColor": "#32cd32"
+      },
+      {
+        "pagePath": "pages/record/index",
+        "text": "充电记录",
+        "iconPath": "./static/images/tabbar_home_default.png",
+        "selectedIconPath": "./static/images/tabbar_home_default.png",
+        "color": "#333",
+        "selectedColor": "#32cd32"
+      },
+      {
+        "pagePath": "pages/mine/index",
+        "text": "我的",
+        "iconPath": "./static/images/tabbar_home_default.png",
+        "selectedIconPath": "./static/images/tabbar_home_default.png",
+        "color": "#333",
+        "selectedColor": "#32cd32"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "van-button": "./modules/dist/button/index",
+    "van-radio-group": "./modules/dist/radio-group/index",
+    "van-cell-group": "./modules/dist/cell-group/index",
+    "van-cell": "./modules/dist/cell/index",
+    "van-radio": "./modules/dist/radio/index",
+    "van-icon": "./modules/dist/icon/index"
+  }
+}

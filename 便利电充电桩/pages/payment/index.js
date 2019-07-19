@@ -6,7 +6,7 @@ import { goPayTip,goBack,goIndex } from '../../router/routes'
 import { login } from '../../utils/login'
 import {recharge} from '../../utils/util'
 
-const app = getApp()
+const App = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -34,7 +34,8 @@ Page({
         name: '余额支付'
       }
     ],
-    param:{} // 获取端口号
+    param:{}, // 获取端口号
+    navH:App.globalData.navHeight
   },
   clickedPileNum: function (e) {
     let currentTarget = e.currentTarget 

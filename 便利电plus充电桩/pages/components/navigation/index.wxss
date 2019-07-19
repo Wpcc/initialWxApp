@@ -1,0 +1,27 @@
+/* pages/components/navigation/index.wxss */
+.van-icon,.van-icon:before{
+  display: block;
+}
+.title{
+  width: 100%;
+  background: #fff;
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+.left-icon{
+  width: 90px;
+  height: 30px;
+  border-radius: 15px;
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  position: absolute;
+  left: 10px;
+  bottom: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.left-icon-num{
+  margin:0 8px;
+}

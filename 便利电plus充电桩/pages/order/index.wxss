@@ -1,0 +1,157 @@
+/* pages/order/index.wxss */
+/* 背景色：#32cd32 */
+page{
+  width: 100%;
+  height: 100%;
+}
+.container-box{
+  width: 100%;
+  height: 100%;
+  background: #eee;
+  box-sizing: border-box;
+}
+.bg-top{
+  width: 100%;
+  height: 15%;
+  background: #32cd32;
+}
+.content-box{
+  box-sizing: border-box;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 80rpx 40rpx 0;
+}
+.box1-panel{
+  width: 100%;
+  height: 600rpx;
+  background: #fff;
+  border-radius: 4px;
+  margin-bottom: 3%;
+  padding-top: 50rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+.box1-panel .top{
+  width: 100%;
+  height: 400rpx;
+}
+.circle-out{
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  border: 10rpx solid #32cd32;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+.circle-inner{
+  width: 205rpx;
+  height: 205rpx;
+  border-radius: 50%;
+  border: 10rpx solid #4ee64e;
+  box-sizing: border-box;
+  text-align: center;
+}
+.main-text{
+  font-size: 24px;
+  position: relative;
+  top: 40rpx;
+  left: 0;
+}
+.side-text{
+  font-size: 10px;
+  position: relative;
+  top: 40rpx;
+  left: 0;
+}
+.text-time{
+  font-size: 10px;
+  display: flex;
+  justify-content: space-around;
+  box-sizing: border-box;
+  padding-top: 20rpx;
+}
+.position-left, .position-right{
+  width: 30rpx;
+  height: 30rpx;
+  border-radius: 50%;
+  background: #eee;
+}
+.position-left{
+  position: absolute;
+  left: -15rpx;
+  bottom: 200rpx;
+}
+.position-right{
+  position: absolute;
+  right: -15rpx;
+  bottom: 200rpx;
+}
+.position-bottom-box{
+  position: absolute;
+  bottom: 200rpx;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.position-bottom{
+  padding:5rpx 30rpx;
+  font-size: 12px;
+  background: #eee;
+  border-radius: 30rpx;
+}
+.bottom{
+  width: 90%;
+  height: 200rpx;
+  border-top: 1px dashed #eee;
+  position: absolute;
+  left: 5%;
+  bottom: 15rpx;
+  padding-top: 30rpx;
+  box-sizing: border-box;
+}
+.order-number{
+  width: 100%;
+  text-align: center;
+  font-size: 12px;
+}
+.recharge-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 160rpx;
+}
+.recharge-big{
+  font-size: 18px;
+  font-weight: 600;
+}
+.recharge-small{
+  box-sizing: border-box;
+  padding-top: 10rpx;
+  font-size: 12px;
+  color: #666;
+  text-align: center;
+}
+.align-image{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.box-btn{
+  width: 100%;
+  padding: 0 40rpx;
+  position: absolute;
+  left: 0;
+  bottom: 40rpx;
+  box-sizing: border-box;
+}
+.btn{
+  width: 100%;
+  margin-top: 5%;
+  background: #32cd32!important;
+  border: none!important;
+}

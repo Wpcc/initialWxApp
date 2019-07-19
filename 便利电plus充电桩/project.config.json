@@ -1,0 +1,82 @@
+{
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.7.4",
+	"appid": "wx7b16fa0e1303c68e",
+	"projectname": "%E4%BE%BF%E5%88%A9%E7%94%B5plus%E5%85%85%E7%94%B5%E6%A1%A9",
+	"debugOptions": {
+		"hidedInDevtools": []
+	},
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 1,
+			"list": [
+				{
+					"id": -1,
+					"name": "payment",
+					"pathName": "pages/payment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "order",
+					"pathName": "pages/order/index",
+					"query": "order_id=78",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "socket",
+					"pathName": "pages/socket/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "mine",
+					"pathName": "pages/mine/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "login",
+					"pathName": "pages/login/index",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
+}

@@ -41,7 +41,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -89,6 +89,35 @@
 					"id": -1,
 					"name": "bind",
 					"pathName": "pages/bind/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "list",
+					"pathName": "pages/list/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "payment",
+					"pathName": "pages/payment/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "payment",
+					"pathName": "pages/paysuccess/index",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "payment",
+					"pathName": "pages/payment/index",
+					"query": "id=1",
 					"scene": null
 				}
 			]

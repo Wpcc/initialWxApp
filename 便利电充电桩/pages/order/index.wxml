@@ -1,7 +1,7 @@
 <!--pages/order/index.wxml-->
 <navigation></navigation>
-<view class="container">
-  <view class="tabbar-container">
+<view class="container" style="margin-top:{{navH}}px">
+  <view class="tabbar-container" style="top:{{navH}}px">
     <view id="tabbar-underway" class="tabbar-underway" style="{{leftSelected==true ? 'border-bottom:2px solid #23C675' : ''}}" bindtap="ing_order">
       <text class="underway-text">进行中</text>
     </view>

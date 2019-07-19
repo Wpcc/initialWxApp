@@ -32,7 +32,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 10px;
-  margin: 115px 0 0;
+  margin: 40px 0 0;
 }
 .underway-ul{
   width: 100%;
